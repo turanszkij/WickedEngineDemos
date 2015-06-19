@@ -1,0 +1,1 @@
+Wicked Engine demos in a Win32 application template project.

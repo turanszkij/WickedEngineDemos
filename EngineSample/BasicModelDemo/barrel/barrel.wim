@@ -1,0 +1,10 @@
+//MATERIAL-barrelMat
+f 0.5
+d 0.800000011920929 0.800000011920929 0.800000011920929
+t wood_barrel1_c.dds 0
+b MIX
+n wood_barrel1_n.dds
+S wood_barrel1_s.dds
+s 1.0 1.0 1.0 0.5
+p 50
+e 0.0
