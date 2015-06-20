@@ -19,11 +19,12 @@ enum DEMOS{
 	HELLOWORLD,
 	BASICMODEL,
 	SKINNEDMODEL,
-	DEFERREDSCENE,
 	EMITTERPARTICLE,
 	HAIRPARTICLE,
 	RIGIDBODY,
 	SOFTBODY,
+	DEFERREDSCENE,
+	DEFERREDLIGHTS,
 };
 DEMOS demoScene = HELLOWORLD;
 map<DEMOS, WiDemo*> demos;
@@ -44,7 +45,7 @@ void LoadProgram(){
 	Renderer::HAIRPARTICLEENABLED = true;
 	Renderer::setRenderResolution(screenW, screenH);
 	Renderer::SHADOWMAPRES = 1024;
-	Renderer::POINTLIGHTSHADOW = 2;
+	Renderer::POINTLIGHTSHADOW = 6;
 	Renderer::POINTLIGHTSHADOWRES = 512;
 	Renderer::SOFTSHADOW = 2;
 	Renderer::DX11 = false;
@@ -61,6 +62,7 @@ void LoadProgram(){
 	FrameRate::Initialize();
 	CpuInfo::Initialize();
 	FrameRate::Initialize();
+	LensFlare::Initialize(screenW,screenH);
 
 	Font::addFontStyle("basic");
 	InputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
@@ -73,9 +75,13 @@ void LoadProgram(){
 	WiDemo::screenH = screenH;
 	demos.insert(pair<DEMOS, WiDemo*>(HELLOWORLD, new HelloWorldDemo()));
 	demos.insert(pair<DEMOS, WiDemo*>(BASICMODEL, new BasicModelDemo()));
+	demos.insert(pair<DEMOS, WiDemo*>(SKINNEDMODEL, new SkinnedModelDemo()));
 	demos.insert(pair<DEMOS, WiDemo*>(EMITTERPARTICLE, new EmittedParticleDemo()));
 	demos.insert(pair<DEMOS, WiDemo*>(HAIRPARTICLE, new HairParticleDemo()));
+	demos.insert(pair<DEMOS, WiDemo*>(RIGIDBODY, new RigidBodyDemo()));
 	demos.insert(pair<DEMOS, WiDemo*>(SOFTBODY, new SoftBodyDemo()));
+	demos.insert(pair<DEMOS, WiDemo*>(DEFERREDSCENE, new DeferredSceneDemo()));
+	demos.insert(pair<DEMOS, WiDemo*>(DEFERREDLIGHTS, new DeferredLightDemo()));
 }
 void CleanUpProgram(){
 
@@ -84,6 +90,7 @@ void CleanUpProgram(){
 	Font::CleanUpStatic();
 	ResourceManager::CleanUp();
 	InputManager::CleanUp();
+	LensFlare::CleanUp();
 	Renderer::DestroyDevice();
 }
 void CameraControl(){
@@ -127,11 +134,13 @@ void HudRender(){
 	ss << "\n[1] :  HelloWorld";
 	ss << "\n[2] :  BasicModel";
 	ss << "\n[3] :  SkinnedModel";
-	ss << "\n[4] :  DeferredScene";
-	ss << "\n[5] :  EmitterParticle";
-	ss << "\n[6] :  HairParticle";
-	ss << "\n[7] :  RigidBody";
-	ss << "\n[8] :  SoftBody";
+	ss << "\n[4] :  EmitterParticle";
+	ss << "\n[5] :  HairParticle";
+	ss << "\n[6] :  RigidBody";
+	ss << "\n[7] :  SoftBody";
+	ss << "\n[8] :  DeferredLights";
+	ss << "\n[9] :  DeferredScene";
+	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB";
 	Font::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
 	ss.str("");
 	ss.precision(1);
@@ -146,9 +155,6 @@ void HudRender(){
 		break;
 	case BASICMODEL:
 		ss << "BASICMODEL";
-		break;
-	case DEFERREDSCENE:
-		ss << "DEFERREDSCENE";
 		break;
 	case SKINNEDMODEL:
 		ss << "SKINNEDMODEL";
@@ -165,12 +171,20 @@ void HudRender(){
 	case SOFTBODY:
 		ss << "SOFTBODY";
 		break;
+	case DEFERREDSCENE:
+		ss << "DEFERREDSCENE";
+		break;
+	case DEFERREDLIGHTS:
+		ss << "DEFERREDLIGHTS";
+		break;
 	default:
 		break;
 	}
 	ss << " DEMO";
 	Font::Draw(ss.str(), "basic", XMFLOAT4(screenW/2, -screenH, -5, -4), "center", "bottom");
 }
+
+
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -249,19 +263,22 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 					ChangeDemo(SKINNEDMODEL);
 				}
 				else if (InputManager::press(DIK_4)){
-					ChangeDemo(DEFERREDSCENE);
-				}
-				else if (InputManager::press(DIK_5)){
 					ChangeDemo(EMITTERPARTICLE);
 				}
-				else if (InputManager::press(DIK_6)){
+				else if (InputManager::press(DIK_5)){
 					ChangeDemo(HAIRPARTICLE);
 				}
-				else if (InputManager::press(DIK_7)){
+				else if (InputManager::press(DIK_6)){
 					ChangeDemo(RIGIDBODY);
 				}
-				else if (InputManager::press(DIK_8)){
+				else if (InputManager::press(DIK_7)){
 					ChangeDemo(SOFTBODY);
+				}
+				else if (InputManager::press(DIK_8)){
+					ChangeDemo(DEFERREDLIGHTS);
+				}
+				else if (InputManager::press(DIK_9)){
+					ChangeDemo(DEFERREDSCENE);
 				}
 
 				demos[demoScene]->Update();
@@ -279,7 +296,6 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 
-	CleanUpProgram();
 
 	return (int) msg.wParam;
 }
@@ -388,6 +404,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
+		CleanUpProgram();
 		PostQuitMessage(0);
 		break;
 	default:

@@ -44,6 +44,20 @@ public:
 	void Compose();
 };
 
+class SkinnedModelDemo : public WiDemo
+{
+private:
+	RenderTarget renderTarget;
+public:
+	SkinnedModelDemo();
+	~SkinnedModelDemo();
+
+	void Start();
+	void Update();
+	void Render();
+	void Compose();
+};
+
 class EmittedParticleDemo : public WiDemo
 {
 private:
@@ -72,6 +86,20 @@ public:
 	void Compose();
 };
 
+class RigidBodyDemo : public WiDemo
+{
+private:
+	RenderTarget renderTarget;
+public:
+	RigidBodyDemo();
+	~RigidBodyDemo();
+
+	void Start();
+	void Update();
+	void Render();
+	void Compose();
+};
+
 class SoftBodyDemo : public WiDemo
 {
 private:
@@ -84,4 +112,55 @@ public:
 	void Update();
 	void Render();
 	void Compose();
+};
+
+class DeferredDemo : public WiDemo
+{
+private:
+	RenderTarget 
+				  rtReflection
+				, rtGBuffer
+				, rtDeferred
+				, rtLight
+				, rtVolumeLight
+				, rtTransparent
+				, rtWater
+				, rtWaterRipple
+				, rtLinearDepth
+				, rtParticle
+				, rtParticleAdditive
+				, rtLensFlare
+				, rtFinal[2]
+			;
+	vector<RenderTarget> rtSun, rtBloom, rtSSAO;
+	DepthTarget dtDepthCopy;
+
+	void RenderReflections();
+	void RenderShadows();
+	void RenderScene();
+	void RenderBloom();
+	void RenderLightShafts();
+	void RenderComposition1();
+	void RenderComposition2();
+	void RenderColorGradedComposition();
+public:
+	DeferredDemo();
+	~DeferredDemo();
+
+	virtual void Start() = 0;
+	void Update();
+	void Render();
+	void Compose();
+};
+
+class DeferredLightDemo :public DeferredDemo
+{
+public:
+	void Start();
+};
+
+class DeferredSceneDemo :public DeferredDemo
+{
+public:
+	void Start();
 };
