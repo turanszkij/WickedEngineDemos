@@ -61,6 +61,7 @@ SkinnedModelDemo::~SkinnedModelDemo(){}
 void SkinnedModelDemo::Start(){
 	Renderer::LoadModel("SkinnedModelDemo/", "girl");
 	Renderer::FinishLoading();
+	Renderer::SetToDrawDebugLines(true);
 	Renderer::objects.front()->translation_rest.y = 2.2f;
 
 	for (int i = 0; i < Renderer::armatures.back()->actions.size(); ++i){
@@ -83,6 +84,7 @@ void SkinnedModelDemo::Render(){
 		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
 			, false, Renderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
+		Renderer::DrawDebugLines(Renderer::cam->View, Renderer::immediateContext);
 	}
 }
 void SkinnedModelDemo::Compose(){
@@ -435,7 +437,6 @@ void DeferredDemo::RenderScene(){
 			, rtLinearDepth.shaderResource.back(), rtLight.shaderResource.front(), rtGBuffer.shaderResource[1]
 			, rtSSAO.back().shaderResource.back(), Renderer::immediateContext, STENCILREF_DEFAULT);
 		Renderer::DrawSky(Renderer::cam->Eye, Renderer::immediateContext);
-
 	}
 
 
