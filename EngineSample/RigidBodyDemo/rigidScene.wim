@@ -4,6 +4,8 @@ d 0.800000011920929 0.800000011920929 0.800000011920929
 i 0.0
 t wc1_diffuse.dds 0
 b MIX
+S wc1_specular.dds
+n wc1_normal.dds
 s 1.0 1.0 1.0 0.5
 p 50
 e 0.0
