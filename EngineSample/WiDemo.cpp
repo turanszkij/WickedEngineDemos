@@ -196,10 +196,7 @@ void RigidBodyDemo::Start(){
 }
 void RigidBodyDemo::Update(){
 	Renderer::Update();
-	Timer tim = Timer();
 	Renderer::SychronizeWithPhysicsEngine();
-	tim.record();
-	double el = tim.elapsed();
 	Renderer::UpdateRenderInfo(Renderer::immediateContext);
 }
 void RigidBodyDemo::Render(){
