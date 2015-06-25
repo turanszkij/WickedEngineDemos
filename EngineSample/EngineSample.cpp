@@ -68,6 +68,8 @@ void LoadProgram(){
 	InputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
 
 	ResourceManager::add("HelloWorld/HelloWorld.png");
+	ResourceManager::add("sound/change.wav",ResourceManager::SOUND);
+	SoundEffect::SetVolume(0.5f);
 
 	Renderer::cam->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
 
@@ -114,6 +116,7 @@ void ChangeDemo(DEMOS newDemo){
 
 	CameraReset();
 
+	static_cast<SoundEffect*>(ResourceManager::get("sound/change.wav")->data)->Play();
 
 	if (demos.find(newDemo) != demos.end()){
 		Renderer::CleanUpStaticTemp();
