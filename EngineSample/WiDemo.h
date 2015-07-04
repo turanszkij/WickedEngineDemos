@@ -121,6 +121,7 @@ private:
 				  rtReflection
 				, rtGBuffer
 				, rtDeferred
+				, rtSSR
 				, rtLight
 				, rtVolumeLight
 				, rtTransparent
@@ -143,6 +144,8 @@ private:
 	void RenderComposition1();
 	void RenderComposition2();
 	void RenderColorGradedComposition();
+
+	bool ssr, ssao;
 public:
 	DeferredDemo();
 	~DeferredDemo();
@@ -160,6 +163,18 @@ public:
 };
 
 class DeferredSceneDemo :public DeferredDemo
+{
+public:
+	void Start();
+};
+
+class SSRTestDemo :public DeferredDemo
+{
+public:
+	void Start();
+};
+
+class SoftBodyDeferredDemo :public DeferredDemo
 {
 public:
 	void Start();

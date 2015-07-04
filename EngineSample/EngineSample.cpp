@@ -25,6 +25,9 @@ enum DEMOS{
 	SOFTBODY,
 	DEFERREDSCENE,
 	DEFERREDLIGHTS,
+	SSRTEST,
+	SOFTBODY_DEFERRED,
+	DEMO_COUNT,
 };
 DEMOS demoScene = HELLOWORLD;
 map<DEMOS, WiDemo*> demos;
@@ -84,6 +87,8 @@ void LoadProgram(){
 	demos.insert(pair<DEMOS, WiDemo*>(SOFTBODY, new SoftBodyDemo()));
 	demos.insert(pair<DEMOS, WiDemo*>(DEFERREDSCENE, new DeferredSceneDemo()));
 	demos.insert(pair<DEMOS, WiDemo*>(DEFERREDLIGHTS, new DeferredLightDemo()));
+	demos.insert(pair<DEMOS, WiDemo*>(SSRTEST, new SSRTestDemo()));
+	demos.insert(pair<DEMOS, WiDemo*>(SOFTBODY_DEFERRED, new SoftBodyDeferredDemo()));
 }
 void CleanUpProgram(){
 
@@ -143,6 +148,8 @@ void HudRender(){
 	ss << "\n[7] :  SoftBody";
 	ss << "\n[8] :  DeferredLights";
 	ss << "\n[9] :  DeferredScene";
+	ss << "\n[0] :  SSRTest";
+	ss << "\n[F1] : SoftBody Deferred";
 	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB";
 	Font::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
 	ss.str("");
@@ -282,6 +289,12 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 				}
 				else if (InputManager::press(DIK_9)){
 					ChangeDemo(DEFERREDSCENE);
+				}
+				else if (InputManager::press(DIK_0)){
+					ChangeDemo(SSRTEST);
+				}
+				else if (InputManager::press(DIK_F1)){
+					ChangeDemo(SOFTBODY_DEFERRED);
 				}
 
 				demos[demoScene]->Update();

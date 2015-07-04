@@ -249,9 +249,8 @@ void SoftBodyDemo::Compose(){
 }
 
 
-DeferredDemo::DeferredDemo(){
+DeferredDemo::DeferredDemo() :ssao(true), ssr(true){
 	static const float lightShaftQuality = .4f;
-	static const int bloomPassCount = 4;
 	static const float bloomDownSample = 4.f;
 	static const float particleDownSample = 1.0f;
 	static const float reflectionDownSample = 0.5f;
@@ -270,13 +269,18 @@ DeferredDemo::DeferredDemo(){
 		);
 	rtLensFlare.Initialize(screenW, screenH, 1, false);
 
-	rtBloom.resize(bloomPassCount + 1);
-	for (int i = 0; i<rtBloom.size(); ++i)
-		rtBloom[i].Initialize(
-		screenW / bloomDownSample
-		, screenH / bloomDownSample
-		, 1, false
+	rtBloom.resize(3);
+	rtBloom[0].Initialize(
+		screenW
+		, screenH
+		, 1, false, 1, 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0
 		);
+	for (int i = 1; i<rtBloom.size(); ++i)
+		rtBloom[i].Initialize(
+			screenW / bloomDownSample
+			, screenH / bloomDownSample
+			, 1, false
+			);
 
 	rtGBuffer.Initialize(
 		screenW, screenH
@@ -285,22 +289,25 @@ DeferredDemo::DeferredDemo(){
 		);
 	rtDeferred.Initialize(
 		screenW, screenH
-		, 1, false); 
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT, 0);
+	rtSSR.Initialize(
+		screenW/2, screenH/2
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT);
 	rtLinearDepth.Initialize(
 		screenW, screenH
 		, 1, false, 1, 0, DXGI_FORMAT_R32_FLOAT
 		);
 	rtParticle.Initialize(
 		screenW*particleDownSample, screenH*particleDownSample
-		, 1, false
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT
 		);
 	rtParticleAdditive.Initialize(
 		screenW*particleDownSample, screenH*particleDownSample
-		, 1, false
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT
 		);
 	rtWater.Initialize(
 		screenW, screenH
-		, 1, false
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT
 		); 
 	rtWaterRipple.Initialize(
 		screenW
@@ -310,7 +317,7 @@ DeferredDemo::DeferredDemo(){
 	rtWaterRipple.Activate(Renderer::immediateContext, 0, 0, 0, 0);
 	rtTransparent.Initialize(
 		screenW, screenH
-		, 1, false
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT
 		);
 	rtLight.Initialize(
 		screenW, screenH
@@ -324,11 +331,11 @@ DeferredDemo::DeferredDemo(){
 	rtReflection.Initialize(
 		screenW * reflectionDownSample
 		, screenH * reflectionDownSample
-		, 1, true
+		, 1, true, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT
 		);
 	rtFinal[0].Initialize(
 		screenW, screenH
-		, 1, false);
+		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT);
 	rtFinal[1].Initialize(
 		screenW, screenH
 		, 1, false);
@@ -367,6 +374,11 @@ void DeferredDemo::Compose(){
 
 	RenderColorGradedComposition();
 
+	Image::BatchBegin();
+	ImageEffects fx = ImageEffects(0, 0, 200, 200);
+	fx.blendFlag = BLENDMODE_OPAQUE;
+	fx.mipLevel = 4.5f;
+	Image::Draw(rtBloom.back().shaderResource[0], fx);
 }
 
 void DeferredDemo::RenderReflections(){
@@ -432,11 +444,58 @@ void DeferredDemo::RenderScene(){
 	Renderer::DrawVolumeLights(Renderer::cam->View, Renderer::immediateContext);
 
 
-	rtDeferred.Activate(Renderer::immediateContext, rtGBuffer.depth); { //DEFERRED+COMPOSITION
+
+	if (ssao){
+		Image::BatchBegin(Renderer::immediateContext, STENCILREF_DEFAULT);
+		rtSSAO[0].Activate(Renderer::immediateContext); {
+			fx.process.setSSAO(true);
+			fx.setDepthMap(rtLinearDepth.shaderResource.back());
+			fx.setNormalMap(rtGBuffer.shaderResource[1]);
+			fx.setMaskMap((ID3D11ShaderResourceView*)ResourceManager::add("images/noise.png"));
+			//fx.sampleFlag=SAMPLEMODE_CLAMP;
+			fx.quality = QUALITY_BILINEAR;
+			fx.sampleFlag = SAMPLEMODE_MIRROR;
+			Image::Draw(nullptr, fx, Renderer::immediateContext);
+			//fx.sampleFlag=SAMPLEMODE_CLAMP;
+			fx.process.clear();
+		}
+		static const float ssaoBlur = 2.f;
+		rtSSAO[1].Activate(Renderer::immediateContext); {
+			fx.blur = ssaoBlur;
+			fx.blurDir = 0;
+			fx.blendFlag = BLENDMODE_OPAQUE;
+			Image::Draw(rtSSAO[0].shaderResource.back(), fx, Renderer::immediateContext);
+		}
+		rtSSAO[2].Activate(Renderer::immediateContext); {
+			fx.blur = ssaoBlur;
+			fx.blurDir = 1;
+			fx.blendFlag = BLENDMODE_OPAQUE;
+			Image::Draw(rtSSAO[1].shaderResource.back(), fx, Renderer::immediateContext);
+			fx.blur = 0;
+		}
+	}
+
+
+	rtDeferred.Activate(Renderer::immediateContext, rtGBuffer.depth); {
 		Image::DrawDeferred(rtGBuffer.shaderResource[0]
 			, rtLinearDepth.shaderResource.back(), rtLight.shaderResource.front(), rtGBuffer.shaderResource[1]
 			, rtSSAO.back().shaderResource.back(), Renderer::immediateContext, STENCILREF_DEFAULT);
 		Renderer::DrawSky(Renderer::cam->Eye, Renderer::immediateContext);
+	}
+
+
+	if (ssr){
+		rtSSR.Activate(Renderer::immediateContext); {
+			Image::BatchBegin(Renderer::immediateContext);
+			Renderer::immediateContext->GenerateMips(rtDeferred.shaderResource[0]);
+			fx.process.setSSR(true);
+			fx.setDepthMap(dtDepthCopy.shaderResource);
+			fx.setNormalMap(rtGBuffer.shaderResource[1]);
+			fx.setVelocityMap(rtGBuffer.shaderResource[2]);
+			fx.setMaskMap(rtLinearDepth.shaderResource.front());
+			Image::Draw(rtDeferred.shaderResource.front(), fx, Renderer::immediateContext);
+			fx.process.clear();
+		}
 	}
 
 
@@ -454,38 +513,72 @@ void DeferredDemo::RenderScene(){
 	}
 }
 void DeferredDemo::RenderBloom(){
-	static const float bloomStren = 6.f, bloomThreshold = 0.99f, bloomSaturation = -3.86f;
+	static const float bloomStren = 19.3f, bloomThreshold = 0.99f, bloomSaturation = -3.86f;
 
 
 	ImageEffects fx(screenW, screenH);
 
 	Image::BatchBegin();
-	if (rtBloom.size()>2){
-		for (int i = 0; i<rtBloom.size() - 1; ++i){
-			rtBloom[i].Activate(Renderer::immediateContext);
-			if (i == 0){
-				fx.bloom.separate = true;
-				fx.bloom.threshold = bloomThreshold;
-				fx.bloom.saturation = bloomSaturation;
-				fx.blendFlag = BLENDMODE_OPAQUE;
-				fx.sampleFlag = SAMPLEMODE_CLAMP;
-				Image::Draw(rtFinal[0].shaderResource.front(), fx);
-			}
-			else { //horizontal blurs
-				fx.blur = bloomStren;
-				fx.blurDir = 0;
-				fx.blendFlag = BLENDMODE_OPAQUE;
-				Image::Draw(rtBloom[i - 1].shaderResource.back(), fx);
-			}
-		}
 
-		rtBloom.back().Activate(Renderer::immediateContext);
-		//vertical blur
+	rtBloom[0].Activate(Renderer::immediateContext); 
+	{
+		fx.bloom.separate = true;
+		fx.blendFlag = BLENDMODE_OPAQUE;
+		fx.sampleFlag = SAMPLEMODE_CLAMP;
+		Image::Draw(rtFinal[0].shaderResource.front(), fx);
+	}
+
+
+	rtBloom[1].Activate(Renderer::immediateContext); //horizontal
+	{
+		Renderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
+		fx.mipLevel = 5.32f;
+		fx.blur = bloomStren;
+		fx.blurDir = 0;
+		fx.blendFlag = BLENDMODE_OPAQUE;
+		Image::Draw(rtBloom[0].shaderResource.back(), fx);
+	}
+	rtBloom[2].Activate(Renderer::immediateContext); //vertical
+	{
+		Renderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
 		fx.blur = bloomStren;
 		fx.blurDir = 1;
 		fx.blendFlag = BLENDMODE_OPAQUE;
-		Image::Draw(rtBloom[rtBloom.size() - 2].shaderResource.back(), fx);
+		Image::Draw(rtBloom[1].shaderResource.back(), fx);
 	}
+
+
+	//if (rtBloom.size()>2){
+	//	for (int i = 0; i<rtBloom.size() - 1; ++i){
+	//		rtBloom[i].Activate(Renderer::immediateContext);
+	//		if (i == 0){
+	//			fx.bloom.separate = true;
+	//			fx.bloom.threshold = bloomThreshold;
+	//			fx.bloom.saturation = bloomSaturation;
+	//			fx.blendFlag = BLENDMODE_OPAQUE;
+	//			fx.sampleFlag = SAMPLEMODE_CLAMP;
+	//			Image::Draw(rtFinal[0].shaderResource.front(), fx);
+	//		}
+	//		else { //horizontal blurs
+	//			if (i == 1)
+	//			{
+	//				Renderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
+	//			}
+	//			fx.mipLevel = 4;
+	//			fx.blur = bloomStren;
+	//			fx.blurDir = 0;
+	//			fx.blendFlag = BLENDMODE_OPAQUE;
+	//			Image::Draw(rtBloom[i - 1].shaderResource.back(), fx);
+	//		}
+	//	}
+
+	//	rtBloom.back().Activate(Renderer::immediateContext);
+	//	//vertical blur
+	//	fx.blur = bloomStren;
+	//	fx.blurDir = 1;
+	//	fx.blendFlag = BLENDMODE_OPAQUE;
+	//	Image::Draw(rtBloom[rtBloom.size() - 2].shaderResource.back(), fx);
+	//}
 }
 void DeferredDemo::RenderLightShafts(){
 	ImageEffects fx(screenW, screenH);
@@ -518,12 +611,15 @@ void DeferredDemo::RenderComposition1(){
 	Image::Draw(rtDeferred.shaderResource.back(), fx);
 
 	fx.blendFlag = BLENDMODE_ALPHA;
+	if (ssr){
+		Image::Draw(rtSSR.shaderResource.back(), fx);
+	}
 	Image::Draw(rtWater.shaderResource.back(), fx);
 	Image::Draw(rtTransparent.shaderResource.back(), fx);
 	Image::Draw(rtParticle.shaderResource.back(), fx);
-	Image::Draw(rtVolumeLight.shaderResource.back(), fx);
 
 	fx.blendFlag = BLENDMODE_ADDITIVE;
+	Image::Draw(rtVolumeLight.shaderResource.back(), fx);
 	Image::Draw(rtParticleAdditive.shaderResource.back(), fx);
 	Image::Draw(rtLensFlare.shaderResource.back(), fx);
 }
@@ -565,6 +661,22 @@ void DeferredLightDemo::Start(){
 
 void DeferredSceneDemo::Start(){
 	Renderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
+	Renderer::FinishLoading();
+	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	HairParticle::Settings(20, 50, 200);
+}
+
+void SSRTestDemo::Start(){
+	Renderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
+	Renderer::FinishLoading();
+	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	HairParticle::Settings(20, 50, 200);
+}
+
+void SoftBodyDeferredDemo::Start(){
+	Renderer::LoadModel("SoftBodyDemo/", "flag");
 	Renderer::FinishLoading();
 	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
 	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
