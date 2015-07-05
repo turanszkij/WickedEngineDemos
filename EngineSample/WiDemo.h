@@ -19,7 +19,7 @@ public:
 class HelloWorldDemo : public WiDemo
 {
 private:
-	oImage image;
+	wiSprite image;
 public:
 	HelloWorldDemo();
 	~HelloWorldDemo();
@@ -33,7 +33,7 @@ public:
 class BasicModelDemo : public WiDemo
 {
 private:
-	RenderTarget renderTarget;
+	wiRenderTarget renderTarget;
 public:
 	BasicModelDemo();
 	~BasicModelDemo();
@@ -47,7 +47,7 @@ public:
 class SkinnedModelDemo : public WiDemo
 {
 private:
-	RenderTarget renderTarget;
+	wiRenderTarget renderTarget;
 public:
 	SkinnedModelDemo();
 	~SkinnedModelDemo();
@@ -61,7 +61,7 @@ public:
 class EmittedParticleDemo : public WiDemo
 {
 private:
-	RenderTarget renderTarget, renderTargetParticle, renderTargetAdditiveParticle, renderTargetLinearDepth;
+	wiRenderTarget renderTarget, renderTargetParticle, renderTargetAdditiveParticle, renderTargetLinearDepth;
 public:
 	EmittedParticleDemo();
 	~EmittedParticleDemo();
@@ -75,7 +75,7 @@ public:
 class HairParticleDemo : public WiDemo
 {
 private:
-	RenderTarget renderTarget;
+	wiRenderTarget renderTarget;
 public:
 	HairParticleDemo();
 	~HairParticleDemo();
@@ -89,7 +89,7 @@ public:
 class RigidBodyDemo : public WiDemo
 {
 private:
-	RenderTarget renderTarget;
+	wiRenderTarget renderTarget;
 public:
 	RigidBodyDemo();
 	~RigidBodyDemo();
@@ -103,7 +103,7 @@ public:
 class SoftBodyDemo : public WiDemo
 {
 private:
-	RenderTarget renderTarget;
+	wiRenderTarget renderTarget;
 public:
 	SoftBodyDemo();
 	~SoftBodyDemo();
@@ -117,7 +117,7 @@ public:
 class DeferredDemo : public WiDemo
 {
 private:
-	RenderTarget 
+	wiRenderTarget
 				  rtReflection
 				, rtGBuffer
 				, rtDeferred
@@ -133,8 +133,8 @@ private:
 				, rtLensFlare
 				, rtFinal[2]
 			;
-	vector<RenderTarget> rtSun, rtBloom, rtSSAO;
-	DepthTarget dtDepthCopy;
+	vector<wiRenderTarget> rtSun, rtBloom, rtSSAO;
+	wiDepthTarget dtDepthCopy;
 
 	void RenderReflections();
 	void RenderShadows();

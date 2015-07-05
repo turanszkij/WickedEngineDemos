@@ -4,7 +4,7 @@
 int WiDemo::screenW = 0, WiDemo::screenH = 0;
 
 HelloWorldDemo::HelloWorldDemo(){
-	image = oImage("HelloWorldDemo/HelloWorld.png");
+	image = wiSprite("HelloWorldDemo/HelloWorld.png");
 	image.effects.siz = XMFLOAT2(400, 200);
 	image.effects.pos = XMFLOAT3(screenW / 2 - image.effects.siz.x / 2, -screenH / 2 + image.effects.siz.y / 2, 0);
 	image.anim.rot = 0.01f;
@@ -18,7 +18,7 @@ void HelloWorldDemo::Update(){
 }
 void HelloWorldDemo::Render(){}
 void HelloWorldDemo::Compose(){
-	Image::BatchBegin();
+	wiImage::BatchBegin();
 	image.Draw();
 }
 
@@ -28,29 +28,29 @@ BasicModelDemo::BasicModelDemo(){
 }
 BasicModelDemo::~BasicModelDemo(){}
 void BasicModelDemo::Start(){
-	Renderer::LoadModel("BasicModelDemo/barrel/", "barrel");
-	Renderer::FinishLoading();
-	Renderer::objects.front()->translation_rest.y = 2.2f;
+	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
+	wiRenderer::FinishLoading();
+	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
 void BasicModelDemo::Update(){
-	Renderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0,0.001f*XM_2PI,0));
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
+	wiRenderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0,0.001f*XM_2PI,0));
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
 void BasicModelDemo::Render(){
-	renderTarget.Activate(Renderer::immediateContext, 0, 0, 0, 1);
+	renderTarget.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
 	{
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_FORWARD_SIMPLE
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
 	}
 }
 void BasicModelDemo::Compose(){
 	ImageEffects fx = ImageEffects(screenW, screenH);
-	Image::BatchBegin();
-	Image::Draw(renderTarget.shaderResource.back(), fx);
+	wiImage::BatchBegin();
+	wiImage::Draw(renderTarget.shaderResource.back(), fx);
 }
 
 
@@ -59,38 +59,38 @@ SkinnedModelDemo::SkinnedModelDemo(){
 }
 SkinnedModelDemo::~SkinnedModelDemo(){}
 void SkinnedModelDemo::Start(){
-	Renderer::LoadModel("SkinnedModelDemo/", "girl");
-	Renderer::FinishLoading();
-	Renderer::SetToDrawDebugLines(true);
-	Renderer::objects.front()->translation_rest.y = 2.2f;
+	wiRenderer::LoadModel("SkinnedModelDemo/", "girl");
+	wiRenderer::FinishLoading();
+	wiRenderer::SetToDrawDebugLines(true);
+	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 
-	for (int i = 0; i < Renderer::armatures.back()->actions.size(); ++i){
-		if (Renderer::armatures.back()->actions[i].name.find("Idle") != string::npos){
-			Renderer::armatures.back()->activeAction = i;
+	for (int i = 0; i < wiRenderer::armatures.back()->actions.size(); ++i){
+		if (wiRenderer::armatures.back()->actions[i].name.find("Idle") != string::npos){
+			wiRenderer::armatures.back()->activeAction = i;
 			break;
 		}
 	}
 }
 void SkinnedModelDemo::Update(){
-	Renderer::Update();
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
+	wiRenderer::Update();
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
 void SkinnedModelDemo::Render(){
-	renderTarget.Activate(Renderer::immediateContext, 0, 0, 0, 1);
+	renderTarget.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
 	{
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_FORWARD_SIMPLE
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
-		Renderer::DrawDebugLines(Renderer::cam->View, Renderer::immediateContext);
+		wiRenderer::DrawDebugLines(wiRenderer::cam->View, wiRenderer::immediateContext);
 	}
 }
 void SkinnedModelDemo::Compose(){
 	ImageEffects fx = ImageEffects(screenW, screenH);
-	Image::BatchBegin();
-	Image::Draw(renderTarget.shaderResource.back(), fx);
+	wiImage::BatchBegin();
+	wiImage::Draw(renderTarget.shaderResource.back(), fx);
 }
 
 
@@ -106,52 +106,52 @@ EmittedParticleDemo::EmittedParticleDemo(){
 }
 EmittedParticleDemo::~EmittedParticleDemo(){}
 void EmittedParticleDemo::Start(){
-	Renderer::LoadModel("EmitterParticleDemo/", "emitter");
-	Renderer::FinishLoading();
-	for (Object* o:Renderer::objects)
+	wiRenderer::LoadModel("EmitterParticleDemo/", "emitter");
+	wiRenderer::FinishLoading();
+	for (Object* o:wiRenderer::objects)
 		o->translation_rest.y = 2.2f;
 }
 void EmittedParticleDemo::Update(){
-	Renderer::Update();
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
+	wiRenderer::Update();
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
 void EmittedParticleDemo::Render(){
-	renderTarget.Activate(Renderer::immediateContext, 0, 0, 0, 1);
+	renderTarget.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
 	{
-		Renderer::UpdatePerFrameCB(Renderer::immediateContext);
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_NONE
+		wiRenderer::UpdatePerFrameCB(wiRenderer::immediateContext);
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_NONE
 			, nullptr, true);
 	}
 
-	renderTargetLinearDepth.Activate(Renderer::immediateContext); {
+	renderTargetLinearDepth.Activate(wiRenderer::immediateContext); {
 		ImageEffects fx;
 		fx.blendFlag = BLENDMODE_OPAQUE;
 		fx.sampleFlag = SAMPLEMODE_CLAMP;
 		fx.quality = QUALITY_NEAREST;
 		fx.process.setLinDepth(true);
-		Image::BatchBegin();
-		Image::Draw(renderTarget.depth->shaderResource, fx);
+		wiImage::BatchBegin();
+		wiImage::Draw(renderTarget.depth->shaderResource, fx);
 	}
 
-	renderTargetParticle.Activate(Renderer::immediateContext, 0, 0, 0, 0);
-	Renderer::DrawSoftParticles(Renderer::cam->Eye, Renderer::cam->View, Renderer::immediateContext
+	renderTargetParticle.Activate(wiRenderer::immediateContext, 0, 0, 0, 0);
+	wiRenderer::DrawSoftParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext
 		, renderTargetLinearDepth.shaderResource.back());
 
-	renderTargetAdditiveParticle.Activate(Renderer::immediateContext, 0, 0, 0, 1);
-	Renderer::DrawSoftPremulParticles(Renderer::cam->Eye, Renderer::cam->View, Renderer::immediateContext
+	renderTargetAdditiveParticle.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
+	wiRenderer::DrawSoftPremulParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext
 		, renderTargetLinearDepth.shaderResource.back());
 }
 void EmittedParticleDemo::Compose(){
 	ImageEffects fx = ImageEffects(screenW, screenH);
-	Image::BatchBegin();
-	Image::Draw(renderTarget.shaderResource.back(), fx);
-	Image::Draw(renderTargetParticle.shaderResource.back(), fx);
+	wiImage::BatchBegin();
+	wiImage::Draw(renderTarget.shaderResource.back(), fx);
+	wiImage::Draw(renderTargetParticle.shaderResource.back(), fx);
 	fx.blendFlag = BLENDMODE_ADDITIVE;
-	Image::Draw(renderTargetAdditiveParticle.shaderResource.back(), fx);
+	wiImage::Draw(renderTargetAdditiveParticle.shaderResource.back(), fx);
 }
 
 
@@ -160,29 +160,29 @@ HairParticleDemo::HairParticleDemo(){
 }
 HairParticleDemo::~HairParticleDemo(){}
 void HairParticleDemo::Start(){
-	Renderer::LoadModel("HairParticleDemo/", "hair");
-	Renderer::FinishLoading();
-	HairParticle::Settings(8, 14, 28);
+	wiRenderer::LoadModel("HairParticleDemo/", "hair");
+	wiRenderer::FinishLoading();
+	wiHairParticle::Settings(8, 14, 28);
 }
 void HairParticleDemo::Update(){
-	Renderer::Update();
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
+	wiRenderer::Update();
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
 void HairParticleDemo::Render(){
-	renderTarget.Activate(Renderer::immediateContext, 0, 0, 0, 1);
+	renderTarget.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
 	{
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_NONE
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_NONE
 			, nullptr, true);
 	}
 }
 void HairParticleDemo::Compose(){
 	ImageEffects fx = ImageEffects(screenW, screenH);
-	Image::BatchBegin();
-	Image::Draw(renderTarget.shaderResource.back(), fx);
+	wiImage::BatchBegin();
+	wiImage::Draw(renderTarget.shaderResource.back(), fx);
 }
 
 
@@ -191,29 +191,29 @@ RigidBodyDemo::RigidBodyDemo(){
 }
 RigidBodyDemo::~RigidBodyDemo(){}
 void RigidBodyDemo::Start(){
-	Renderer::LoadModel("RigidBodyDemo/", "rigidScene");
-	Renderer::FinishLoading();
+	wiRenderer::LoadModel("RigidBodyDemo/", "rigidScene");
+	wiRenderer::FinishLoading();
 }
 void RigidBodyDemo::Update(){
-	Renderer::Update();
-	Renderer::SychronizeWithPhysicsEngine();
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
+	wiRenderer::Update();
+	wiRenderer::SychronizeWithPhysicsEngine();
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
 void RigidBodyDemo::Render(){
-	renderTarget.Activate(Renderer::immediateContext, 0, 0, 0, 1);
+	renderTarget.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
 	{
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_FORWARD_SIMPLE
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
 	}
 }
 void RigidBodyDemo::Compose(){
 	ImageEffects fx = ImageEffects(screenW, screenH);
-	Image::BatchBegin();
-	Image::Draw(renderTarget.shaderResource.back(), fx);
+	wiImage::BatchBegin();
+	wiImage::Draw(renderTarget.shaderResource.back(), fx);
 }
 
 
@@ -222,30 +222,30 @@ SoftBodyDemo::SoftBodyDemo(){
 }
 SoftBodyDemo::~SoftBodyDemo(){}
 void SoftBodyDemo::Start(){
-	Renderer::LoadModel("SoftBodyDemo/", "flag");
-	Renderer::FinishLoading();
+	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
+	wiRenderer::FinishLoading();
 }
 void SoftBodyDemo::Update(){
-	Renderer::Update();
-	Renderer::SychronizeWithPhysicsEngine();
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
-	Renderer::UpdateSkinnedVB();
+	wiRenderer::Update();
+	wiRenderer::SychronizeWithPhysicsEngine();
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
+	wiRenderer::UpdateSkinnedVB();
 }
 void SoftBodyDemo::Render(){
-	renderTarget.Activate(Renderer::immediateContext, 0, 0, 0, 1);
+	renderTarget.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
 	{
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_FORWARD_SIMPLE
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
 	}
 }
 void SoftBodyDemo::Compose(){
 	ImageEffects fx = ImageEffects(screenW, screenH);
-	Image::BatchBegin();
-	Image::Draw(renderTarget.shaderResource.back(), fx);
+	wiImage::BatchBegin();
+	wiImage::Draw(renderTarget.shaderResource.back(), fx);
 }
 
 
@@ -314,7 +314,7 @@ DeferredDemo::DeferredDemo() :ssao(true), ssr(true){
 		,screenH
 		, 1, false, 1, 0, DXGI_FORMAT_R8G8B8A8_SNORM
 		); 
-	rtWaterRipple.Activate(Renderer::immediateContext, 0, 0, 0, 0);
+	rtWaterRipple.Activate(wiRenderer::immediateContext, 0, 0, 0, 0);
 	rtTransparent.Initialize(
 		screenW, screenH
 		, 1, false, 1, 0, DXGI_FORMAT_R16G16B16A16_FLOAT
@@ -350,16 +350,16 @@ DeferredDemo::DeferredDemo() :ssao(true), ssr(true){
 		screenW*ssaoQuality,screenH*ssaoQuality
 		, 1, false, 1, 0, DXGI_FORMAT_R8_UNORM
 		);
-	rtSSAO.back().Activate(Renderer::immediateContext, 1, 1, 1, 1);
+	rtSSAO.back().Activate(wiRenderer::immediateContext, 1, 1, 1, 1);
 
 }
 DeferredDemo::~DeferredDemo(){}
 void DeferredDemo::Update(){
-	Renderer::Update();
-	Renderer::UpdateLights();
-	Renderer::SychronizeWithPhysicsEngine();
-	Renderer::UpdateRenderInfo(Renderer::immediateContext);
-	Renderer::UpdateSkinnedVB();
+	wiRenderer::Update();
+	wiRenderer::UpdateLights();
+	wiRenderer::SychronizeWithPhysicsEngine();
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
+	wiRenderer::UpdateSkinnedVB();
 }
 void DeferredDemo::Render(){
 	RenderReflections();
@@ -374,142 +374,142 @@ void DeferredDemo::Compose(){
 
 	RenderColorGradedComposition();
 
-	Image::BatchBegin();
+	wiImage::BatchBegin();
 	ImageEffects fx = ImageEffects(0, 0, 200, 200);
 	fx.blendFlag = BLENDMODE_OPAQUE;
 	fx.mipLevel = 4.5f;
-	Image::Draw(rtBloom.back().shaderResource[0], fx);
+	wiImage::Draw(rtBloom.back().shaderResource[0], fx);
 }
 
 void DeferredDemo::RenderReflections(){
 	static const XMFLOAT4 waterPlane = XMFLOAT4(0, 1, 0, 0);
 
-	rtReflection.Activate(Renderer::immediateContext); {
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->refView, Renderer::cam->View, Renderer::cam->Projection, Renderer::cam->refEye, waterPlane);
-		Renderer::DrawWorld(Renderer::cam->refView, false, 0, Renderer::immediateContext
-			, false, Renderer::SHADED_NONE
+	rtReflection.Activate(wiRenderer::immediateContext); {
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->refView, wiRenderer::cam->View, wiRenderer::cam->Projection, wiRenderer::cam->refEye, waterPlane);
+		wiRenderer::DrawWorld(wiRenderer::cam->refView, false, 0, wiRenderer::immediateContext
+			, false, wiRenderer::SHADED_NONE
 			, nullptr, false, 1);
-		Renderer::DrawSky(Renderer::cam->refEye, Renderer::immediateContext);
+		wiRenderer::DrawSky(wiRenderer::cam->refEye, wiRenderer::immediateContext);
 	}
 }
 void DeferredDemo::RenderShadows(){
-	Renderer::ClearShadowMaps(Renderer::immediateContext);
-	Renderer::DrawForShadowMap(Renderer::immediateContext);
+	wiRenderer::ClearShadowMaps(wiRenderer::immediateContext);
+	wiRenderer::DrawForShadowMap(wiRenderer::immediateContext);
 }
 void DeferredDemo::RenderScene(){
 	static const int tessellationQuality = 0;
 
-	Renderer::UpdatePerFrameCB(Renderer::immediateContext);
+	wiRenderer::UpdatePerFrameCB(wiRenderer::immediateContext);
 	ImageEffects fx(screenW, screenH);
 
-	rtGBuffer.Activate(Renderer::immediateContext); {
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, tessellationQuality);
-		Renderer::UpdatePerViewCB(Renderer::immediateContext, Renderer::cam->View, Renderer::cam->refView, Renderer::cam->Projection, Renderer::cam->Eye);
+	rtGBuffer.Activate(wiRenderer::immediateContext); {
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, tessellationQuality);
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye);
 
 
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawWorld(Renderer::cam->View, Renderer::DX11, tessellationQuality, Renderer::immediateContext, false
-			, Renderer::SHADED_DEFERRED, rtReflection.shaderResource.front(), true, 2);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::cam->View, wiRenderer::DX11, tessellationQuality, wiRenderer::immediateContext, false
+			, wiRenderer::SHADED_DEFERRED, rtReflection.shaderResource.front(), true, 2);
 
 
 	}
 
-	rtLensFlare.Activate(Renderer::immediateContext);
-	if (!Renderer::GetRasterizer())
-		Renderer::DrawLensFlares(Renderer::immediateContext, rtGBuffer.depth->shaderResource, screenW, screenH);
+	rtLensFlare.Activate(wiRenderer::immediateContext);
+	if (!wiRenderer::GetRasterizer())
+		wiRenderer::DrawLensFlares(wiRenderer::immediateContext, rtGBuffer.depth->shaderResource, screenW, screenH);
 
-	rtLinearDepth.Activate(Renderer::immediateContext); {
-		Image::BatchBegin(Renderer::immediateContext);
+	rtLinearDepth.Activate(wiRenderer::immediateContext); {
+		wiImage::BatchBegin(wiRenderer::immediateContext);
 		fx.blendFlag = BLENDMODE_OPAQUE;
 		fx.sampleFlag = SAMPLEMODE_CLAMP;
 		fx.quality = QUALITY_NEAREST;
 		fx.process.setLinDepth(true);
-		Image::Draw(rtGBuffer.depth->shaderResource, fx, Renderer::immediateContext);
+		wiImage::Draw(rtGBuffer.depth->shaderResource, fx, wiRenderer::immediateContext);
 		fx.process.clear();
 	}
-	dtDepthCopy.CopyFrom(*rtGBuffer.depth, Renderer::immediateContext);
+	dtDepthCopy.CopyFrom(*rtGBuffer.depth, wiRenderer::immediateContext);
 
-	rtGBuffer.Set(Renderer::immediateContext); {
-		Renderer::DrawDecals(Renderer::cam->View, Renderer::immediateContext, dtDepthCopy.shaderResource);
+	rtGBuffer.Set(wiRenderer::immediateContext); {
+		wiRenderer::DrawDecals(wiRenderer::cam->View, wiRenderer::immediateContext, dtDepthCopy.shaderResource);
 	}
 
-	rtLight.Activate(Renderer::immediateContext, rtGBuffer.depth); {
-		Renderer::DrawLights(Renderer::cam->View, Renderer::immediateContext,
+	rtLight.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
+		wiRenderer::DrawLights(wiRenderer::cam->View, wiRenderer::immediateContext,
 			dtDepthCopy.shaderResource, rtGBuffer.shaderResource[1], rtGBuffer.shaderResource[2]);
 	}
 
-	rtVolumeLight.Activate(Renderer::immediateContext, rtGBuffer.depth);
-	Renderer::DrawVolumeLights(Renderer::cam->View, Renderer::immediateContext);
+	rtVolumeLight.Activate(wiRenderer::immediateContext, rtGBuffer.depth);
+	wiRenderer::DrawVolumeLights(wiRenderer::cam->View, wiRenderer::immediateContext);
 
 
 
 	if (ssao){
-		Image::BatchBegin(Renderer::immediateContext, STENCILREF_DEFAULT);
-		rtSSAO[0].Activate(Renderer::immediateContext); {
+		wiImage::BatchBegin(wiRenderer::immediateContext, STENCILREF_DEFAULT);
+		rtSSAO[0].Activate(wiRenderer::immediateContext); {
 			fx.process.setSSAO(true);
 			fx.setDepthMap(rtLinearDepth.shaderResource.back());
 			fx.setNormalMap(rtGBuffer.shaderResource[1]);
-			fx.setMaskMap((ID3D11ShaderResourceView*)ResourceManager::add("images/noise.png"));
+			fx.setMaskMap((ID3D11ShaderResourceView*)wiResourceManager::add("images/noise.png"));
 			//fx.sampleFlag=SAMPLEMODE_CLAMP;
 			fx.quality = QUALITY_BILINEAR;
 			fx.sampleFlag = SAMPLEMODE_MIRROR;
-			Image::Draw(nullptr, fx, Renderer::immediateContext);
+			wiImage::Draw(nullptr, fx, wiRenderer::immediateContext);
 			//fx.sampleFlag=SAMPLEMODE_CLAMP;
 			fx.process.clear();
 		}
 		static const float ssaoBlur = 2.f;
-		rtSSAO[1].Activate(Renderer::immediateContext); {
+		rtSSAO[1].Activate(wiRenderer::immediateContext); {
 			fx.blur = ssaoBlur;
 			fx.blurDir = 0;
 			fx.blendFlag = BLENDMODE_OPAQUE;
-			Image::Draw(rtSSAO[0].shaderResource.back(), fx, Renderer::immediateContext);
+			wiImage::Draw(rtSSAO[0].shaderResource.back(), fx, wiRenderer::immediateContext);
 		}
-		rtSSAO[2].Activate(Renderer::immediateContext); {
+		rtSSAO[2].Activate(wiRenderer::immediateContext); {
 			fx.blur = ssaoBlur;
 			fx.blurDir = 1;
 			fx.blendFlag = BLENDMODE_OPAQUE;
-			Image::Draw(rtSSAO[1].shaderResource.back(), fx, Renderer::immediateContext);
+			wiImage::Draw(rtSSAO[1].shaderResource.back(), fx, wiRenderer::immediateContext);
 			fx.blur = 0;
 		}
 	}
 
 
-	rtDeferred.Activate(Renderer::immediateContext, rtGBuffer.depth); {
-		Image::DrawDeferred(rtGBuffer.shaderResource[0]
+	rtDeferred.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
+		wiImage::DrawDeferred(rtGBuffer.shaderResource[0]
 			, rtLinearDepth.shaderResource.back(), rtLight.shaderResource.front(), rtGBuffer.shaderResource[1]
-			, rtSSAO.back().shaderResource.back(), Renderer::immediateContext, STENCILREF_DEFAULT);
-		Renderer::DrawSky(Renderer::cam->Eye, Renderer::immediateContext);
+			, rtSSAO.back().shaderResource.back(), wiRenderer::immediateContext, STENCILREF_DEFAULT);
+		wiRenderer::DrawSky(wiRenderer::cam->Eye, wiRenderer::immediateContext);
 	}
 
 
 	if (ssr){
-		rtSSR.Activate(Renderer::immediateContext); {
-			Image::BatchBegin(Renderer::immediateContext);
-			Renderer::immediateContext->GenerateMips(rtDeferred.shaderResource[0]);
+		rtSSR.Activate(wiRenderer::immediateContext); {
+			wiImage::BatchBegin(wiRenderer::immediateContext);
+			wiRenderer::immediateContext->GenerateMips(rtDeferred.shaderResource[0]);
 			fx.process.setSSR(true);
 			fx.setDepthMap(dtDepthCopy.shaderResource);
 			fx.setNormalMap(rtGBuffer.shaderResource[1]);
 			fx.setVelocityMap(rtGBuffer.shaderResource[2]);
 			fx.setMaskMap(rtLinearDepth.shaderResource.front());
-			Image::Draw(rtDeferred.shaderResource.front(), fx, Renderer::immediateContext);
+			wiImage::Draw(rtDeferred.shaderResource.front(), fx, wiRenderer::immediateContext);
 			fx.process.clear();
 		}
 	}
 
 
-	rtParticle.Activate(Renderer::immediateContext, 0, 0, 0, 0);  //OFFSCREEN RENDER ALPHAPARTICLES
-	Renderer::DrawSoftParticles(Renderer::cam->Eye, Renderer::cam->View, Renderer::immediateContext, rtLinearDepth.shaderResource.back());
-	rtParticleAdditive.Activate(Renderer::immediateContext, 0, 0, 0, 1);  //OFFSCREEN RENDER ADDITIVEPARTICLES
-	Renderer::DrawSoftPremulParticles(Renderer::cam->Eye, Renderer::cam->View, Renderer::immediateContext, rtLinearDepth.shaderResource.back());
-	rtWater.Activate(Renderer::immediateContext, rtGBuffer.depth); {
-		Renderer::DrawWorldWater(Renderer::cam->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
-			, rtWaterRipple.shaderResource.back(), Renderer::immediateContext, 2);
+	rtParticle.Activate(wiRenderer::immediateContext, 0, 0, 0, 0);  //OFFSCREEN RENDER ALPHAPARTICLES
+	wiRenderer::DrawSoftParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext, rtLinearDepth.shaderResource.back());
+	rtParticleAdditive.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);  //OFFSCREEN RENDER ADDITIVEPARTICLES
+	wiRenderer::DrawSoftPremulParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext, rtLinearDepth.shaderResource.back());
+	rtWater.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
+		wiRenderer::DrawWorldWater(wiRenderer::cam->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
+			, rtWaterRipple.shaderResource.back(), wiRenderer::immediateContext, 2);
 	}
-	rtTransparent.Activate(Renderer::immediateContext, rtGBuffer.depth); {
-		Renderer::DrawWorldTransparent(Renderer::cam->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
-			, Renderer::immediateContext, 2);
+	rtTransparent.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
+		wiRenderer::DrawWorldTransparent(wiRenderer::cam->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
+			, wiRenderer::immediateContext, 2);
 	}
 }
 void DeferredDemo::RenderBloom(){
@@ -518,167 +518,167 @@ void DeferredDemo::RenderBloom(){
 
 	ImageEffects fx(screenW, screenH);
 
-	Image::BatchBegin();
+	wiImage::BatchBegin();
 
-	rtBloom[0].Activate(Renderer::immediateContext); 
+	rtBloom[0].Activate(wiRenderer::immediateContext); 
 	{
 		fx.bloom.separate = true;
 		fx.blendFlag = BLENDMODE_OPAQUE;
 		fx.sampleFlag = SAMPLEMODE_CLAMP;
-		Image::Draw(rtFinal[0].shaderResource.front(), fx);
+		wiImage::Draw(rtFinal[0].shaderResource.front(), fx);
 	}
 
 
-	rtBloom[1].Activate(Renderer::immediateContext); //horizontal
+	rtBloom[1].Activate(wiRenderer::immediateContext); //horizontal
 	{
-		Renderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
+		wiRenderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
 		fx.mipLevel = 5.32f;
 		fx.blur = bloomStren;
 		fx.blurDir = 0;
 		fx.blendFlag = BLENDMODE_OPAQUE;
-		Image::Draw(rtBloom[0].shaderResource.back(), fx);
+		wiImage::Draw(rtBloom[0].shaderResource.back(), fx);
 	}
-	rtBloom[2].Activate(Renderer::immediateContext); //vertical
+	rtBloom[2].Activate(wiRenderer::immediateContext); //vertical
 	{
-		Renderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
+		wiRenderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
 		fx.blur = bloomStren;
 		fx.blurDir = 1;
 		fx.blendFlag = BLENDMODE_OPAQUE;
-		Image::Draw(rtBloom[1].shaderResource.back(), fx);
+		wiImage::Draw(rtBloom[1].shaderResource.back(), fx);
 	}
 
 
 	//if (rtBloom.size()>2){
 	//	for (int i = 0; i<rtBloom.size() - 1; ++i){
-	//		rtBloom[i].Activate(Renderer::immediateContext);
+	//		rtBloom[i].Activate(wiRenderer::immediateContext);
 	//		if (i == 0){
 	//			fx.bloom.separate = true;
 	//			fx.bloom.threshold = bloomThreshold;
 	//			fx.bloom.saturation = bloomSaturation;
 	//			fx.blendFlag = BLENDMODE_OPAQUE;
 	//			fx.sampleFlag = SAMPLEMODE_CLAMP;
-	//			Image::Draw(rtFinal[0].shaderResource.front(), fx);
+	//			wiImage::Draw(rtFinal[0].shaderResource.front(), fx);
 	//		}
 	//		else { //horizontal blurs
 	//			if (i == 1)
 	//			{
-	//				Renderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
+	//				wiRenderer::immediateContext->GenerateMips(rtBloom[0].shaderResource[0]);
 	//			}
 	//			fx.mipLevel = 4;
 	//			fx.blur = bloomStren;
 	//			fx.blurDir = 0;
 	//			fx.blendFlag = BLENDMODE_OPAQUE;
-	//			Image::Draw(rtBloom[i - 1].shaderResource.back(), fx);
+	//			wiImage::Draw(rtBloom[i - 1].shaderResource.back(), fx);
 	//		}
 	//	}
 
-	//	rtBloom.back().Activate(Renderer::immediateContext);
+	//	rtBloom.back().Activate(wiRenderer::immediateContext);
 	//	//vertical blur
 	//	fx.blur = bloomStren;
 	//	fx.blurDir = 1;
 	//	fx.blendFlag = BLENDMODE_OPAQUE;
-	//	Image::Draw(rtBloom[rtBloom.size() - 2].shaderResource.back(), fx);
+	//	wiImage::Draw(rtBloom[rtBloom.size() - 2].shaderResource.back(), fx);
 	//}
 }
 void DeferredDemo::RenderLightShafts(){
 	ImageEffects fx(screenW, screenH);
 
 
-	rtSun[0].Activate(Renderer::immediateContext, rtGBuffer.depth); {
-		Renderer::UpdatePerRenderCB(Renderer::immediateContext, 0);
-		Renderer::UpdatePerEffectCB(Renderer::immediateContext, XMFLOAT4(1, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		Renderer::DrawSky(Renderer::cam->Eye, Renderer::immediateContext);
+	rtSun[0].Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
+		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
+		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(1, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawSky(wiRenderer::cam->Eye, wiRenderer::immediateContext);
 	}
 
-	Image::BatchBegin();
-	rtSun[1].Activate(Renderer::immediateContext); {
+	wiImage::BatchBegin();
+	rtSun[1].Activate(wiRenderer::immediateContext); {
 		ImageEffects fxs = fx;
 		fxs.blendFlag = BLENDMODE_ADDITIVE;
-		XMVECTOR sunPos = XMVector3Project(Renderer::GetSunPosition() * 100000, 0, 0, screenW, screenH, 0.1f, 1.0f, Renderer::cam->Projection, Renderer::cam->View, XMMatrixIdentity());
+		XMVECTOR sunPos = XMVector3Project(wiRenderer::GetSunPosition() * 100000, 0, 0, screenW, screenH, 0.1f, 1.0f, wiRenderer::cam->Projection, wiRenderer::cam->View, XMMatrixIdentity());
 		{
 			XMStoreFloat2(&fxs.sunPos, sunPos);
-			Image::Draw(rtSun[0].shaderResource.back(), fxs, Renderer::immediateContext);
+			wiImage::Draw(rtSun[0].shaderResource.back(), fxs, wiRenderer::immediateContext);
 		}
 	}
 }
 void DeferredDemo::RenderComposition1(){
 	ImageEffects fx(screenW, screenH);
-	Image::BatchBegin();
+	wiImage::BatchBegin();
 
-	rtFinal[0].Activate(Renderer::immediateContext);
+	rtFinal[0].Activate(wiRenderer::immediateContext);
 
 	fx.blendFlag = BLENDMODE_OPAQUE;
-	Image::Draw(rtDeferred.shaderResource.back(), fx);
+	wiImage::Draw(rtDeferred.shaderResource.back(), fx);
 
 	fx.blendFlag = BLENDMODE_ALPHA;
 	if (ssr){
-		Image::Draw(rtSSR.shaderResource.back(), fx);
+		wiImage::Draw(rtSSR.shaderResource.back(), fx);
 	}
-	Image::Draw(rtWater.shaderResource.back(), fx);
-	Image::Draw(rtTransparent.shaderResource.back(), fx);
-	Image::Draw(rtParticle.shaderResource.back(), fx);
+	wiImage::Draw(rtWater.shaderResource.back(), fx);
+	wiImage::Draw(rtTransparent.shaderResource.back(), fx);
+	wiImage::Draw(rtParticle.shaderResource.back(), fx);
 
 	fx.blendFlag = BLENDMODE_ADDITIVE;
-	Image::Draw(rtVolumeLight.shaderResource.back(), fx);
-	Image::Draw(rtParticleAdditive.shaderResource.back(), fx);
-	Image::Draw(rtLensFlare.shaderResource.back(), fx);
+	wiImage::Draw(rtVolumeLight.shaderResource.back(), fx);
+	wiImage::Draw(rtParticleAdditive.shaderResource.back(), fx);
+	wiImage::Draw(rtLensFlare.shaderResource.back(), fx);
 }
 void DeferredDemo::RenderComposition2(){
 	ImageEffects fx(screenW, screenH);
-	Image::BatchBegin();
+	wiImage::BatchBegin();
 
-	rtFinal[1].Activate(Renderer::immediateContext);
+	rtFinal[1].Activate(wiRenderer::immediateContext);
 
 	fx.blendFlag = BLENDMODE_OPAQUE;
 	fx.process.setFXAA(true);
-	Image::Draw(rtFinal[0].shaderResource.back(), fx);
+	wiImage::Draw(rtFinal[0].shaderResource.back(), fx);
 	fx.process.clear();
 
 	fx.blendFlag = BLENDMODE_ADDITIVE;
-	Image::Draw(rtBloom.back().shaderResource.back(), fx);
-	Image::Draw(rtSun.back().shaderResource.back(), fx);
+	wiImage::Draw(rtBloom.back().shaderResource.back(), fx);
+	wiImage::Draw(rtSun.back().shaderResource.back(), fx);
 }
 void DeferredDemo::RenderColorGradedComposition(){
 
 	ImageEffects fx(screenW, screenH);
-	Image::BatchBegin();
+	wiImage::BatchBegin();
 
-	if (Renderer::GetColorGrading()){
+	if (wiRenderer::GetColorGrading()){
 		fx.process.setColorGrade(true);
-		fx.setMaskMap(Renderer::GetColorGrading());
+		fx.setMaskMap(wiRenderer::GetColorGrading());
 	}
-	Image::Draw(rtFinal[1].shaderResource.back(), fx);
+	wiImage::Draw(rtFinal[1].shaderResource.back(), fx);
 }
 
 
 void DeferredLightDemo::Start(){
-	Renderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
-	Renderer::FinishLoading();
-	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/lightBenchmark/env.dds"));
-	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
-	HairParticle::Settings(20, 50, 200);
+	wiRenderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
+	wiRenderer::FinishLoading();
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
+	wiHairParticle::Settings(20, 50, 200);
 }
 
 void DeferredSceneDemo::Start(){
-	Renderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
-	Renderer::FinishLoading();
-	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
-	HairParticle::Settings(20, 50, 200);
+	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
+	wiRenderer::FinishLoading();
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiHairParticle::Settings(20, 50, 200);
 }
 
 void SSRTestDemo::Start(){
-	Renderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
-	Renderer::FinishLoading();
-	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
-	HairParticle::Settings(20, 50, 200);
+	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
+	wiRenderer::FinishLoading();
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiHairParticle::Settings(20, 50, 200);
 }
 
 void SoftBodyDeferredDemo::Start(){
-	Renderer::LoadModel("SoftBodyDemo/", "flag");
-	Renderer::FinishLoading();
-	Renderer::SetEnviromentMap((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	Renderer::SetColorGrading((Renderer::TextureView)ResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
-	HairParticle::Settings(20, 50, 200);
+	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
+	wiRenderer::FinishLoading();
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiHairParticle::Settings(20, 50, 200);
 }

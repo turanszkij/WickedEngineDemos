@@ -42,39 +42,39 @@ void BasicModelInit();
 void EmitterParticleInit();
 
 void LoadProgram(){
-	Renderer::SetUpStaticComponents();
-	Renderer::VSYNC = false;
-	Renderer::EMITTERSENABLED = true;
-	Renderer::HAIRPARTICLEENABLED = true;
-	Renderer::setRenderResolution(screenW, screenH);
-	Renderer::SHADOWMAPRES = 1024;
-	Renderer::POINTLIGHTSHADOW = 6;
-	Renderer::POINTLIGHTSHADOWRES = 512;
-	Renderer::SOFTSHADOW = 2;
-	Renderer::DX11 = false;
-	Renderer::physicsEngine = new BULLET();
+	wiRenderer::SetUpStaticComponents();
+	wiRenderer::VSYNC = false;
+	wiRenderer::EMITTERSENABLED = true;
+	wiRenderer::HAIRPARTICLEENABLED = true;
+	wiRenderer::setRenderResolution(screenW, screenH);
+	wiRenderer::SHADOWMAPRES = 1024;
+	wiRenderer::POINTLIGHTSHADOW = 6;
+	wiRenderer::POINTLIGHTSHADOWRES = 512;
+	wiRenderer::SOFTSHADOW = 2;
+	wiRenderer::DX11 = false;
+	wiRenderer::physicsEngine = new BULLET();
 
-	Image::Load();
-	Image::SetScreenResolution(screenW, screenH);
-	ResourceManager::SetUp();
-	BackLog::Initialize(screenW, screenH);
-	Font::SetUpStaticComponents();
-	Font::SetScreenResolution(screenW, screenH);
-	SoundEffect::Initialize();
-	Music::Initialize(); 
-	FrameRate::Initialize();
-	CpuInfo::Initialize();
-	FrameRate::Initialize();
-	LensFlare::Initialize(screenW,screenH);
+	wiImage::Load();
+	wiImage::SetScreenResolution(screenW, screenH);
+	wiResourceManager::SetUp();
+	wiBackLog::Initialize(screenW, screenH);
+	wiFont::SetUpStaticComponents();
+	wiFont::SetScreenResolution(screenW, screenH);
+	wiSoundEffect::Initialize();
+	wiMusic::Initialize();
+	wiFrameRate::Initialize();
+	wiCpuInfo::Initialize();
+	wiFrameRate::Initialize();
+	wiLensFlare::Initialize(screenW,screenH);
 
-	Font::addFontStyle("basic");
-	InputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
+	wiFont::addFontStyle("basic");
+	wiInputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
 
-	ResourceManager::add("HelloWorld/HelloWorld.png");
-	ResourceManager::add("sound/change.wav",ResourceManager::SOUND);
-	SoundEffect::SetVolume(0.5f);
+	wiResourceManager::add("HelloWorld/HelloWorld.png");
+	wiResourceManager::add("sound/change.wav",wiResourceManager::SOUND);
+	wiSoundEffect::SetVolume(0.5f);
 
-	Renderer::cam->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
+	wiRenderer::cam->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
 
 	WiDemo::screenW = screenW;
 	WiDemo::screenH = screenH;
@@ -92,17 +92,17 @@ void LoadProgram(){
 }
 void CleanUpProgram(){
 
-	Renderer::CleanUpStatic();
-	Image::CleanUp();
-	Font::CleanUpStatic();
-	ResourceManager::CleanUp();
-	InputManager::CleanUp();
-	LensFlare::CleanUp();
-	Renderer::DestroyDevice();
+	wiRenderer::CleanUpStatic();
+	wiImage::CleanUp();
+	wiFont::CleanUpStatic();
+	wiResourceManager::CleanUp();
+	wiInputManager::CleanUp();
+	wiLensFlare::CleanUp();
+	wiRenderer::DestroyDevice();
 }
 void CameraControl(){
-	DirectInput* dinput = InputManager::dinput;
-	Camera* cam = Renderer::cam;
+	DirectInput* dinput = wiInputManager::dinput;
+	Camera* cam = wiRenderer::cam;
 	float speed = (dinput->IsKeyDown(DIK_LSHIFT) ? 10.0f : 1.0f);
 	if (dinput->IsKeyDown(DIK_A)) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
 	if (dinput->IsKeyDown(DIK_D)) cam->AddtoCameraPosition(XMVectorSet(speed, 0, 0, 0));
@@ -113,7 +113,7 @@ void CameraControl(){
 	cam->ProcessInput(1.0f / 60.0f, mousebuttondown);
 }
 void CameraReset(){
-	Renderer::cam->Reset();
+	wiRenderer::cam->Reset();
 }
 
 
@@ -121,10 +121,10 @@ void ChangeDemo(DEMOS newDemo){
 
 	CameraReset();
 
-	static_cast<SoundEffect*>(ResourceManager::get("sound/change.wav")->data)->Play();
+	static_cast<wiSoundEffect*>(wiResourceManager::get("sound/change.wav")->data)->Play();
 
 	if (demos.find(newDemo) != demos.end()){
-		Renderer::CleanUpStaticTemp();
+		wiRenderer::CleanUpStaticTemp();
 		demos[newDemo]->Start();
 		demoScene = newDemo;
 	}
@@ -151,12 +151,12 @@ void HudRender(){
 	ss << "\n[0] :  SSRTest";
 	ss << "\n[F1] : SoftBody Deferred";
 	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB";
-	Font::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
+	wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
 	ss.str("");
 	ss.precision(1);
-	ss <<fixed<<FrameRate::FPS()<< " FPS";
-	ss << "\nCPU: " << CpuInfo::GetCpuPercentage()<< "%";
-	Font::Draw(ss.str(), "basic", XMFLOAT4(screenW-15, 0, -5, -4), "right", "top");
+	ss <<fixed<<wiFrameRate::FPS()<< " FPS";
+	ss << "\nCPU: " << wiCpuInfo::GetCpuPercentage()<< "%";
+	wiFont::Draw(ss.str(), "basic", XMFLOAT4(screenW-15, 0, -5, -4), "right", "top");
 	ss.str("");
 	switch (demoScene)
 	{
@@ -191,7 +191,7 @@ void HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	Font::Draw(ss.str(), "basic", XMFLOAT4(screenW/2, -screenH, -5, -4), "center", "bottom");
+	wiFont::Draw(ss.str(), "basic", XMFLOAT4(screenW/2, -screenH, -5, -4), "center", "bottom");
 }
 
 
@@ -226,7 +226,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	screenH = rect.bottom - rect.top;
 
 	short requestMultiThreading = 0;
-	if (FAILED(Renderer::InitDevice(g_hWnd, screenW, screenH, 1, requestMultiThreading)))
+	if (FAILED(wiRenderer::InitDevice(g_hWnd, screenW, screenH, 1, requestMultiThreading)))
 	{
 		MessageBox(NULL, L"Could not initialize the D3D device", L"Error", MB_OK);
 		return 0;
@@ -259,41 +259,41 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			while (accumulator >= dt)
 			{
 
-				InputManager::Update();
+				wiInputManager::Update();
 				CameraControl();
-				CpuInfo::Frame();
+				wiCpuInfo::Frame();
 
-				if (InputManager::press(DIK_1)){
+				if (wiInputManager::press(DIK_1)){
 					ChangeDemo(HELLOWORLD);
 				}
-				else if (InputManager::press(DIK_2)){
+				else if (wiInputManager::press(DIK_2)){
 					ChangeDemo(BASICMODEL);
 				}
-				else if (InputManager::press(DIK_3)){
+				else if (wiInputManager::press(DIK_3)){
 					ChangeDemo(SKINNEDMODEL);
 				}
-				else if (InputManager::press(DIK_4)){
+				else if (wiInputManager::press(DIK_4)){
 					ChangeDemo(EMITTERPARTICLE);
 				}
-				else if (InputManager::press(DIK_5)){
+				else if (wiInputManager::press(DIK_5)){
 					ChangeDemo(HAIRPARTICLE);
 				}
-				else if (InputManager::press(DIK_6)){
+				else if (wiInputManager::press(DIK_6)){
 					ChangeDemo(RIGIDBODY);
 				}
-				else if (InputManager::press(DIK_7)){
+				else if (wiInputManager::press(DIK_7)){
 					ChangeDemo(SOFTBODY);
 				}
-				else if (InputManager::press(DIK_8)){
+				else if (wiInputManager::press(DIK_8)){
 					ChangeDemo(DEFERREDLIGHTS);
 				}
-				else if (InputManager::press(DIK_9)){
+				else if (wiInputManager::press(DIK_9)){
 					ChangeDemo(DEFERREDSCENE);
 				}
-				else if (InputManager::press(DIK_0)){
+				else if (wiInputManager::press(DIK_0)){
 					ChangeDemo(SSRTEST);
 				}
-				else if (InputManager::press(DIK_F1)){
+				else if (wiInputManager::press(DIK_F1)){
 					ChangeDemo(SOFTBODY_DEFERRED);
 				}
 
@@ -308,7 +308,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 			//Render demo
 			demos[demoScene]->Render();
-			Renderer::Present(bind(&WiDemo::Compose,demos[demoScene]), bind(HudRender));
+			wiRenderer::Present(bind(&WiDemo::Compose,demos[demoScene]), bind(HudRender));
 		}
 	}
 
