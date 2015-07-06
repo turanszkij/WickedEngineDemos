@@ -1,22 +1,7 @@
 #pragma once
 #include "WickedEngine.h"
 
-class WiDemo
-{
-private:
-public:
-	static int screenW, screenH;
-
-	virtual void Start() = 0;
-	//Update Demo
-	virtual void Update() = 0;
-	//Render the composition by layers
-	virtual void Render() = 0;
-	//Compose the rendered layers
-	virtual void Compose() = 0;
-};
-
-class HelloWorldDemo : public WiDemo
+class HelloWorldDemo : public RenderableComponent
 {
 private:
 	wiSprite image;
@@ -24,13 +9,11 @@ public:
 	HelloWorldDemo();
 	~HelloWorldDemo();
 
-	void Start();
 	void Update();
-	void Render();
 	void Compose();
 };
 
-class BasicModelDemo : public WiDemo
+class BasicModelDemo : public ForwardRenderableComponent
 {
 private:
 	wiRenderTarget renderTarget;
@@ -39,12 +22,9 @@ public:
 	~BasicModelDemo();
 
 	void Start();
-	void Update();
-	void Render();
-	void Compose();
 };
 
-class SkinnedModelDemo : public WiDemo
+class SkinnedModelDemo : public ForwardRenderableComponent
 {
 private:
 	wiRenderTarget renderTarget;
@@ -53,12 +33,9 @@ public:
 	~SkinnedModelDemo();
 
 	void Start();
-	void Update();
-	void Render();
-	void Compose();
 };
 
-class EmittedParticleDemo : public WiDemo
+class EmittedParticleDemo : public ForwardRenderableComponent
 {
 private:
 	wiRenderTarget renderTarget, renderTargetParticle, renderTargetAdditiveParticle, renderTargetLinearDepth;
@@ -67,12 +44,9 @@ public:
 	~EmittedParticleDemo();
 
 	void Start();
-	void Update();
-	void Render();
-	void Compose();
 };
 
-class HairParticleDemo : public WiDemo
+class HairParticleDemo : public ForwardRenderableComponent
 {
 private:
 	wiRenderTarget renderTarget;
@@ -81,12 +55,9 @@ public:
 	~HairParticleDemo();
 
 	void Start();
-	void Update();
-	void Render();
-	void Compose();
 };
 
-class RigidBodyDemo : public WiDemo
+class RigidBodyDemo : public ForwardRenderableComponent
 {
 private:
 	wiRenderTarget renderTarget;
@@ -95,12 +66,9 @@ public:
 	~RigidBodyDemo();
 
 	void Start();
-	void Update();
-	void Render();
-	void Compose();
 };
 
-class SoftBodyDemo : public WiDemo
+class SoftBodyDemo : public ForwardRenderableComponent
 {
 private:
 	wiRenderTarget renderTarget;
@@ -109,72 +77,33 @@ public:
 	~SoftBodyDemo();
 
 	void Start();
-	void Update();
-	void Render();
-	void Compose();
 };
 
-class DeferredDemo : public WiDemo
-{
-private:
-	wiRenderTarget
-				  rtReflection
-				, rtGBuffer
-				, rtDeferred
-				, rtSSR
-				, rtLight
-				, rtVolumeLight
-				, rtTransparent
-				, rtWater
-				, rtWaterRipple
-				, rtLinearDepth
-				, rtParticle
-				, rtParticleAdditive
-				, rtLensFlare
-				, rtFinal[2]
-			;
-	vector<wiRenderTarget> rtSun, rtBloom, rtSSAO;
-	wiDepthTarget dtDepthCopy;
-
-	void RenderReflections();
-	void RenderShadows();
-	void RenderScene();
-	void RenderBloom();
-	void RenderLightShafts();
-	void RenderComposition1();
-	void RenderComposition2();
-	void RenderColorGradedComposition();
-
-	bool ssr, ssao;
-public:
-	DeferredDemo();
-	~DeferredDemo();
-
-	virtual void Start() = 0;
-	void Update();
-	void Render();
-	void Compose();
-};
-
-class DeferredLightDemo :public DeferredDemo
+class DeferredLightDemo :public DeferredRenderableComponent
 {
 public:
 	void Start();
 };
 
-class DeferredSceneDemo :public DeferredDemo
+class DeferredSceneDemo :public DeferredRenderableComponent
 {
 public:
 	void Start();
 };
 
-class SSRTestDemo :public DeferredDemo
+class ForwardSceneDemo :public ForwardRenderableComponent
 {
 public:
 	void Start();
 };
 
-class SoftBodyDeferredDemo :public DeferredDemo
+class SSRTestDemo :public DeferredRenderableComponent
+{
+public:
+	void Start();
+};
+
+class SoftBodyDeferredDemo :public DeferredRenderableComponent
 {
 public:
 	void Start();

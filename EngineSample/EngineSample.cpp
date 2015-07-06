@@ -27,10 +27,11 @@ enum DEMOS{
 	DEFERREDLIGHTS,
 	SSRTEST,
 	SOFTBODY_DEFERRED,
+	FORWARDSCENE,
 	DEMO_COUNT,
 };
 DEMOS demoScene = HELLOWORLD;
-map<DEMOS, WiDemo*> demos;
+map<DEMOS, RenderableComponent*> demos;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -74,19 +75,20 @@ void LoadProgram(){
 
 	wiRenderer::getCamera()->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
 
-	WiDemo::screenW = screenW;
-	WiDemo::screenH = screenH;
-	demos.insert(pair<DEMOS, WiDemo*>(HELLOWORLD, new HelloWorldDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(BASICMODEL, new BasicModelDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(SKINNEDMODEL, new SkinnedModelDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(EMITTERPARTICLE, new EmittedParticleDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(HAIRPARTICLE, new HairParticleDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(RIGIDBODY, new RigidBodyDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(SOFTBODY, new SoftBodyDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(DEFERREDSCENE, new DeferredSceneDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(DEFERREDLIGHTS, new DeferredLightDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(SSRTEST, new SSRTestDemo()));
-	demos.insert(pair<DEMOS, WiDemo*>(SOFTBODY_DEFERRED, new SoftBodyDeferredDemo()));
+	RenderableComponent::screenW = screenW;
+	RenderableComponent::screenH = screenH;
+	demos.insert(pair<DEMOS, RenderableComponent*>(HELLOWORLD, new HelloWorldDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(BASICMODEL, new BasicModelDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(SKINNEDMODEL, new SkinnedModelDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(EMITTERPARTICLE, new EmittedParticleDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(HAIRPARTICLE, new HairParticleDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(RIGIDBODY, new RigidBodyDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(SOFTBODY, new SoftBodyDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDSCENE, new DeferredSceneDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDLIGHTS, new DeferredLightDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(SSRTEST, new SSRTestDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(SOFTBODY_DEFERRED, new SoftBodyDeferredDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(FORWARDSCENE, new ForwardSceneDemo()));
 }
 void CleanUpProgram(){
 
@@ -148,6 +150,7 @@ void HudRender(){
 	ss << "\n[9] :  DeferredScene";
 	ss << "\n[0] :  SSRTest";
 	ss << "\n[F1] : SoftBody Deferred";
+	ss << "\n[F2] : ForwardScene";
 	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB";
 	wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
 	ss.str("");
@@ -184,6 +187,15 @@ void HudRender(){
 		break;
 	case DEFERREDLIGHTS:
 		ss << "DEFERREDLIGHTS";
+		break;
+	case FORWARDSCENE:
+		ss << "FORWARDSCENE";
+		break;
+	case SOFTBODY_DEFERRED:
+		ss << "SOFTBODY DEFERRED";
+		break;
+	case SSRTEST:
+		ss << "SSRTEST";
 		break;
 	default:
 		break;
@@ -294,6 +306,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 				else if (wiInputManager::press(DIK_F1)){
 					ChangeDemo(SOFTBODY_DEFERRED);
 				}
+				else if (wiInputManager::press(DIK_F2)){
+					ChangeDemo(FORWARDSCENE);
+				}
 
 				demos[demoScene]->Update();
 
@@ -306,7 +321,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 			//Render demo
 			demos[demoScene]->Render();
-			wiRenderer::Present(bind(&WiDemo::Compose,demos[demoScene]), bind(HudRender));
+			wiRenderer::Present(bind(&RenderableComponent::Compose,demos[demoScene]), bind(HudRender));
 		}
 	}
 
