@@ -41,8 +41,8 @@ void BasicModelDemo::Render(){
 	{
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
 	}
@@ -80,11 +80,11 @@ void SkinnedModelDemo::Render(){
 	{
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
-		wiRenderer::DrawDebugLines(wiRenderer::cam->View, wiRenderer::immediateContext);
+		wiRenderer::DrawDebugLines(wiRenderer::getCamera()->View, wiRenderer::immediateContext);
 	}
 }
 void SkinnedModelDemo::Compose(){
@@ -121,8 +121,8 @@ void EmittedParticleDemo::Render(){
 		wiRenderer::UpdatePerFrameCB(wiRenderer::immediateContext);
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_NONE
 			, nullptr, true);
 	}
@@ -138,11 +138,11 @@ void EmittedParticleDemo::Render(){
 	}
 
 	renderTargetParticle.Activate(wiRenderer::immediateContext, 0, 0, 0, 0);
-	wiRenderer::DrawSoftParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext
+	wiRenderer::DrawSoftParticles(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->View, wiRenderer::immediateContext
 		, renderTargetLinearDepth.shaderResource.back());
 
 	renderTargetAdditiveParticle.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);
-	wiRenderer::DrawSoftPremulParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext
+	wiRenderer::DrawSoftPremulParticles(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->View, wiRenderer::immediateContext
 		, renderTargetLinearDepth.shaderResource.back());
 }
 void EmittedParticleDemo::Compose(){
@@ -173,8 +173,8 @@ void HairParticleDemo::Render(){
 	{
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_NONE
 			, nullptr, true);
 	}
@@ -204,8 +204,8 @@ void RigidBodyDemo::Render(){
 	{
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
 	}
@@ -236,8 +236,8 @@ void SoftBodyDemo::Render(){
 	{
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye, XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye, XMFLOAT4(0, 0, 0, 0));
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_FORWARD_SIMPLE
 			, nullptr, true);
 	}
@@ -374,11 +374,6 @@ void DeferredDemo::Compose(){
 
 	RenderColorGradedComposition();
 
-	wiImage::BatchBegin();
-	ImageEffects fx = ImageEffects(0, 0, 200, 200);
-	fx.blendFlag = BLENDMODE_OPAQUE;
-	fx.mipLevel = 4.5f;
-	wiImage::Draw(rtBloom.back().shaderResource[0], fx);
 }
 
 void DeferredDemo::RenderReflections(){
@@ -387,11 +382,11 @@ void DeferredDemo::RenderReflections(){
 	rtReflection.Activate(wiRenderer::immediateContext); {
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->refView, wiRenderer::cam->View, wiRenderer::cam->Projection, wiRenderer::cam->refEye, waterPlane);
-		wiRenderer::DrawWorld(wiRenderer::cam->refView, false, 0, wiRenderer::immediateContext
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->View, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->refEye, waterPlane);
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->refView, false, 0, wiRenderer::immediateContext
 			, false, wiRenderer::SHADED_NONE
 			, nullptr, false, 1);
-		wiRenderer::DrawSky(wiRenderer::cam->refEye, wiRenderer::immediateContext);
+		wiRenderer::DrawSky(wiRenderer::getCamera()->refEye, wiRenderer::immediateContext);
 	}
 }
 void DeferredDemo::RenderShadows(){
@@ -406,11 +401,11 @@ void DeferredDemo::RenderScene(){
 
 	rtGBuffer.Activate(wiRenderer::immediateContext); {
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, tessellationQuality);
-		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::cam->View, wiRenderer::cam->refView, wiRenderer::cam->Projection, wiRenderer::cam->Eye);
+		wiRenderer::UpdatePerViewCB(wiRenderer::immediateContext, wiRenderer::getCamera()->View, wiRenderer::getCamera()->refView, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->Eye);
 
 
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(0, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawWorld(wiRenderer::cam->View, wiRenderer::DX11, tessellationQuality, wiRenderer::immediateContext, false
+		wiRenderer::DrawWorld(wiRenderer::getCamera()->View, wiRenderer::DX11, tessellationQuality, wiRenderer::immediateContext, false
 			, wiRenderer::SHADED_DEFERRED, rtReflection.shaderResource.front(), true, 2);
 
 
@@ -432,16 +427,16 @@ void DeferredDemo::RenderScene(){
 	dtDepthCopy.CopyFrom(*rtGBuffer.depth, wiRenderer::immediateContext);
 
 	rtGBuffer.Set(wiRenderer::immediateContext); {
-		wiRenderer::DrawDecals(wiRenderer::cam->View, wiRenderer::immediateContext, dtDepthCopy.shaderResource);
+		wiRenderer::DrawDecals(wiRenderer::getCamera()->View, wiRenderer::immediateContext, dtDepthCopy.shaderResource);
 	}
 
 	rtLight.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
-		wiRenderer::DrawLights(wiRenderer::cam->View, wiRenderer::immediateContext,
+		wiRenderer::DrawLights(wiRenderer::getCamera()->View, wiRenderer::immediateContext,
 			dtDepthCopy.shaderResource, rtGBuffer.shaderResource[1], rtGBuffer.shaderResource[2]);
 	}
 
 	rtVolumeLight.Activate(wiRenderer::immediateContext, rtGBuffer.depth);
-	wiRenderer::DrawVolumeLights(wiRenderer::cam->View, wiRenderer::immediateContext);
+	wiRenderer::DrawVolumeLights(wiRenderer::getCamera()->View, wiRenderer::immediateContext);
 
 
 
@@ -480,7 +475,7 @@ void DeferredDemo::RenderScene(){
 		wiImage::DrawDeferred(rtGBuffer.shaderResource[0]
 			, rtLinearDepth.shaderResource.back(), rtLight.shaderResource.front(), rtGBuffer.shaderResource[1]
 			, rtSSAO.back().shaderResource.back(), wiRenderer::immediateContext, STENCILREF_DEFAULT);
-		wiRenderer::DrawSky(wiRenderer::cam->Eye, wiRenderer::immediateContext);
+		wiRenderer::DrawSky(wiRenderer::getCamera()->Eye, wiRenderer::immediateContext);
 	}
 
 
@@ -500,15 +495,15 @@ void DeferredDemo::RenderScene(){
 
 
 	rtParticle.Activate(wiRenderer::immediateContext, 0, 0, 0, 0);  //OFFSCREEN RENDER ALPHAPARTICLES
-	wiRenderer::DrawSoftParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext, rtLinearDepth.shaderResource.back());
+	wiRenderer::DrawSoftParticles(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->View, wiRenderer::immediateContext, rtLinearDepth.shaderResource.back());
 	rtParticleAdditive.Activate(wiRenderer::immediateContext, 0, 0, 0, 1);  //OFFSCREEN RENDER ADDITIVEPARTICLES
-	wiRenderer::DrawSoftPremulParticles(wiRenderer::cam->Eye, wiRenderer::cam->View, wiRenderer::immediateContext, rtLinearDepth.shaderResource.back());
+	wiRenderer::DrawSoftPremulParticles(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->View, wiRenderer::immediateContext, rtLinearDepth.shaderResource.back());
 	rtWater.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
-		wiRenderer::DrawWorldWater(wiRenderer::cam->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
+		wiRenderer::DrawWorldWater(wiRenderer::getCamera()->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
 			, rtWaterRipple.shaderResource.back(), wiRenderer::immediateContext, 2);
 	}
 	rtTransparent.Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
-		wiRenderer::DrawWorldTransparent(wiRenderer::cam->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
+		wiRenderer::DrawWorldTransparent(wiRenderer::getCamera()->View, rtDeferred.shaderResource.front(), rtReflection.shaderResource.front(), rtLinearDepth.shaderResource.back()
 			, wiRenderer::immediateContext, 2);
 	}
 }
@@ -587,14 +582,14 @@ void DeferredDemo::RenderLightShafts(){
 	rtSun[0].Activate(wiRenderer::immediateContext, rtGBuffer.depth); {
 		wiRenderer::UpdatePerRenderCB(wiRenderer::immediateContext, 0);
 		wiRenderer::UpdatePerEffectCB(wiRenderer::immediateContext, XMFLOAT4(1, 0, 0, 0), XMFLOAT4(0, 0, 0, 0));
-		wiRenderer::DrawSky(wiRenderer::cam->Eye, wiRenderer::immediateContext);
+		wiRenderer::DrawSky(wiRenderer::getCamera()->Eye, wiRenderer::immediateContext);
 	}
 
 	wiImage::BatchBegin();
 	rtSun[1].Activate(wiRenderer::immediateContext); {
 		ImageEffects fxs = fx;
 		fxs.blendFlag = BLENDMODE_ADDITIVE;
-		XMVECTOR sunPos = XMVector3Project(wiRenderer::GetSunPosition() * 100000, 0, 0, screenW, screenH, 0.1f, 1.0f, wiRenderer::cam->Projection, wiRenderer::cam->View, XMMatrixIdentity());
+		XMVECTOR sunPos = XMVector3Project(wiRenderer::GetSunPosition() * 100000, 0, 0, screenW, screenH, 0.1f, 1.0f, wiRenderer::getCamera()->Projection, wiRenderer::getCamera()->View, XMMatrixIdentity());
 		{
 			XMStoreFloat2(&fxs.sunPos, sunPos);
 			wiImage::Draw(rtSun[0].shaderResource.back(), fxs, wiRenderer::immediateContext);

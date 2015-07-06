@@ -55,17 +55,15 @@ void LoadProgram(){
 	wiRenderer::physicsEngine = new BULLET();
 
 	wiImage::Load();
-	wiImage::SetScreenResolution(screenW, screenH);
 	wiResourceManager::SetUp();
-	wiBackLog::Initialize(screenW, screenH);
+	wiBackLog::Initialize();
 	wiFont::SetUpStaticComponents();
-	wiFont::SetScreenResolution(screenW, screenH);
 	wiSoundEffect::Initialize();
 	wiMusic::Initialize();
 	wiFrameRate::Initialize();
 	wiCpuInfo::Initialize();
 	wiFrameRate::Initialize();
-	wiLensFlare::Initialize(screenW,screenH);
+	wiLensFlare::Initialize();
 
 	wiFont::addFontStyle("basic");
 	wiInputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
@@ -74,7 +72,7 @@ void LoadProgram(){
 	wiResourceManager::add("sound/change.wav",wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
 
-	wiRenderer::cam->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
+	wiRenderer::getCamera()->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
 
 	WiDemo::screenW = screenW;
 	WiDemo::screenH = screenH;
@@ -102,7 +100,7 @@ void CleanUpProgram(){
 }
 void CameraControl(){
 	DirectInput* dinput = wiInputManager::dinput;
-	Camera* cam = wiRenderer::cam;
+	Camera* cam = wiRenderer::getCamera();
 	float speed = (dinput->IsKeyDown(DIK_LSHIFT) ? 10.0f : 1.0f);
 	if (dinput->IsKeyDown(DIK_A)) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
 	if (dinput->IsKeyDown(DIK_D)) cam->AddtoCameraPosition(XMVectorSet(speed, 0, 0, 0));
@@ -113,7 +111,7 @@ void CameraControl(){
 	cam->ProcessInput(1.0f / 60.0f, mousebuttondown);
 }
 void CameraReset(){
-	wiRenderer::cam->Reset();
+	wiRenderer::getCamera()->Reset();
 }
 
 
