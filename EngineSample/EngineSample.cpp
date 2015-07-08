@@ -89,6 +89,12 @@ void LoadProgram(){
 	demos.insert(pair<DEMOS, RenderableComponent*>(SSRTEST, new SSRTestDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(SOFTBODY_DEFERRED, new SoftBodyDeferredDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(FORWARDSCENE, new ForwardSceneDemo()));
+
+	for (pair<DEMOS, RenderableComponent*> x : demos)
+	{
+		x.second->Initialize();
+		x.second->Load();
+	}
 }
 void CleanUpProgram(){
 

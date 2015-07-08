@@ -15,67 +15,38 @@ public:
 
 class BasicModelDemo : public ForwardRenderableComponent
 {
-private:
-	wiRenderTarget renderTarget;
 public:
-	BasicModelDemo();
-	~BasicModelDemo();
-
 	void Start();
+	void Update();
 };
 
 class SkinnedModelDemo : public ForwardRenderableComponent
 {
-private:
-	wiRenderTarget renderTarget;
 public:
-	SkinnedModelDemo();
-	~SkinnedModelDemo();
-
 	void Start();
 };
 
 class EmittedParticleDemo : public ForwardRenderableComponent
 {
-private:
-	wiRenderTarget renderTarget, renderTargetParticle, renderTargetAdditiveParticle, renderTargetLinearDepth;
 public:
-	EmittedParticleDemo();
-	~EmittedParticleDemo();
-
 	void Start();
 };
 
 class HairParticleDemo : public ForwardRenderableComponent
 {
-private:
-	wiRenderTarget renderTarget;
 public:
-	HairParticleDemo();
-	~HairParticleDemo();
-
 	void Start();
 };
 
 class RigidBodyDemo : public ForwardRenderableComponent
 {
-private:
-	wiRenderTarget renderTarget;
 public:
-	RigidBodyDemo();
-	~RigidBodyDemo();
-
 	void Start();
 };
 
 class SoftBodyDemo : public ForwardRenderableComponent
 {
-private:
-	wiRenderTarget renderTarget;
 public:
-	SoftBodyDemo();
-	~SoftBodyDemo();
-
 	void Start();
 };
 

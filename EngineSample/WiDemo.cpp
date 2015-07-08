@@ -19,20 +19,23 @@ void HelloWorldDemo::Compose(){
 }
 
 
-BasicModelDemo::BasicModelDemo(){
-}
-BasicModelDemo::~BasicModelDemo(){}
 void BasicModelDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
+	//wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiRenderer::FinishLoading();
 	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
-
-
-SkinnedModelDemo::SkinnedModelDemo(){
+void BasicModelDemo::Update(){
+	wiRenderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
+	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
-SkinnedModelDemo::~SkinnedModelDemo(){}
+
+
 void SkinnedModelDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("SkinnedModelDemo/", "girl");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetToDrawDebugLines(true);
@@ -47,10 +50,9 @@ void SkinnedModelDemo::Start(){
 }
 
 
-EmittedParticleDemo::EmittedParticleDemo(){
-}
-EmittedParticleDemo::~EmittedParticleDemo(){}
 void EmittedParticleDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("EmitterParticleDemo/", "emitter");
 	wiRenderer::FinishLoading();
 	for (Object* o:wiRenderer::objects)
@@ -58,37 +60,36 @@ void EmittedParticleDemo::Start(){
 }
 
 
-HairParticleDemo::HairParticleDemo(){
-}
-HairParticleDemo::~HairParticleDemo(){}
 void HairParticleDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("HairParticleDemo/", "hair");
 	wiRenderer::FinishLoading();
 	wiHairParticle::Settings(8, 14, 28);
 }
 
 
-RigidBodyDemo::RigidBodyDemo(){
-}
-RigidBodyDemo::~RigidBodyDemo(){}
 void RigidBodyDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("RigidBodyDemo/", "rigidScene");
 	wiRenderer::FinishLoading();
 }
 
 
-SoftBodyDemo::SoftBodyDemo(){
-}
-SoftBodyDemo::~SoftBodyDemo(){}
 void SoftBodyDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
 	wiRenderer::FinishLoading();
 }
 
 
 void DeferredLightDemo::Start(){
-	ssao = true;
-	ssr = false;
+	DeferredRenderableComponent::Start();
+
+	setSSAOEnabled(true);
+	setSSREnabled(false);
 	wiRenderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/env.dds"));
@@ -97,8 +98,10 @@ void DeferredLightDemo::Start(){
 }
 
 void DeferredSceneDemo::Start(){
-	ssao = true;
-	ssr = false;
+	DeferredRenderableComponent::Start();
+
+	setSSAOEnabled(true);
+	setSSREnabled(false);
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
@@ -107,6 +110,8 @@ void DeferredSceneDemo::Start(){
 }
 
 void ForwardSceneDemo::Start(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
@@ -115,8 +120,10 @@ void ForwardSceneDemo::Start(){
 }
 
 void SSRTestDemo::Start(){
-	ssao = true;
-	ssr = true;
+	DeferredRenderableComponent::Start();
+
+	setSSAOEnabled(true);
+	setSSREnabled(true);
 	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
@@ -125,8 +132,10 @@ void SSRTestDemo::Start(){
 }
 
 void SoftBodyDeferredDemo::Start(){
-	ssao = true;
-	ssr = false;
+	DeferredRenderableComponent::Start();
+
+	setSSAOEnabled(true);
+	setSSREnabled(false);
 	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
