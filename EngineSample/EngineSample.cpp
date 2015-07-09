@@ -7,6 +7,10 @@
 
 #define MAX_LOADSTRING 100
 
+extern "C" {
+	_declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+}
+
 // Global Variables:
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
@@ -14,6 +18,13 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 HWND g_hWnd;
 int screenW=800, screenH=600;
 bool mousebuttondown = false;
+enum INTERACT{
+	DECAL,
+	WATER,
+	SPAWN_OBJECT,
+	SPAWN_LIGHT,
+};
+INTERACT interactionType = SPAWN_OBJECT;
 
 enum DEMOS{
 	HELLOWORLD,
@@ -26,7 +37,6 @@ enum DEMOS{
 	DEFERREDSCENE,
 	DEFERREDLIGHTS,
 	SSRTEST,
-	SOFTBODY_DEFERRED,
 	FORWARDSCENE,
 	DEMO_COUNT,
 };
@@ -87,7 +97,6 @@ void LoadProgram(){
 	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDSCENE, new DeferredSceneDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDLIGHTS, new DeferredLightDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(SSRTEST, new SSRTestDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(SOFTBODY_DEFERRED, new SoftBodyDeferredDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(FORWARDSCENE, new ForwardSceneDemo()));
 
 	for (pair<DEMOS, RenderableComponent*> x : demos)
@@ -141,6 +150,8 @@ void ChangeDemo(DEMOS newDemo){
 void HudRender(){
 	stringstream ss("");
 	ss << "Wicked Engine v" << WICKED_ENGINE_VERSION;
+	ss << "\nResolution: " << screenW << " x " << screenH;
+	ss << "\nDeferred context support: " << (wiRenderer::getMultithreadingSupport() ? "yes" : "no");
 #ifdef _DEBUG
 	ss << " [DEBUG]";
 #endif
@@ -155,9 +166,26 @@ void HudRender(){
 	ss << "\n[8] :  DeferredLights";
 	ss << "\n[9] :  DeferredScene";
 	ss << "\n[0] :  SSRTest";
-	ss << "\n[F1] : SoftBody Deferred";
-	ss << "\n[F2] : ForwardScene";
-	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB";
+	ss << "\n[F1] : ForwardScene";
+	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB\nChange interaction type with MOUSEWHEEL";
+	ss << "\nInteraction type: ";
+	switch (interactionType)
+	{
+	case DECAL:
+		ss << "DECAL";
+		break;
+	case WATER:
+		ss << "WATER";
+		break;
+	case SPAWN_OBJECT:
+		ss << "SPAWN OBJECT";
+		break;
+	case SPAWN_LIGHT:
+		ss << "SPAWN LIGHT";
+		break;
+	default:
+		break;
+	}
 	wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
 	ss.str("");
 	ss.precision(1);
@@ -196,9 +224,6 @@ void HudRender(){
 		break;
 	case FORWARDSCENE:
 		ss << "FORWARDSCENE";
-		break;
-	case SOFTBODY_DEFERRED:
-		ss << "SOFTBODY DEFERRED";
 		break;
 	case SSRTEST:
 		ss << "SSRTEST";
@@ -241,8 +266,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	screenW = rect.right - rect.left;
 	screenH = rect.bottom - rect.top;
 
-	short requestMultiThreading = 0;
-	if (FAILED(wiRenderer::InitDevice(g_hWnd, screenW, screenH, 1, requestMultiThreading)))
+	if (FAILED(wiRenderer::InitDevice(g_hWnd, screenW, screenH, true)))
 	{
 		MessageBox(NULL, L"Could not initialize the D3D device", L"Error", MB_OK);
 		return 0;
@@ -310,9 +334,6 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 					ChangeDemo(SSRTEST);
 				}
 				else if (wiInputManager::press(DIK_F1)){
-					ChangeDemo(SOFTBODY_DEFERRED);
-				}
-				else if (wiInputManager::press(DIK_F2)){
 					ChangeDemo(FORWARDSCENE);
 				}
 
@@ -425,6 +446,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
 		break;
+	case WM_MOUSEMOVE:
+		if (interactionType == INTERACT::WATER){
+			if (wParam & MK_LBUTTON)
+			{
+				POINT p;
+				GetCursorPos(&p);
+				ScreenToClient(hWnd, &p);
+				wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_WATER);
+				if (picked.object != nullptr){
+					XMFLOAT4 waterPlane = XMFLOAT4(0,0,0,1);
+					if (dynamic_cast<Renderable3DSceneComponent*>(demos[demoScene]))
+					{
+						waterPlane = dynamic_cast<Renderable3DSceneComponent*>(demos[demoScene])->getWaterPlane();
+					}
+					wiRenderer::PutWaterRipple("images/ripple.png", picked.position, waterPlane);
+				}
+
+			}
+		}
+		break;
+	case WM_MOUSEWHEEL:
+		switch (interactionType)
+		{
+		case DECAL:
+			interactionType = WATER;
+			break;
+		case WATER:
+			interactionType = SPAWN_OBJECT;
+			break;
+		case SPAWN_OBJECT:
+			interactionType = SPAWN_LIGHT;
+			break;
+		case SPAWN_LIGHT:
+			interactionType = DECAL;
+			break;
+		default:
+			break;
+		}
+		break;
 	case WM_RBUTTONDOWN:
 		mousebuttondown = true;
 		ShowCursor(false);
@@ -433,6 +493,93 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		mousebuttondown = false;
 		ShowCursor(true);
 		break;
+	case WM_LBUTTONDOWN:
+	{
+		if (interactionType == INTERACT::DECAL){
+			POINT p;
+			GetCursorPos(&p);
+			ScreenToClient(hWnd, &p);
+			wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_OPAQUE);
+			if (picked.object != nullptr){
+				XMFLOAT4 rot;
+				XMStoreFloat4(&rot, XMQuaternionRotationRollPitchYaw(wiRenderer::getCamera()->updownRot, wiRenderer::getCamera()->leftrightRot, 0));
+				Decal* decal = new Decal(picked.position, XMFLOAT3(5, 5, 5), rot);
+				decal->life = 200;
+				decal->fadeStart = 50;
+				switch (rand() % 3){
+				case 0:
+					decal->addTexture("images/blood1.png");
+					break;
+				case 1:
+					decal->addTexture("images/leaf.png");
+					break;
+				case 2:
+					decal->addTexture("images/graffiti.png");
+					break;
+				case 3:
+					decal->addTexture("images/blood2.png");
+					break;
+				default:break;
+				};
+				wiRenderer::decals.push_back(decal);
+				decal->attachTo(picked.object);
+			}
+		}
+		else if (interactionType == SPAWN_OBJECT){
+			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->At * 5));
+			switch (rand() % 4)
+			{
+			case 0:
+				thread(wiRenderer::LoadModel, "models/barrel/", "barrel",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine).detach();
+				break;
+			case 1:
+				thread(wiRenderer::LoadModel, "models/crate/", "crate",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine).detach();
+				break;
+			case 2:
+				thread(wiRenderer::LoadModel, "models/monkey/", "monkey",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine
+					).detach();
+				break;
+			case 3:
+				thread(wiRenderer::LoadModel, "models/golfball/", "golfball",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine
+					).detach();
+				break;
+			default:
+				break;
+			}
+		}
+		else if (interactionType == SPAWN_LIGHT){
+			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->At * 5));
+			switch (rand() % 3)
+			{
+			case 0:
+				wiRenderer::LoadModel("models/lightTube blue/", "lightTube blue",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine);
+				break;
+			case 1:
+				wiRenderer::LoadModel("models/lightTube green/", "lightTube green",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine);
+				break;
+			case 2:
+				wiRenderer::LoadModel("models/lightTube red/", "lightTube red",
+					spawnTrans
+					, "common", wiRenderer::physicsEngine);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...

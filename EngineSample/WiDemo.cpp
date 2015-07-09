@@ -23,11 +23,12 @@ void BasicModelDemo::Start(){
 	ForwardRenderableComponent::Start();
 
 	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
-	//wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiRenderer::FinishLoading();
 	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
 void BasicModelDemo::Update(){
+	ForwardRenderableComponent::Start();
+
 	wiRenderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
 	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
 }
@@ -102,6 +103,7 @@ void DeferredSceneDemo::Start(){
 
 	setSSAOEnabled(true);
 	setSSREnabled(false);
+	setReflectionsEnabled(true);
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
@@ -111,6 +113,8 @@ void DeferredSceneDemo::Start(){
 
 void ForwardSceneDemo::Start(){
 	ForwardRenderableComponent::Start();
+
+	setReflectionsEnabled(true);
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
@@ -131,14 +135,3 @@ void SSRTestDemo::Start(){
 	wiHairParticle::Settings(20, 50, 200);
 }
 
-void SoftBodyDeferredDemo::Start(){
-	DeferredRenderableComponent::Start();
-
-	setSSAOEnabled(true);
-	setSSREnabled(false);
-	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
-	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
-	wiHairParticle::Settings(20, 50, 200);
-}

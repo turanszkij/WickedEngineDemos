@@ -73,9 +73,3 @@ class SSRTestDemo :public DeferredRenderableComponent
 public:
 	void Start();
 };
-
-class SoftBodyDeferredDemo :public DeferredRenderableComponent
-{
-public:
-	void Start();
-};

@@ -1,0 +1,10 @@
+//MATERIAL-crateMat
+f 0.5
+d 0.800000011920929 0.800000011920929 0.800000011920929
+t wc1_diffuse.dds 0
+b MIX
+n wc1_normal.dds
+S wc1_specular.dds
+s 1.0 1.0 1.0 0.5
+p 50
+e 0.0
