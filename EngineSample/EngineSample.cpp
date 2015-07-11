@@ -455,7 +455,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				ScreenToClient(hWnd, &p);
 				wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_WATER);
 				if (picked.object != nullptr){
-					XMFLOAT4 waterPlane = XMFLOAT4(0,0,0,1);
+					wiWaterPlane waterPlane = wiWaterPlane(0, 0, 0, 1);
 					if (dynamic_cast<Renderable3DSceneComponent*>(demos[demoScene]))
 					{
 						waterPlane = dynamic_cast<Renderable3DSceneComponent*>(demos[demoScene])->getWaterPlane();

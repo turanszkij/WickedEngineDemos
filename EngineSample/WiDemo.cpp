@@ -22,6 +22,10 @@ void HelloWorldDemo::Compose(){
 void BasicModelDemo::Start(){
 	ForwardRenderableComponent::Start();
 
+	setFXAAEnabled(false);
+	setColorGradingEnabled(false);
+	setBloomEnabled(false);
+
 	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
 	wiRenderer::FinishLoading();
 	wiRenderer::objects.front()->translation_rest.y = 2.2f;
@@ -36,6 +40,10 @@ void BasicModelDemo::Update(){
 
 void SkinnedModelDemo::Start(){
 	ForwardRenderableComponent::Start();
+
+	setFXAAEnabled(false);
+	setColorGradingEnabled(false);
+	setBloomEnabled(false);
 
 	wiRenderer::LoadModel("SkinnedModelDemo/", "girl");
 	wiRenderer::FinishLoading();
@@ -54,6 +62,9 @@ void SkinnedModelDemo::Start(){
 void EmittedParticleDemo::Start(){
 	ForwardRenderableComponent::Start();
 
+	setFXAAEnabled(false);
+	setColorGradingEnabled(false);
+
 	wiRenderer::LoadModel("EmitterParticleDemo/", "emitter");
 	wiRenderer::FinishLoading();
 	for (Object* o:wiRenderer::objects)
@@ -64,6 +75,10 @@ void EmittedParticleDemo::Start(){
 void HairParticleDemo::Start(){
 	ForwardRenderableComponent::Start();
 
+	setFXAAEnabled(false);
+	setColorGradingEnabled(false);
+	setBloomEnabled(false);
+
 	wiRenderer::LoadModel("HairParticleDemo/", "hair");
 	wiRenderer::FinishLoading();
 	wiHairParticle::Settings(8, 14, 28);
@@ -73,6 +88,10 @@ void HairParticleDemo::Start(){
 void RigidBodyDemo::Start(){
 	ForwardRenderableComponent::Start();
 
+	setFXAAEnabled(false);
+	setColorGradingEnabled(false);
+	setBloomEnabled(false);
+
 	wiRenderer::LoadModel("RigidBodyDemo/", "rigidScene");
 	wiRenderer::FinishLoading();
 }
@@ -80,6 +99,10 @@ void RigidBodyDemo::Start(){
 
 void SoftBodyDemo::Start(){
 	ForwardRenderableComponent::Start();
+
+	setFXAAEnabled(false);
+	setColorGradingEnabled(false);
+	setBloomEnabled(false);
 
 	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
 	wiRenderer::FinishLoading();
