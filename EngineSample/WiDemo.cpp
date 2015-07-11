@@ -25,13 +25,18 @@ void BasicModelDemo::Start(){
 	setFXAAEnabled(false);
 	setColorGradingEnabled(false);
 	setBloomEnabled(false);
+	setLightShaftsEnabled(false);
+	setLensFlareEnabled(false);
+	setVolumeLightsEnabled(false);
+	setEmitterParticlesEnabled(false);
+	setHairParticlesEnabled(false);
 
 	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
 	wiRenderer::FinishLoading();
 	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
 void BasicModelDemo::Update(){
-	ForwardRenderableComponent::Start();
+	ForwardRenderableComponent::Update();
 
 	wiRenderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
 	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
@@ -44,6 +49,11 @@ void SkinnedModelDemo::Start(){
 	setFXAAEnabled(false);
 	setColorGradingEnabled(false);
 	setBloomEnabled(false);
+	setLightShaftsEnabled(false);
+	setLensFlareEnabled(false);
+	setVolumeLightsEnabled(false);
+	setEmitterParticlesEnabled(false);
+	setHairParticlesEnabled(false);
 
 	wiRenderer::LoadModel("SkinnedModelDemo/", "girl");
 	wiRenderer::FinishLoading();
@@ -64,6 +74,10 @@ void EmittedParticleDemo::Start(){
 
 	setFXAAEnabled(false);
 	setColorGradingEnabled(false);
+	setHairParticlesEnabled(false);
+	setVolumeLightsEnabled(false);
+	setLightShaftsEnabled(false);
+	setLensFlareEnabled(false);
 
 	wiRenderer::LoadModel("EmitterParticleDemo/", "emitter");
 	wiRenderer::FinishLoading();
@@ -78,6 +92,10 @@ void HairParticleDemo::Start(){
 	setFXAAEnabled(false);
 	setColorGradingEnabled(false);
 	setBloomEnabled(false);
+	setEmitterParticlesEnabled(false);
+	setVolumeLightsEnabled(false);
+	setLightShaftsEnabled(false);
+	setLensFlareEnabled(false);
 
 	wiRenderer::LoadModel("HairParticleDemo/", "hair");
 	wiRenderer::FinishLoading();
@@ -91,6 +109,11 @@ void RigidBodyDemo::Start(){
 	setFXAAEnabled(false);
 	setColorGradingEnabled(false);
 	setBloomEnabled(false);
+	setLightShaftsEnabled(false);
+	setLensFlareEnabled(false);
+	setVolumeLightsEnabled(false);
+	setEmitterParticlesEnabled(false);
+	setHairParticlesEnabled(false);
 
 	wiRenderer::LoadModel("RigidBodyDemo/", "rigidScene");
 	wiRenderer::FinishLoading();
@@ -103,6 +126,11 @@ void SoftBodyDemo::Start(){
 	setFXAAEnabled(false);
 	setColorGradingEnabled(false);
 	setBloomEnabled(false);
+	setLightShaftsEnabled(false);
+	setLensFlareEnabled(false);
+	setVolumeLightsEnabled(false);
+	setEmitterParticlesEnabled(false);
+	setHairParticlesEnabled(false);
 
 	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
 	wiRenderer::FinishLoading();
