@@ -150,11 +150,11 @@ void ChangeDemo(DEMOS newDemo){
 void HudRender(){
 	stringstream ss("");
 	ss << "Wicked Engine v" << WICKED_ENGINE_VERSION;
-	ss << "\nResolution: " << screenW << " x " << screenH;
-	ss << "\nDeferred context support: " << (wiRenderer::getMultithreadingSupport() ? "yes" : "no");
 #ifdef _DEBUG
 	ss << " [DEBUG]";
 #endif
+	ss << "\nResolution: " << screenW << " x " << screenH;
+	ss << "\nDeferred context support: " << (wiRenderer::getMultithreadingSupport() ? "yes" : "no");
 	ss << "\n\nDemo Select:\n------------------";
 	ss << "\n[1] :  HelloWorld";
 	ss << "\n[2] :  BasicModel";
@@ -506,7 +506,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				Decal* decal = new Decal(picked.position, XMFLOAT3(5, 5, 5), rot);
 				decal->life = 200;
 				decal->fadeStart = 50;
-				switch (rand() % 3){
+				switch (wiRandom::getRandom(0,2)){
 				case 0:
 					decal->addTexture("images/blood1.png");
 					break;
@@ -527,7 +527,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else if (interactionType == SPAWN_OBJECT){
 			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->At * 5));
-			switch (rand() % 4)
+			switch (wiRandom::getRandom(0,3))
 			{
 			case 0:
 				thread(wiRenderer::LoadModel, "models/barrel/", "barrel",
@@ -557,7 +557,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else if (interactionType == SPAWN_LIGHT){
 			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->At * 5));
-			switch (rand() % 3)
+			switch (wiRandom::getRandom(0,2))
 			{
 			case 0:
 				wiRenderer::LoadModel("models/lightTube blue/", "lightTube blue",

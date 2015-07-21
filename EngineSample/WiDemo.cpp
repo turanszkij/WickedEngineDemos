@@ -39,7 +39,7 @@ void BasicModelDemo::Update(){
 	ForwardRenderableComponent::Update();
 
 	wiRenderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
-	wiRenderer::UpdateRenderInfo(wiRenderer::immediateContext);
+	wiRenderer::UpdateRenderInfo(wiRenderer::getImmediateContext());
 }
 
 
