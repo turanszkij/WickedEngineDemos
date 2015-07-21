@@ -191,7 +191,7 @@ void HudRender(){
 	ss.precision(1);
 	ss <<fixed<<wiFrameRate::FPS()<< " FPS";
 	ss << "\nCPU: " << wiCpuInfo::GetCpuPercentage()<< "%";
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4(screenW-15, 0, -5, -4), "right", "top");
+	wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW-15, 0, -5, -4), "right", "top");
 	ss.str("");
 	switch (demoScene)
 	{
@@ -232,7 +232,7 @@ void HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4(screenW/2, -screenH, -5, -4), "center", "bottom");
+	wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW / 2, -(float)screenH, -5, -4), "center", "bottom");
 }
 
 

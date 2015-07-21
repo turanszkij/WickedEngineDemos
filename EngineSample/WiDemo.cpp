@@ -60,7 +60,7 @@ void SkinnedModelDemo::Start(){
 	wiRenderer::SetToDrawDebugLines(true);
 	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 
-	for (int i = 0; i < wiRenderer::armatures.back()->actions.size(); ++i){
+	for (unsigned int i = 0; i < wiRenderer::armatures.back()->actions.size(); ++i){
 		if (wiRenderer::armatures.back()->actions[i].name.find("Idle") != string::npos){
 			wiRenderer::armatures.back()->activeAction = i;
 			break;
