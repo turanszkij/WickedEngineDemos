@@ -1,6 +1,12 @@
 #pragma once
 #include "WickedEngine.h"
 
+class DemoLoadingScreen : public LoadingScreenComponent
+{
+public:
+	void Compose();
+};
+
 class HelloWorldDemo : public RenderableComponent
 {
 private:

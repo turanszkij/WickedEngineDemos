@@ -27,6 +27,7 @@ enum INTERACT{
 INTERACT interactionType = SPAWN_OBJECT;
 
 enum DEMOS{
+	LOADINGSCREEN,
 	HELLOWORLD,
 	BASICMODEL,
 	SKINNEDMODEL,
@@ -58,8 +59,7 @@ void LoadProgram(){
 		| wiInitializer::WICKEDENGINE_INITIALIZE_IMAGE
 		| wiInitializer::WICKEDENGINE_INITIALIZE_FONT
 		| wiInitializer::WICKEDENGINE_INITIALIZE_SOUND
-		| wiInitializer::WICKEDENGINE_INITIALIZE_DIRECTINPUT
-		| wiInitializer::WICKEDENGINE_INITIALIZE_XINPUT
+		| wiInitializer::WICKEDENGINE_INITIALIZE_MISC
 		);
 
 	wiRenderer::VSYNC = false;
@@ -84,6 +84,7 @@ void LoadProgram(){
 
 	RenderableComponent::screenW = screenW;
 	RenderableComponent::screenH = screenH;
+	demos.insert(pair<DEMOS, RenderableComponent*>(LOADINGSCREEN, new DemoLoadingScreen()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(HELLOWORLD, new HelloWorldDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(BASICMODEL, new BasicModelDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(SKINNEDMODEL, new SkinnedModelDemo()));
@@ -129,22 +130,48 @@ void CameraReset(){
 }
 
 
+void StartLoadingChangeDemo(DEMOS newDemo){
+	wiRenderer::CleanUpStaticTemp();
+	demos[newDemo]->Start();
+}
+void FinishLoadingChangeDemo(DEMOS newDemo)
+{
+	Sleep(150);
+	demoScene = newDemo;
+}
 void ChangeDemo(DEMOS newDemo){
-
-	CameraReset();
+	if (demoScene == LOADINGSCREEN)
+	{
+		return;
+	}
 
 	static_cast<wiSoundEffect*>(wiResourceManager::get("sound/change.wav")->data)->Play();
 
 	if (demos.find(newDemo) != demos.end()){
-		wiRenderer::CleanUpStaticTemp();
-		demos[newDemo]->Start();
-		demoScene = newDemo;
+		LoadingScreenComponent* loading = dynamic_cast<LoadingScreenComponent*>(demos[LOADINGSCREEN]);
+		if (loading != nullptr)
+		{
+			loading->Unload();
+			for (int i = 0; i < 10; ++i)
+			{ 
+				//Added some fake loading simulation tasks
+				//just to see it visually, because these demos load in one task
+				loading->addLoadingFunction(bind(Sleep, i * 20));
+			}
+			loading->addLoadingFunction(bind(StartLoadingChangeDemo, newDemo));
+			loading->onFinished(bind(FinishLoadingChangeDemo, newDemo));
+			loading->Start();
+			demoScene = LOADINGSCREEN;
+		}
 	}
 
 }
 
 
 void HudRender(){
+	if (demoScene == LOADINGSCREEN)
+		return;
+
 	stringstream ss("");
 	ss << "Wicked Engine v" << WICKED_ENGINE_VERSION;
 #ifdef _DEBUG
@@ -281,70 +308,53 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else{
 
-			//Update demo
-			static bool frameskip = true;
-			static Timer timer = Timer();
-			static const double dt = 1.0 / 60.0;
-			static double accumulator = 0.0;
+			FRAMESKIP_START(true,10)
 
-			accumulator += timer.elapsed() / 1000.0;
-			if (accumulator>10) //application probably lost control
-				accumulator = 0;
-			timer.record();
+			wiInputManager::Update();
+			CameraControl();
+			wiCpuInfo::Frame();
 
-
-			while (accumulator >= dt)
-			{
-
-				wiInputManager::Update();
-				CameraControl();
-				wiCpuInfo::Frame();
-
-				if (wiInputManager::press(DIK_1)){
-					ChangeDemo(HELLOWORLD);
-				}
-				else if (wiInputManager::press(DIK_2)){
-					ChangeDemo(BASICMODEL);
-				}
-				else if (wiInputManager::press(DIK_3)){
-					ChangeDemo(SKINNEDMODEL);
-				}
-				else if (wiInputManager::press(DIK_4)){
-					ChangeDemo(EMITTERPARTICLE);
-				}
-				else if (wiInputManager::press(DIK_5)){
-					ChangeDemo(HAIRPARTICLE);
-				}
-				else if (wiInputManager::press(DIK_6)){
-					ChangeDemo(RIGIDBODY);
-				}
-				else if (wiInputManager::press(DIK_7)){
-					ChangeDemo(SOFTBODY);
-				}
-				else if (wiInputManager::press(DIK_8)){
-					ChangeDemo(DEFERREDLIGHTS);
-				}
-				else if (wiInputManager::press(DIK_9)){
-					ChangeDemo(DEFERREDSCENE);
-				}
-				else if (wiInputManager::press(DIK_0)){
-					ChangeDemo(SSRTEST);
-				}
-				else if (wiInputManager::press(DIK_F1)){
-					ChangeDemo(FORWARDSCENE);
-				}
-
-				demos[demoScene]->Update();
-
-				accumulator -= dt;
-
-				if (!frameskip)
-					break;
-
+			if (wiInputManager::press(DIK_1)){
+				ChangeDemo(HELLOWORLD);
 			}
+			else if (wiInputManager::press(DIK_2)){
+				ChangeDemo(BASICMODEL);
+			}
+			else if (wiInputManager::press(DIK_3)){
+				ChangeDemo(SKINNEDMODEL);
+			}
+			else if (wiInputManager::press(DIK_4)){
+				ChangeDemo(EMITTERPARTICLE);
+			}
+			else if (wiInputManager::press(DIK_5)){
+				ChangeDemo(HAIRPARTICLE);
+			}
+			else if (wiInputManager::press(DIK_6)){
+				ChangeDemo(RIGIDBODY);
+			}
+			else if (wiInputManager::press(DIK_7)){
+				ChangeDemo(SOFTBODY);
+			}
+			else if (wiInputManager::press(DIK_8)){
+				ChangeDemo(DEFERREDLIGHTS);
+			}
+			else if (wiInputManager::press(DIK_9)){
+				ChangeDemo(DEFERREDSCENE);
+			}
+			else if (wiInputManager::press(DIK_0)){
+				ChangeDemo(SSRTEST);
+			}
+			else if (wiInputManager::press(DIK_F1)){
+				ChangeDemo(FORWARDSCENE);
+			}
+
+			demos[demoScene]->Update();
+
+			FRAMESKIP_END
 
 			//Render demo
 			demos[demoScene]->Render();
+
 			wiRenderer::Present(bind(&RenderableComponent::Compose,demos[demoScene]), bind(HudRender));
 		}
 	}

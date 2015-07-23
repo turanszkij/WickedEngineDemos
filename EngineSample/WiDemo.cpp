@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "WiDemo.h"
 
+void DemoLoadingScreen::Compose()
+{
+	stringstream ss("");
+	ss << "Loading: " << getPercentageComplete() << "%";
+	wiFont::Draw(ss.str(),XMFLOAT4(screenW/2.f,-screenH/2.f,10.f,0),"center","center");
+}
+
+
 HelloWorldDemo::HelloWorldDemo(){
 	image = wiSprite("HelloWorldDemo/HelloWorld.png");
 	image.effects.siz = XMFLOAT2(400, 200);
