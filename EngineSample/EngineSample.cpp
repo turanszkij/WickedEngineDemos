@@ -53,7 +53,15 @@ void BasicModelInit();
 void EmitterParticleInit();
 
 void LoadProgram(){
-	wiRenderer::SetUpStaticComponents();
+	wiInitializer::InitializeComponents(
+		  wiInitializer::WICKEDENGINE_INITIALIZE_RENDERER
+		| wiInitializer::WICKEDENGINE_INITIALIZE_IMAGE
+		| wiInitializer::WICKEDENGINE_INITIALIZE_FONT
+		| wiInitializer::WICKEDENGINE_INITIALIZE_SOUND
+		| wiInitializer::WICKEDENGINE_INITIALIZE_DIRECTINPUT
+		| wiInitializer::WICKEDENGINE_INITIALIZE_XINPUT
+		);
+
 	wiRenderer::VSYNC = false;
 	wiRenderer::EMITTERSENABLED = true;
 	wiRenderer::HAIRPARTICLEENABLED = true;
@@ -64,17 +72,6 @@ void LoadProgram(){
 	wiRenderer::SOFTSHADOW = 2;
 	wiRenderer::DX11 = false;
 	wiRenderer::physicsEngine = new BULLET();
-
-	wiImage::Load();
-	wiResourceManager::SetUp();
-	wiBackLog::Initialize();
-	wiFont::SetUpStaticComponents();
-	wiSoundEffect::Initialize();
-	wiMusic::Initialize();
-	wiFrameRate::Initialize();
-	wiCpuInfo::Initialize();
-	wiFrameRate::Initialize();
-	wiLensFlare::Initialize();
 
 	wiFont::addFontStyle("basic");
 	wiInputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
