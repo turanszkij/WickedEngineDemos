@@ -16,248 +16,13 @@ HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 HWND g_hWnd;
-int screenW=800, screenH=600;
-bool mousebuttondown = false;
-enum INTERACT{
-	DECAL,
-	WATER,
-	SPAWN_OBJECT,
-	SPAWN_LIGHT,
-};
-INTERACT interactionType = SPAWN_OBJECT;
-
-enum DEMOS{
-	LOADINGSCREEN,
-	HELLOWORLD,
-	BASICMODEL,
-	SKINNEDMODEL,
-	EMITTERPARTICLE,
-	HAIRPARTICLE,
-	RIGIDBODY,
-	SOFTBODY,
-	DEFERREDSCENE,
-	DEFERREDLIGHTS,
-	SSRTEST,
-	FORWARDSCENE,
-	DEMO_COUNT,
-};
-DEMOS demoScene = HELLOWORLD;
-map<DEMOS, RenderableComponent*> demos;
+Demo demo;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
-
-void BasicModelInit();
-void EmitterParticleInit();
-
-void LoadProgram(){
-	wiInitializer::InitializeComponents(
-		  wiInitializer::WICKEDENGINE_INITIALIZE_RENDERER
-		| wiInitializer::WICKEDENGINE_INITIALIZE_IMAGE
-		| wiInitializer::WICKEDENGINE_INITIALIZE_FONT
-		| wiInitializer::WICKEDENGINE_INITIALIZE_SOUND
-		| wiInitializer::WICKEDENGINE_INITIALIZE_MISC
-		);
-
-	wiRenderer::VSYNC = false;
-	wiRenderer::EMITTERSENABLED = true;
-	wiRenderer::HAIRPARTICLEENABLED = true;
-	wiRenderer::setRenderResolution(screenW, screenH);
-	wiRenderer::SHADOWMAPRES = 1024;
-	wiRenderer::POINTLIGHTSHADOW = 6;
-	wiRenderer::POINTLIGHTSHADOWRES = 512;
-	wiRenderer::SOFTSHADOW = 2;
-	wiRenderer::DX11 = false;
-	wiRenderer::physicsEngine = new BULLET();
-
-	wiFont::addFontStyle("basic");
-	wiInputManager::addDirectInput(new DirectInput(hInst, g_hWnd));
-
-	wiResourceManager::add("HelloWorld/HelloWorld.png");
-	wiResourceManager::add("sound/change.wav",wiResourceManager::SOUND);
-	wiSoundEffect::SetVolume(0.5f);
-
-	wiRenderer::getCamera()->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
-
-	RenderableComponent::screenW = screenW;
-	RenderableComponent::screenH = screenH;
-	demos.insert(pair<DEMOS, RenderableComponent*>(LOADINGSCREEN, new DemoLoadingScreen()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(HELLOWORLD, new HelloWorldDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(BASICMODEL, new BasicModelDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(SKINNEDMODEL, new SkinnedModelDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(EMITTERPARTICLE, new EmittedParticleDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(HAIRPARTICLE, new HairParticleDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(RIGIDBODY, new RigidBodyDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(SOFTBODY, new SoftBodyDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDSCENE, new DeferredSceneDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDLIGHTS, new DeferredLightDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(SSRTEST, new SSRTestDemo()));
-	demos.insert(pair<DEMOS, RenderableComponent*>(FORWARDSCENE, new ForwardSceneDemo()));
-
-	for (pair<DEMOS, RenderableComponent*> x : demos)
-	{
-		x.second->Initialize();
-		x.second->Load();
-	}
-}
-void CleanUpProgram(){
-
-	wiRenderer::CleanUpStatic();
-	wiImage::CleanUp();
-	wiFont::CleanUpStatic();
-	wiResourceManager::CleanUp();
-	wiInputManager::CleanUp();
-	wiLensFlare::CleanUp();
-	wiRenderer::DestroyDevice();
-}
-void CameraControl(){
-	DirectInput* dinput = wiInputManager::dinput;
-	Camera* cam = wiRenderer::getCamera();
-	float speed = (dinput->IsKeyDown(DIK_LSHIFT) ? 10.0f : 1.0f);
-	if (dinput->IsKeyDown(DIK_A)) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
-	if (dinput->IsKeyDown(DIK_D)) cam->AddtoCameraPosition(XMVectorSet(speed, 0, 0, 0));
-	if (dinput->IsKeyDown(DIK_W)) cam->AddtoCameraPosition(XMVectorSet(0, 0, speed, 0));
-	if (dinput->IsKeyDown(DIK_S)) cam->AddtoCameraPosition(XMVectorSet(0, 0, -speed, 0));
-	if (dinput->IsKeyDown(DIK_SPACE)) cam->AddtoCameraPosition(XMVectorSet(0, speed, 0, 0));
-	if (dinput->IsKeyDown(DIK_LCONTROL)) cam->AddtoCameraPosition(XMVectorSet(0, -speed, 0, 0));
-	cam->ProcessInput(1.0f / 60.0f, mousebuttondown);
-}
-void CameraReset(){
-	wiRenderer::getCamera()->Reset();
-}
-
-
-void StartLoadingChangeDemo(DEMOS newDemo){
-	wiRenderer::CleanUpStaticTemp();
-	demos[newDemo]->Start();
-}
-void FinishLoadingChangeDemo(DEMOS newDemo)
-{
-	Sleep(150);
-	demoScene = newDemo;
-}
-void ChangeDemo(DEMOS newDemo){
-	if (demoScene == LOADINGSCREEN)
-	{
-		return;
-	}
-
-	static_cast<wiSoundEffect*>(wiResourceManager::get("sound/change.wav")->data)->Play();
-
-	if (demos.find(newDemo) != demos.end()){
-		LoadingScreenComponent* loading = dynamic_cast<LoadingScreenComponent*>(demos[LOADINGSCREEN]);
-		if (loading != nullptr)
-		{
-			loading->Unload();
-			for (int i = 0; i < 10; ++i)
-			{ 
-				//Added some fake loading simulation tasks
-				//just to see it visually, because these demos load in one task
-				loading->addLoadingFunction(bind(Sleep, i * 20));
-			}
-			loading->addLoadingFunction(bind(StartLoadingChangeDemo, newDemo));
-			loading->onFinished(bind(FinishLoadingChangeDemo, newDemo));
-			loading->Start();
-			demoScene = LOADINGSCREEN;
-		}
-	}
-
-}
-
-
-void HudRender(){
-	if (demoScene == LOADINGSCREEN)
-		return;
-
-	stringstream ss("");
-	ss << "Wicked Engine v" << WICKED_ENGINE_VERSION;
-#ifdef _DEBUG
-	ss << " [DEBUG]";
-#endif
-	ss << "\nResolution: " << screenW << " x " << screenH;
-	ss << "\nDeferred context support: " << (wiRenderer::getMultithreadingSupport() ? "yes" : "no");
-	ss << "\n\nDemo Select:\n------------------";
-	ss << "\n[1] :  HelloWorld";
-	ss << "\n[2] :  BasicModel";
-	ss << "\n[3] :  SkinnedModel";
-	ss << "\n[4] :  EmitterParticle";
-	ss << "\n[5] :  HairParticle";
-	ss << "\n[6] :  RigidBody";
-	ss << "\n[7] :  SoftBody";
-	ss << "\n[8] :  DeferredLights";
-	ss << "\n[9] :  DeferredScene";
-	ss << "\n[0] :  SSRTest";
-	ss << "\n[F1] : ForwardScene";
-	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB\nChange interaction type with MOUSEWHEEL";
-	ss << "\nInteraction type: ";
-	switch (interactionType)
-	{
-	case DECAL:
-		ss << "DECAL";
-		break;
-	case WATER:
-		ss << "WATER";
-		break;
-	case SPAWN_OBJECT:
-		ss << "SPAWN OBJECT";
-		break;
-	case SPAWN_LIGHT:
-		ss << "SPAWN LIGHT";
-		break;
-	default:
-		break;
-	}
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
-	ss.str("");
-	ss.precision(1);
-	ss <<fixed<<wiFrameRate::FPS()<< " FPS";
-	ss << "\nCPU: " << wiCpuInfo::GetCpuPercentage()<< "%";
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW-15, 0, -5, -4), "right", "top");
-	ss.str("");
-	switch (demoScene)
-	{
-	case HELLOWORLD:
-		ss << "HELLOWORLD";
-		break;
-	case BASICMODEL:
-		ss << "BASICMODEL";
-		break;
-	case SKINNEDMODEL:
-		ss << "SKINNEDMODEL";
-		break;
-	case EMITTERPARTICLE:
-		ss << "EMITTERPARTICLE";
-		break;
-	case HAIRPARTICLE:
-		ss << "HAIRPARTICLE";
-		break;
-	case RIGIDBODY:
-		ss << "RIGIDBODY";
-		break;
-	case SOFTBODY:
-		ss << "SOFTBODY";
-		break;
-	case DEFERREDSCENE:
-		ss << "DEFERREDSCENE";
-		break;
-	case DEFERREDLIGHTS:
-		ss << "DEFERREDLIGHTS";
-		break;
-	case FORWARDSCENE:
-		ss << "FORWARDSCENE";
-		break;
-	case SSRTEST:
-		ss << "SSRTEST";
-		break;
-	default:
-		break;
-	}
-	ss << " DEMO";
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW / 2, -(float)screenH, -5, -4), "center", "bottom");
-}
 
 
 
@@ -285,19 +50,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ENGINESAMPLE));
 
-	RECT rect = RECT();
-	GetClientRect(g_hWnd, &rect);
-	screenW = rect.right - rect.left;
-	screenH = rect.bottom - rect.top;
 
-	if (FAILED(wiRenderer::InitDevice(g_hWnd, screenW, screenH, true)))
-	{
-		MessageBox(NULL, L"Could not initialize the D3D device", L"Error", MB_OK);
-		return 0;
-	}
-
-	LoadProgram();
-	ChangeDemo(HELLOWORLD);
+	if (!demo.setWindow(g_hWnd,hInstance))
+		return 1;
+	
+	demo.Initialize();
 
 	MSG msg = { 0 };
 	while (msg.message != WM_QUIT)
@@ -308,54 +65,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else{
 
-			FRAMESKIP_START(true,10)
+			demo.run();
 
-			wiInputManager::Update();
-			CameraControl();
-			wiCpuInfo::Frame();
-
-			if (wiInputManager::press(DIK_1)){
-				ChangeDemo(HELLOWORLD);
-			}
-			else if (wiInputManager::press(DIK_2)){
-				ChangeDemo(BASICMODEL);
-			}
-			else if (wiInputManager::press(DIK_3)){
-				ChangeDemo(SKINNEDMODEL);
-			}
-			else if (wiInputManager::press(DIK_4)){
-				ChangeDemo(EMITTERPARTICLE);
-			}
-			else if (wiInputManager::press(DIK_5)){
-				ChangeDemo(HAIRPARTICLE);
-			}
-			else if (wiInputManager::press(DIK_6)){
-				ChangeDemo(RIGIDBODY);
-			}
-			else if (wiInputManager::press(DIK_7)){
-				ChangeDemo(SOFTBODY);
-			}
-			else if (wiInputManager::press(DIK_8)){
-				ChangeDemo(DEFERREDLIGHTS);
-			}
-			else if (wiInputManager::press(DIK_9)){
-				ChangeDemo(DEFERREDSCENE);
-			}
-			else if (wiInputManager::press(DIK_0)){
-				ChangeDemo(SSRTEST);
-			}
-			else if (wiInputManager::press(DIK_F1)){
-				ChangeDemo(FORWARDSCENE);
-			}
-
-			demos[demoScene]->Update();
-
-			FRAMESKIP_END
-
-			//Render demo
-			demos[demoScene]->Render();
-
-			wiRenderer::Present(bind(&RenderableComponent::Compose,demos[demoScene]), bind(HudRender));
 		}
 	}
 
@@ -454,7 +165,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_MOUSEMOVE:
-		if (interactionType == INTERACT::WATER){
+		if (demo.interactionType == Demo::INTERACT::WATER){
 			if (wParam & MK_LBUTTON)
 			{
 				POINT p;
@@ -463,9 +174,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_WATER);
 				if (picked.object != nullptr){
 					wiWaterPlane waterPlane = wiWaterPlane(0, 0, 0, 1);
-					if (dynamic_cast<Renderable3DSceneComponent*>(demos[demoScene]))
+					if (dynamic_cast<Renderable3DSceneComponent*>(demo.getActiveComponent()))
 					{
-						waterPlane = dynamic_cast<Renderable3DSceneComponent*>(demos[demoScene])->getWaterPlane();
+						waterPlane = dynamic_cast<Renderable3DSceneComponent*>(demo.getActiveComponent())->getWaterPlane();
 					}
 					wiRenderer::PutWaterRipple("images/ripple.png", picked.position, waterPlane);
 				}
@@ -474,35 +185,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_MOUSEWHEEL:
-		switch (interactionType)
+		switch (demo.interactionType)
 		{
-		case DECAL:
-			interactionType = WATER;
+		case Demo::DECAL:
+			demo.interactionType = Demo::WATER;
 			break;
-		case WATER:
-			interactionType = SPAWN_OBJECT;
+		case Demo::WATER:
+			demo.interactionType = Demo::SPAWN_OBJECT;
 			break;
-		case SPAWN_OBJECT:
-			interactionType = SPAWN_LIGHT;
+		case Demo::SPAWN_OBJECT:
+			demo.interactionType = Demo::SPAWN_LIGHT;
 			break;
-		case SPAWN_LIGHT:
-			interactionType = DECAL;
+		case Demo::SPAWN_LIGHT:
+			demo.interactionType = Demo::DECAL;
 			break;
 		default:
 			break;
 		}
 		break;
 	case WM_RBUTTONDOWN:
-		mousebuttondown = true;
+		demo.mousebuttondown = true;
 		ShowCursor(false);
 		break;
 	case WM_RBUTTONUP:
-		mousebuttondown = false;
+		demo.mousebuttondown = false;
 		ShowCursor(true);
 		break;
 	case WM_LBUTTONDOWN:
 	{
-		if (interactionType == INTERACT::DECAL){
+		if (demo.interactionType == Demo::INTERACT::DECAL){
 			POINT p;
 			GetCursorPos(&p);
 			ScreenToClient(hWnd, &p);
@@ -532,7 +243,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				decal->attachTo(picked.object);
 			}
 		}
-		else if (interactionType == SPAWN_OBJECT){
+		else if (demo.interactionType == Demo::SPAWN_OBJECT){
 			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->At * 5));
 			switch (wiRandom::getRandom(0,3))
 			{
@@ -562,7 +273,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 			}
 		}
-		else if (interactionType == SPAWN_LIGHT){
+		else if (demo.interactionType == Demo::SPAWN_LIGHT){
 			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->Eye, wiRenderer::getCamera()->At * 5));
 			switch (wiRandom::getRandom(0,2))
 			{
@@ -593,7 +304,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
-		CleanUpProgram();
 		PostQuitMessage(0);
 		break;
 	default:
