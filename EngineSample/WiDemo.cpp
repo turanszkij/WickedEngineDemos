@@ -43,7 +43,7 @@ void Demo::Initialize()
 	wiRenderer::POINTLIGHTSHADOWRES = 512;
 	wiRenderer::SOFTSHADOW = 2;
 	wiRenderer::DX11 = false;
-	wiRenderer::physicsEngine = new BULLET();
+	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiFont::addFontStyle("basic");
 	wiInputManager::addDirectInput(new DirectInput(instance, window));
