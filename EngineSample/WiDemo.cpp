@@ -420,9 +420,11 @@ void HairParticleDemo::Initialize()
 }
 void HairParticleDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("HairParticleDemo/", "hair");
 	wiRenderer::FinishLoading();
-	wiHairParticle::Settings(8, 14, 28);
+	wiHairParticle::Settings(8, 14, 28); //LOD levels (close, mid, distant)
 }
 void HairParticleDemo::Start(){
 	ForwardRenderableComponent::Start();
