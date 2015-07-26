@@ -47,7 +47,11 @@ public:
 
 class DemoLoadingScreen : public LoadingScreenComponent
 {
+private:
+	wiSprite sprite;
 public:
+	void Load();
+	void Update();
 	void Compose();
 };
 
@@ -78,6 +82,7 @@ public:
 	void Initialize();
 	void Load();
 	void Start();
+	void Stop();
 };
 
 class EmittedParticleDemo : public ForwardRenderableComponent

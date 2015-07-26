@@ -7,6 +7,8 @@ Demo::Demo()
 	
 	demoScene = HELLOWORLD;
 	interactionType = SPAWN_OBJECT;
+
+	setFrameSkip(true);
 }
 Demo::~Demo()
 {
@@ -71,6 +73,8 @@ void Demo::Initialize()
 	{
 		x.second->Initialize();
 	}
+
+	demos[LOADINGSCREEN]->Load();
 
 	ChangeDemo(HELLOWORLD);
 }
@@ -145,9 +149,9 @@ void Demo::StartLoadingChangeDemo(DEMOS newDemo){
 }
 void Demo::FinishLoadingChangeDemo(DEMOS newDemo)
 {
-	Sleep(150);
 	demoScene = newDemo;
 	activateComponent(demos[demoScene]);
+	Sleep(150);
 }
 void Demo::ChangeDemo(DEMOS newDemo){
 	if (demoScene == LOADINGSCREEN)
@@ -173,8 +177,6 @@ void Demo::ChangeDemo(DEMOS newDemo){
 			demoScene = LOADINGSCREEN;
 			activateComponent(demos[demoScene]);
 		}
-		//StartLoadingChangeDemo(newDemo);
-		//FinishLoadingChangeDemo(newDemo);
 	}
 
 }
@@ -270,8 +272,22 @@ void Demo::HudRender(){
 }
 
 
+void DemoLoadingScreen::Load()
+{
+	sprite.setTexture(wiTextureHelper::getInstance()->getWhite());
+	sprite.anim.rot = 0.08f;
+	sprite.effects.siz = XMFLOAT2(100.f, 100.f);
+	sprite.effects.pos = XMFLOAT3(screenW * 0.5f - 50.f, -screenH * 0.5f - 50.f, 0.f);
+}
+void DemoLoadingScreen::Update()
+{
+	sprite.Update();
+}
 void DemoLoadingScreen::Compose()
 {
+	wiImage::BatchBegin();
+	sprite.Draw();
+
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
 	wiFont::Draw(ss.str(),XMFLOAT4(screenW/2.f,-screenH/2.f,10.f,0),"center","center");
@@ -310,6 +326,8 @@ void BasicModelDemo::Initialize()
 }
 void BasicModelDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
 	wiRenderer::FinishLoading();
 }
@@ -339,6 +357,8 @@ void SkinnedModelDemo::Initialize()
 }
 void SkinnedModelDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("SkinnedModelDemo/", "girl");
 	wiRenderer::FinishLoading();
 }
@@ -352,7 +372,14 @@ void SkinnedModelDemo::Start(){
 			break;
 		}
 	}
+
 	wiRenderer::SetToDrawDebugLines(true);
+}
+void SkinnedModelDemo::Stop()
+{
+	ForwardRenderableComponent::Stop();
+
+	wiRenderer::SetToDrawDebugLines(false);
 }
 
 void EmittedParticleDemo::Initialize()
@@ -368,6 +395,8 @@ void EmittedParticleDemo::Initialize()
 }
 void EmittedParticleDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("EmitterParticleDemo/", "emitter");
 	wiRenderer::FinishLoading();
 }
@@ -393,10 +422,10 @@ void HairParticleDemo::Load()
 {
 	wiRenderer::LoadModel("HairParticleDemo/", "hair");
 	wiRenderer::FinishLoading();
+	wiHairParticle::Settings(8, 14, 28);
 }
 void HairParticleDemo::Start(){
 	ForwardRenderableComponent::Start();
-	wiHairParticle::Settings(8, 14, 28);
 }
 
 void RigidBodyDemo::Initialize()
@@ -414,6 +443,8 @@ void RigidBodyDemo::Initialize()
 }
 void RigidBodyDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("RigidBodyDemo/", "rigidScene");
 	wiRenderer::FinishLoading();
 }
@@ -436,6 +467,8 @@ void SoftBodyDemo::Initialize()
 }
 void SoftBodyDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
 	wiRenderer::FinishLoading();
 }
@@ -452,14 +485,16 @@ void DeferredLightDemo::Initialize()
 }
 void DeferredLightDemo::Load()
 {
+	DeferredRenderableComponent::Load();
+
 	wiRenderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
 	wiRenderer::FinishLoading();
-}
-void DeferredLightDemo::Start(){
-	DeferredRenderableComponent::Start();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/env.dds"));
 	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
+}
+void DeferredLightDemo::Start(){
+	DeferredRenderableComponent::Start();
 }
 
 void DeferredSceneDemo::Initialize()
@@ -472,14 +507,16 @@ void DeferredSceneDemo::Initialize()
 }
 void DeferredSceneDemo::Load()
 {
+	DeferredRenderableComponent::Load();
+
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-}
-void DeferredSceneDemo::Start(){
-	DeferredRenderableComponent::Start();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
 	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
+}
+void DeferredSceneDemo::Start(){
+	DeferredRenderableComponent::Start();
 }
 
 void ForwardSceneDemo::Initialize()
@@ -490,14 +527,16 @@ void ForwardSceneDemo::Initialize()
 }
 void ForwardSceneDemo::Load()
 {
+	ForwardRenderableComponent::Load();
+
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-}
-void ForwardSceneDemo::Start(){
-	ForwardRenderableComponent::Start();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
 	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
+}
+void ForwardSceneDemo::Start(){
+	ForwardRenderableComponent::Start();
 }
 
 void SSRTestDemo::Initialize()
@@ -509,13 +548,15 @@ void SSRTestDemo::Initialize()
 }
 void SSRTestDemo::Load()
 {
+	DeferredRenderableComponent::Load();
+
 	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
 	wiRenderer::FinishLoading();
-}
-void SSRTestDemo::Start(){
-	DeferredRenderableComponent::Start();
 	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
 	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
+}
+void SSRTestDemo::Start(){
+	DeferredRenderableComponent::Start();
 }
 
