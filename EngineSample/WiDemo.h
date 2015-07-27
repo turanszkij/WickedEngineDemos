@@ -55,10 +55,8 @@ public:
 	void Compose();
 };
 
-class HelloWorldDemo : public RenderableComponent
+class HelloWorldDemo : public Renderable2DComponent
 {
-private:
-	wiSprite image;
 public:
 	HelloWorldDemo();
 	~HelloWorldDemo();

@@ -295,20 +295,22 @@ void DemoLoadingScreen::Compose()
 
 
 HelloWorldDemo::HelloWorldDemo(){
-	image = wiSprite("HelloWorldDemo/HelloWorld.png");
-	image.effects.siz = XMFLOAT2(400, 200);
-	image.effects.pos = XMFLOAT3(screenW / 2 - image.effects.siz.x / 2, -screenH / 2 + image.effects.siz.y / 2, 0);
-	image.anim.rot = 0.01f;
+	wiSprite* image;
+	image = new wiSprite("HelloWorldDemo/HelloWorld.png");
+	image->effects.siz = XMFLOAT2(400, 200);
+	image->effects.pos = XMFLOAT3(screenW / 2 - image->effects.siz.x / 2, -screenH / 2 + image->effects.siz.y / 2, 0);
+	image->anim.rot = 0.01f;
+
+	addSprite(image);
 }
 HelloWorldDemo::~HelloWorldDemo(){
-	image.CleanUp();
+	Renderable2DComponent::~Renderable2DComponent();
 }
 void HelloWorldDemo::Update(){
-	image.Update(1);
+	Renderable2DComponent::Update();
 }
 void HelloWorldDemo::Compose(){
-	wiImage::BatchBegin();
-	image.Draw();
+	Renderable2DComponent::Compose();
 }
 
 void BasicModelDemo::Initialize()
