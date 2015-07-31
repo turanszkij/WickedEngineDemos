@@ -15,7 +15,6 @@ Demo::~Demo()
 	wiRenderer::CleanUpStatic();
 	wiImage::CleanUp();
 	wiFont::CleanUpStatic();
-	wiResourceManager::CleanUp();
 	wiInputManager::CleanUp();
 	wiLensFlare::CleanUp();
 	wiRenderer::DestroyDevice();
@@ -48,8 +47,7 @@ void Demo::Initialize()
 	wiFont::addFontStyle("basic");
 	wiInputManager::addDirectInput(new DirectInput(instance, window));
 
-	wiResourceManager::add("HelloWorld/HelloWorld.png");
-	wiResourceManager::add("sound/change.wav", wiResourceManager::SOUND);
+	Content.add("sound/change.wav", wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
 
 	wiRenderer::getCamera()->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
@@ -159,7 +157,7 @@ void Demo::ChangeDemo(DEMOS newDemo){
 		return;
 	}
 
-	static_cast<wiSoundEffect*>(wiResourceManager::get("sound/change.wav")->data)->Play();
+	static_cast<wiSoundEffect*>(Content.get("sound/change.wav")->data)->Play();
 
 	if (demos.find(newDemo) != demos.end()){
 		LoadingScreenComponent* loading = dynamic_cast<LoadingScreenComponent*>(demos[LOADINGSCREEN]);
@@ -493,8 +491,8 @@ void DeferredLightDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/lightBenchmark/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void DeferredLightDemo::Start(){
@@ -515,8 +513,8 @@ void DeferredSceneDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void DeferredSceneDemo::Start(){
@@ -535,8 +533,8 @@ void ForwardSceneDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void ForwardSceneDemo::Start(){
@@ -556,8 +554,8 @@ void SSRTestDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)wiResourceManager::add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void SSRTestDemo::Start(){
