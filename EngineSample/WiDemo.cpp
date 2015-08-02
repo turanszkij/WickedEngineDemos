@@ -9,6 +9,10 @@ Demo::Demo()
 	interactionType = SPAWN_OBJECT;
 
 	setFrameSkip(true);
+
+	//wiLua lua;
+	//lua.RunFile("foo.lua");
+	//lua.RunText("backlog(\"ASD\")");
 }
 Demo::~Demo()
 {
@@ -78,42 +82,46 @@ void Demo::Initialize()
 }
 void Demo::Update()
 {
-	wiInputManager::Update();
 	CameraControl();
-	wiCpuInfo::Frame();
 
-	if (wiInputManager::press(DIK_1)){
-		ChangeDemo(HELLOWORLD);
+	if (!wiBackLog::isActive())
+	{
+		if (wiInputManager::press(DIK_1)){
+			ChangeDemo(HELLOWORLD);
+		}
+		else if (wiInputManager::press(DIK_2)){
+			ChangeDemo(BASICMODEL);
+		}
+		else if (wiInputManager::press(DIK_3)){
+			ChangeDemo(SKINNEDMODEL);
+		}
+		else if (wiInputManager::press(DIK_4)){
+			ChangeDemo(EMITTERPARTICLE);
+		}
+		else if (wiInputManager::press(DIK_5)){
+			ChangeDemo(HAIRPARTICLE);
+		}
+		else if (wiInputManager::press(DIK_6)){
+			ChangeDemo(RIGIDBODY);
+		}
+		else if (wiInputManager::press(DIK_7)){
+			ChangeDemo(SOFTBODY);
+		}
+		else if (wiInputManager::press(DIK_8)){
+			ChangeDemo(DEFERREDLIGHTS);
+		}
+		else if (wiInputManager::press(DIK_9)){
+			ChangeDemo(DEFERREDSCENE);
+		}
+		else if (wiInputManager::press(DIK_0)){
+			ChangeDemo(SSRTEST);
+		}
+		else if (wiInputManager::press(DIK_F1)){
+			ChangeDemo(FORWARDSCENE);
+		}
 	}
-	else if (wiInputManager::press(DIK_2)){
-		ChangeDemo(BASICMODEL);
-	}
-	else if (wiInputManager::press(DIK_3)){
-		ChangeDemo(SKINNEDMODEL);
-	}
-	else if (wiInputManager::press(DIK_4)){
-		ChangeDemo(EMITTERPARTICLE);
-	}
-	else if (wiInputManager::press(DIK_5)){
-		ChangeDemo(HAIRPARTICLE);
-	}
-	else if (wiInputManager::press(DIK_6)){
-		ChangeDemo(RIGIDBODY);
-	}
-	else if (wiInputManager::press(DIK_7)){
-		ChangeDemo(SOFTBODY);
-	}
-	else if (wiInputManager::press(DIK_8)){
-		ChangeDemo(DEFERREDLIGHTS);
-	}
-	else if (wiInputManager::press(DIK_9)){
-		ChangeDemo(DEFERREDSCENE);
-	}
-	else if (wiInputManager::press(DIK_0)){
-		ChangeDemo(SSRTEST);
-	}
-	else if (wiInputManager::press(DIK_F1)){
-		ChangeDemo(FORWARDSCENE);
+	if (wiInputManager::press(DIK_HOME)){
+		wiBackLog::Toggle();
 	}
 
 	MainComponent::Update();
@@ -123,6 +131,8 @@ void Demo::Compose()
 	MainComponent::Compose();
 
 	HudRender();
+
+	wiBackLog::Draw();
 }
 
 void Demo::CameraControl(){
@@ -201,7 +211,7 @@ void Demo::HudRender(){
 	ss << "\n[9] :  DeferredScene";
 	ss << "\n[0] :  SSRTest";
 	ss << "\n[F1] : ForwardScene";
-	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB\nChange interaction type with MOUSEWHEEL";
+	ss << "\n\nControls:\n-----------------\nMove with WASD\nLook with RMB\nChange interaction type with MOUSEWHEEL\nHOME: Toggle console";
 	ss << "\nInteraction type: ";
 	switch (interactionType)
 	{
@@ -220,12 +230,14 @@ void Demo::HudRender(){
 	default:
 		break;
 	}
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -5, -4), "left", "top");
+	wiFont(ss.str(), wiFontProps(0, 0, -7, WIFALIGN_LEFT, WIFALIGN_TOP, -4)).Draw();
+	//wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -7, -4), "left", "top");
 	ss.str("");
 	ss.precision(1);
 	ss << fixed << wiFrameRate::FPS() << " FPS";
 	ss << "\nCPU: " << wiCpuInfo::GetCpuPercentage() << "%";
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW - 15, 0, -5, -4), "right", "top");
+	wiFont(ss.str(), wiFontProps((float)screenW - 15, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
+	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW - 15, 0, -5, -4), "right", "top");
 	ss.str("");
 	switch (demoScene)
 	{
@@ -266,7 +278,8 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW / 2, -(float)screenH, -5, -4), "center", "bottom");
+	wiFont(ss.str(), wiFontProps((float)screenW / 2, -(float)screenH, -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
+	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW / 2, -(float)screenH, -5, -4), "center", "bottom");
 }
 
 
@@ -288,7 +301,8 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont::Draw(ss.str(),XMFLOAT4(screenW/2.f,-screenH/2.f,10.f,0),"center","center");
+	wiFont(ss.str(), wiFontProps(screenW / 2.f, -screenH / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	//wiFont::Draw(ss.str(),XMFLOAT4(screenW/2.f,-screenH/2.f,10.f,0),"center","center");
 }
 
 

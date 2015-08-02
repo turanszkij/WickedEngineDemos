@@ -164,6 +164,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
 		break;
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_UP:
+			if (wiBackLog::isActive())
+				wiBackLog::historyPrev();
+			break;
+		case VK_DOWN:
+			if (wiBackLog::isActive())
+				wiBackLog::historyNext();
+			break;
+		default:
+			break;
+		}
+		break;
+	case WM_CHAR:
+		switch (wParam)
+		{
+		case VK_BACK:
+			if (wiBackLog::isActive())
+				wiBackLog::deletefromInput();
+			break;
+		case VK_RETURN:
+			if (wiBackLog::isActive())
+				wiBackLog::acceptInput();
+			break;
+		default:
+			if (wiBackLog::isActive()){
+				const char c = (const char)(TCHAR)wParam;
+				wiBackLog::input(c);
+			}
+			break;
+		}
+		break;
 	case WM_MOUSEMOVE:
 		if (demo.interactionType == Demo::INTERACT::WATER){
 			if (wParam & MK_LBUTTON)
