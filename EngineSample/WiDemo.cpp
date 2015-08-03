@@ -9,10 +9,6 @@ Demo::Demo()
 	interactionType = SPAWN_OBJECT;
 
 	setFrameSkip(true);
-
-	//wiLua lua;
-	//lua.RunFile("foo.lua");
-	//lua.RunText("backlog(\"ASD\")");
 }
 Demo::~Demo()
 {
