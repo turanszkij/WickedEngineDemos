@@ -19,7 +19,6 @@ Demo::~Demo()
 	wiLensFlare::CleanUp();
 	wiRenderer::DestroyDevice();
 
-	MainComponent::~MainComponent();
 }
 void Demo::Initialize()
 {
