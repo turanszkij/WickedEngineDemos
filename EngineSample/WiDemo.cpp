@@ -1,6 +1,68 @@
 #include "stdafx.h"
 #include "WiDemo.h"
 
+class ASD
+{
+public:
+	int mad;
+	ASD(int mad) :mad(mad){ 
+	}
+	int GetMad(){ return mad; }
+	void SetMad(int value){ mad = value; }
+
+	static int GetMadLua(lua_State* L)
+	{
+		ASD** classData = (ASD**)wiLua::SGetUserData(L);
+		assert(classData);
+		wiLua::SSetInt(L, (**classData).GetMad());
+		return 1;
+	}
+	static int SetMadLua(lua_State* L)
+	{
+		ASD** classData = (ASD**)wiLua::SGetUserData(L);
+		assert(classData);
+		assert(wiLua::SGetArgCount(L) > 1);
+		int value = wiLua::SGetInt(L, 2);
+		(**classData).SetMad(value);
+		return 0;
+	}
+};
+ASD *asd = nullptr;
+ASD *bsd = nullptr;
+luaL_Reg asdReg[] =
+{
+	{ "GetMad", ASD::GetMadLua },
+	{ "SetMad", ASD::SetMadLua },
+	{ NULL, NULL }
+};
+
+
+class Account {
+	lua_Number m_balance;
+public:
+	static const char className[];
+	static Luna<Account>::RegType methods[];
+
+	Account(lua_State *L)      { m_balance = luaL_checknumber(L, 1); }
+	int deposit(lua_State *L) { m_balance += luaL_checknumber(L, 1); return 0; }
+	int withdraw(lua_State *L) { m_balance -= luaL_checknumber(L, 1); return 0; }
+	int balance(lua_State *L) { lua_pushnumber(L, m_balance); return 1; }
+	~Account() { 
+		char* dest;
+		sprintf(dest,"deleted Account (%p)\n", this); 
+		wiBackLog::post(dest);
+	}
+};
+
+const char Account::className[] = "Account";
+
+Luna<Account>::RegType Account::methods[] = {
+	lunamethod(Account, deposit),
+	lunamethod(Account, withdraw),
+	lunamethod(Account, balance),
+	{ 0, 0 }
+};
+
 Demo::Demo()
 {
 	MainComponent::MainComponent();
@@ -9,6 +71,14 @@ Demo::Demo()
 	interactionType = SPAWN_OBJECT;
 
 	setFrameSkip(true);
+
+	asd = new ASD(433);
+	bsd = new ASD(7003);
+	wiLua::GetGlobal()->RegisterLibrary("ASD", asdReg);
+	wiLua::GetGlobal()->RegisterObject("ASD", "asd", asd);
+	wiLua::GetGlobal()->RegisterObject("ASD", "bsd", bsd);
+
+	Luna<Account>::Register(wiLua::GetGlobal()->GetLuaState());
 }
 Demo::~Demo()
 {
@@ -115,6 +185,15 @@ void Demo::Update()
 			ChangeDemo(FORWARDSCENE);
 		}
 	}
+	else
+	{
+		if (wiInputManager::press(DIK_PGUP) || wiInputManager::hold(DIK_PGUP,30,true)){
+			wiBackLog::Scroll(-5);
+		}
+		else if (wiInputManager::press(DIK_PGDN) || wiInputManager::hold(DIK_PGDN, 40, true)){
+			wiBackLog::Scroll(5);
+		}
+	}
 	if (wiInputManager::press(DIK_HOME)){
 		wiBackLog::Toggle();
 	}
@@ -131,6 +210,10 @@ void Demo::Compose()
 }
 
 void Demo::CameraControl(){
+
+	if (wiBackLog::isActive())
+		return;
+
 	DirectInput* dinput = wiInputManager::dinput;
 	Camera* cam = wiRenderer::getCamera();
 	float speed = (dinput->IsKeyDown(DIK_LSHIFT) ? 10.0f : 1.0f);
