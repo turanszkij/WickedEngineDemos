@@ -47,8 +47,6 @@ public:
 
 class DemoLoadingScreen : public LoadingScreenComponent
 {
-private:
-	wiSprite sprite;
 public:
 	void Load();
 	void Update();

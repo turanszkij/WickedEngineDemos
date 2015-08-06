@@ -293,30 +293,30 @@ void Demo::HudRender(){
 
 void DemoLoadingScreen::Load()
 {
-	sprite.setTexture(wiTextureHelper::getInstance()->getWhite());
-	sprite.anim.rot = 0.08f;
-	sprite.effects.siz = XMFLOAT2(100.f, 100.f);
-	sprite.effects.pos = XMFLOAT3(screenW * 0.5f - 50.f, -screenH * 0.5f - 50.f, 0.f);
+	wiSprite* sprite = new wiSprite();
+	sprite->setTexture(wiTextureHelper::getInstance()->getWhite());
+	sprite->anim.rot = 0.08f;
+	sprite->effects.siz = XMFLOAT2(100.f, 100.f);
+	sprite->effects.pos = XMFLOAT3(screenW * 0.5f - 50.f, -screenH * 0.5f - 50.f, 0.f);
+	addSprite(sprite);
 }
 void DemoLoadingScreen::Update()
 {
-	sprite.Update();
+	Renderable2DComponent::Update();
 }
 void DemoLoadingScreen::Compose()
 {
-	wiImage::BatchBegin();
-	sprite.Draw();
+	Renderable2DComponent::Compose();
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
 	wiFont(ss.str(), wiFontProps(screenW / 2.f, -screenH / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
-	//wiFont::Draw(ss.str(),XMFLOAT4(screenW/2.f,-screenH/2.f,10.f,0),"center","center");
 }
 
 
 HelloWorldDemo::HelloWorldDemo(){
 	wiSprite* image;
-	image = new wiSprite("HelloWorldDemo/HelloWorld.png");
+	image = new wiSprite("HelloWorldDemo/HelloWorld.png",&Content);
 	image->effects.siz = XMFLOAT2(400, 200);
 	image->effects.pos = XMFLOAT3(screenW / 2 - image->effects.siz.x / 2, -screenH / 2 + image->effects.siz.y / 2, 0);
 	image->anim.rot = 0.01f;
