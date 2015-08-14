@@ -48,7 +48,7 @@ runProcess( function()
 	for i=1 , 100 do
 		size = 60*rand()+5
 		sprite = Sprite("images/leaf.png")
-		e = ImageEffects(1000*rand()-10,-500*rand()+10,size,size)
+		e = ImageEffects(GetScreenWidth()*rand()-10,-GetScreenHeight()*rand()+10,size,size)
 		sprite:SetEffects(e)
 		a = SpriteAnim()
 		a:SetRot(0.05*rand()-0.025)

@@ -35,7 +35,7 @@ void Demo::Initialize()
 	wiRenderer::VSYNC = false;
 	wiRenderer::EMITTERSENABLED = true;
 	wiRenderer::HAIRPARTICLEENABLED = true;
-	wiRenderer::setRenderResolution(screenW, screenH);
+	wiRenderer::setRenderResolution(wiRenderer::GetScreenWidth(), wiRenderer::GetScreenHeight());
 	wiRenderer::SHADOWMAPRES = 1024;
 	wiRenderer::POINTLIGHTSHADOW = 6;
 	wiRenderer::POINTLIGHTSHADOWRES = 512;
@@ -51,8 +51,6 @@ void Demo::Initialize()
 
 	wiRenderer::getCamera()->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
 
-	RenderableComponent::screenW = screenW;
-	RenderableComponent::screenH = screenH;
 	demos.insert(pair<DEMOS, RenderableComponent*>(LOADINGSCREEN, new DemoLoadingScreen()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(HELLOWORLD, new HelloWorldDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(BASICMODEL, new BasicModelDemo()));
@@ -205,7 +203,7 @@ void Demo::HudRender(){
 #ifdef _DEBUG
 	ss << " [DEBUG]";
 #endif
-	ss << "\nResolution: " << screenW << " x " << screenH;
+	ss << "\nResolution: " << wiRenderer::GetScreenWidth() << " x " << wiRenderer::GetScreenHeight();
 	ss << "\nDeferred context support: " << (wiRenderer::getMultithreadingSupport() ? "yes" : "no");
 	ss << "\n\nDemo Select:\n------------------";
 	ss << "\n[1] :  HelloWorld";
@@ -244,8 +242,8 @@ void Demo::HudRender(){
 	ss.precision(1);
 	ss << fixed << wiFrameRate::FPS() << " FPS";
 	ss << "\nCPU: " << wiCpuInfo::GetCpuPercentage() << "%";
-	wiFont(ss.str(), wiFontProps((float)screenW - 15, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
-	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW - 15, 0, -5, -4), "right", "top");
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetScreenWidth() - 15, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
+	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetScreenWidth() - 15, 0, -5, -4), "right", "top");
 	ss.str("");
 	switch (demoScene)
 	{
@@ -286,8 +284,8 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont(ss.str(), wiFontProps((float)screenW / 2, -(float)screenH, -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
-	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)screenW / 2, -(float)screenH, -5, -4), "center", "bottom");
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetScreenWidth() / 2, -(float)wiRenderer::GetScreenHeight(), -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
+	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetScreenWidth() / 2, -(float)wiRenderer::GetScreenHeight(), -5, -4), "center", "bottom");
 }
 
 
@@ -297,7 +295,7 @@ void DemoLoadingScreen::Load()
 	sprite->setTexture(wiTextureHelper::getInstance()->getWhite());
 	sprite->anim.rot = 0.08f;
 	sprite->effects.siz = XMFLOAT2(100.f, 100.f);
-	sprite->effects.pos = XMFLOAT3(screenW * 0.5f - 50.f, -screenH * 0.5f - 50.f, 0.f);
+	sprite->effects.pos = XMFLOAT3(wiRenderer::GetScreenWidth() * 0.5f - 50.f, -wiRenderer::GetScreenHeight() * 0.5f - 50.f, 0.f);
 	addSprite(sprite);
 }
 void DemoLoadingScreen::Update()
@@ -310,7 +308,7 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont(ss.str(), wiFontProps(screenW / 2.f, -screenH / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetScreenWidth() / 2.f, -wiRenderer::GetScreenHeight() / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
 }
 
 
@@ -318,7 +316,7 @@ HelloWorldDemo::HelloWorldDemo(){
 	wiSprite* image;
 	image = new wiSprite("HelloWorldDemo/HelloWorld.png",&Content);
 	image->effects.siz = XMFLOAT2(400, 200);
-	image->effects.pos = XMFLOAT3(screenW / 2 - image->effects.siz.x / 2, -screenH / 2 + image->effects.siz.y / 2, 0);
+	image->effects.pos = XMFLOAT3(wiRenderer::GetScreenWidth() / 2 - image->effects.siz.x / 2, -wiRenderer::GetScreenHeight() / 2 + image->effects.siz.y / 2, 0);
 	image->anim.rot = 0.01f;
 
 	addSprite(image);
