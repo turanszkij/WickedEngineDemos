@@ -360,7 +360,7 @@ void BasicModelDemo::Start(){
 void BasicModelDemo::Update(){
 	ForwardRenderableComponent::Update();
 
-	wiRenderer::objects.back()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
+	wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
 	wiRenderer::UpdateRenderInfo(wiRenderer::getImmediateContext());
 }
 

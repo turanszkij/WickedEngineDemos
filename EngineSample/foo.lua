@@ -42,17 +42,61 @@ backlog_fontsize(-3)
 -- 	backlog_post(i)
 -- end
 
- for i=0 , 10 do
- 	size = 300*rand()+100
- 	sprite = Sprite("images/leaf.png")
- 	e = ImageEffects(1000*rand(),-500*rand(),size,size)
- 	sprite:SetEffects(e)
- 	a = SpriteAnim()
- 	a:SetRot(0.05*rand()-0.025)
- 	sprite:SetAnim(a)
- 	main:GetActiveComponent():AddSprite(sprite)
- end
+local sleep=waitSeconds
 
+runProcess( function() 
+	for i=1 , 100 do
+		size = 60*rand()+5
+		sprite = Sprite("images/leaf.png")
+		e = ImageEffects(1000*rand()-10,-500*rand()+10,size,size)
+		sprite:SetEffects(e)
+		a = SpriteAnim()
+		a:SetRot(0.05*rand()-0.025)
+		sprite:SetAnim(a)
+		main:GetActiveComponent():AddSprite(sprite)
+		sleep(1)
+	end
+end)
+
+-- LoadModel("../../DXProject/DXProject/levels/Fencer/", "Fencer")
+-- FinishLoading()
+
+
+
+
+
+local print = backlog_post
+
+-- -- And a function to demo it all:
+-- runProcess(function ()  
+--     --print("Hello world. I will now astound you by waiting for 2 seconds.")
+--     --waitSeconds(2)
+--     --print("Haha! I did it!")
+-- 	for i=1, 60 do
+-- 		waitSeconds(1)
+-- 		backlog_post(i)
+-- 	end
+-- end) 
+
+-- runProcess(function()  
+--     print("1: I am the first function. The second function cannot speak until I say it can.")
+--     waitSeconds(2)
+--     print("1: In two more seconds, I will allow it to speak.")
+--     waitSeconds(2)
+--     signal("ok, you can talk")
+--     waitSignal("function 2 done talking")
+--     print("1: First function again. I'm done now too.")
+-- end)
+-- 
+-- runProcess(function()  
+--     waitSignal("ok, you can talk")
+--     print("2: Hey, I'm the second function. I like talking.")
+--     waitSeconds(2)
+--     print("2: I'd talk all the time, if that jerky first function would let me.")
+--     waitSeconds(2)
+--     print("2: I guess I'm done now though.")
+--     signal("function 2 done talking")
+-- end) 
 
 
 
