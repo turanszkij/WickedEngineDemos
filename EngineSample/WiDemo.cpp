@@ -79,50 +79,62 @@ void Demo::Update()
 
 	if (!wiBackLog::isActive())
 	{
-		if (wiInputManager::press(DIK_1)){
+		if (wiInputManager::press('1')){
 			ChangeDemo(HELLOWORLD);
 		}
-		else if (wiInputManager::press(DIK_2)){
+		else if (wiInputManager::press('2')){
 			ChangeDemo(BASICMODEL);
 		}
-		else if (wiInputManager::press(DIK_3)){
+		else if (wiInputManager::press('3')){
 			ChangeDemo(SKINNEDMODEL);
 		}
-		else if (wiInputManager::press(DIK_4)){
+		else if (wiInputManager::press('4')){
 			ChangeDemo(EMITTERPARTICLE);
 		}
-		else if (wiInputManager::press(DIK_5)){
+		else if (wiInputManager::press('5')){
 			ChangeDemo(HAIRPARTICLE);
 		}
-		else if (wiInputManager::press(DIK_6)){
+		else if (wiInputManager::press('6')){
 			ChangeDemo(RIGIDBODY);
 		}
-		else if (wiInputManager::press(DIK_7)){
+		else if (wiInputManager::press('7')){
 			ChangeDemo(SOFTBODY);
 		}
-		else if (wiInputManager::press(DIK_8)){
+		else if (wiInputManager::press('8')){
 			ChangeDemo(DEFERREDLIGHTS);
 		}
-		else if (wiInputManager::press(DIK_9)){
+		else if (wiInputManager::press('9')){
 			ChangeDemo(DEFERREDSCENE);
 		}
-		else if (wiInputManager::press(DIK_0)){
+		else if (wiInputManager::press('0')){
 			ChangeDemo(SSRTEST);
 		}
-		else if (wiInputManager::press(DIK_F1)){
+		else if (wiInputManager::press(VK_F1)){
 			ChangeDemo(FORWARDSCENE);
+		}
+		else if (wiInputManager::press(VK_UP)){
+			wiLua::GetGlobal()->Signal("upkey");
+		}
+		else if (wiInputManager::press(VK_DOWN)){
+			wiLua::GetGlobal()->Signal("downkey");
+		} 
+		else if (wiInputManager::press(VK_LEFT)){
+			wiLua::GetGlobal()->Signal("leftkey");
+		}
+		else if (wiInputManager::press(VK_RIGHT)){
+			wiLua::GetGlobal()->Signal("rightkey");
 		}
 	}
 	else
 	{
-		if (wiInputManager::press(DIK_PGUP) || wiInputManager::hold(DIK_PGUP,30,true)){
+		if (wiInputManager::press(VK_PRIOR) || wiInputManager::hold(VK_PRIOR, 30, true)){ //page up
 			wiBackLog::Scroll(-5);
 		}
-		else if (wiInputManager::press(DIK_PGDN) || wiInputManager::hold(DIK_PGDN, 40, true)){
+		else if (wiInputManager::press(VK_NEXT) || wiInputManager::hold(VK_NEXT, 40, true)){ //page down
 			wiBackLog::Scroll(5);
 		}
 	}
-	if (wiInputManager::press(DIK_HOME)){
+	if (wiInputManager::press(VK_HOME)){
 		wiBackLog::Toggle();
 	}
 
@@ -144,13 +156,13 @@ void Demo::CameraControl(){
 
 	DirectInput* dinput = wiInputManager::dinput;
 	Camera* cam = wiRenderer::getCamera();
-	float speed = (dinput->IsKeyDown(DIK_LSHIFT) ? 10.0f : 1.0f);
-	if (dinput->IsKeyDown(DIK_A)) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
-	if (dinput->IsKeyDown(DIK_D)) cam->AddtoCameraPosition(XMVectorSet(speed, 0, 0, 0));
-	if (dinput->IsKeyDown(DIK_W)) cam->AddtoCameraPosition(XMVectorSet(0, 0, speed, 0));
-	if (dinput->IsKeyDown(DIK_S)) cam->AddtoCameraPosition(XMVectorSet(0, 0, -speed, 0));
-	if (dinput->IsKeyDown(DIK_SPACE)) cam->AddtoCameraPosition(XMVectorSet(0, speed, 0, 0));
-	if (dinput->IsKeyDown(DIK_LCONTROL)) cam->AddtoCameraPosition(XMVectorSet(0, -speed, 0, 0));
+	float speed = (wiInputManager::down(VK_SHIFT) ? 10.0f : 1.0f);
+	if (wiInputManager::down('A')) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
+	if (wiInputManager::down('D')) cam->AddtoCameraPosition(XMVectorSet(speed, 0, 0, 0));
+	if (wiInputManager::down('W')) cam->AddtoCameraPosition(XMVectorSet(0, 0, speed, 0));
+	if (wiInputManager::down('S')) cam->AddtoCameraPosition(XMVectorSet(0, 0, -speed, 0));
+	if (wiInputManager::down(VK_SPACE)) cam->AddtoCameraPosition(XMVectorSet(0, speed, 0, 0));
+	if (wiInputManager::down(VK_CONTROL)) cam->AddtoCameraPosition(XMVectorSet(0, -speed, 0, 0));
 	cam->ProcessInput(1.0f / 60.0f, mousebuttondown);
 }
 void Demo::CameraReset(){

@@ -44,22 +44,24 @@ backlog_fontsize(-3)
 
 local sleep=waitSeconds
 
-runProcess( function() 
-	for i=1 , 100 do
-		size = 60*rand()+5
-		sprite = Sprite("images/leaf.png")
-		e = ImageEffects(GetScreenWidth()*rand()-10,-GetScreenHeight()*rand()+10,size,size)
-		sprite:SetEffects(e)
-		a = SpriteAnim()
-		a:SetRot(0.05*rand()-0.025)
-		sprite:SetAnim(a)
-		main:GetActiveComponent():AddSprite(sprite)
-		sleep(1)
-	end
-end)
+-- runProcess( function() 
+-- 	for i=1 , 100 do
+-- 		size = 60*rand()+5
+-- 		sprite = Sprite("images/leaf.png")
+-- 		e = ImageEffects(GetScreenWidth()*rand()-10,-GetScreenHeight()*rand()+10,size,size)
+-- 		sprite:SetEffects(e)
+-- 		a = SpriteAnim()
+-- 		a:SetRot(0.05*rand()-0.025)
+-- 		sprite:SetAnim(a)
+-- 		main:GetActiveComponent():AddSprite(sprite)
+-- 		sleep(1)
+-- 	end
+-- end)
 
--- LoadModel("../../DXProject/DXProject/levels/Fencer/", "Fencer")
--- FinishLoading()
+-- runProcess(function()
+--  LoadModel("../../DXProject/DXProject/levels/Fencer/", "Fencer")
+--  FinishLoading()
+-- end)
 
 
 
@@ -98,7 +100,95 @@ local print = backlog_post
 --     signal("function 2 done talking")
 -- end) 
 
+-- backlog_post_list = function(a)
+-- 	for key,value in pairs(a) do
+-- 		backlog_post(value)
+-- 	end
+-- end
+-- 
+-- function len(T)
+--   local count = 0
+--   for _ in pairs(T) do 
+-- 	count = count + 1 end
+--   return count
+-- end
+-- 
+-- backlog_post(len({GetObjects()}))
+-- backlog_post_list({GetObjects()})
 
+local up=0xC8
+
+ runProcess(function()
+ 	while true do
+ 		waitSignal("upkey")
+ 		SoundEffect("sound/change.wav"):Play()
+ 	end
+ end)
+
+ local posX = GetScreenWidth()/2
+ local posY = -GetScreenHeight()/2
+ local stepX = posX*0.1
+ local stepY = posY*0.1
+ AddSprite = function()
+ 	local sprite = Sprite("images/blood2.png")
+ 	local effects = ImageEffects(posX,posY,100,100)
+ 	local anim = SpriteAnim()
+ 	sprite:SetEffects(effects)
+ 	sprite:SetAnim(anim)
+ 	main:GetActiveComponent():AddSprite(sprite)
+ end
+ --AddSprite()
+ 
+ 
+ local sprite = Sprite("images/blood2.png")
+ local effects = ImageEffects(posX,posY,100,100)
+ local anim = SpriteAnim()
+ sprite:SetEffects(effects)
+ sprite:SetAnim(anim)
+ main:GetActiveComponent():AddSprite(sprite)
+ UpdateSprite = function()
+	effects:SetPos(posX,posY)
+	sprite:SetEffects(effects)
+ end
+ 
+
+
+runProcess(function()
+	while true do
+		waitSignal("upkey")
+ 		SoundEffect("sound/change.wav"):Play()
+		posY = posY - stepY;
+		UpdateSprite()
+		--AddSprite()
+	end
+end)
+runProcess(function()
+	while true do
+		waitSignal("downkey")
+ 		SoundEffect("sound/change.wav"):Play()
+		posY = posY + stepY;
+		UpdateSprite()
+		--AddSprite()
+	end
+end)
+runProcess(function()
+	while true do
+		waitSignal("leftkey")
+ 		SoundEffect("sound/change.wav"):Play()
+		posX = posX + stepY;
+		UpdateSprite()
+		--AddSprite()
+	end
+end)
+runProcess(function()
+	while true do
+		waitSignal("rightkey")
+ 		SoundEffect("sound/change.wav"):Play()
+		posX = posX - stepY;
+		UpdateSprite()
+		--AddSprite()
+	end
+end)
 
 
 
