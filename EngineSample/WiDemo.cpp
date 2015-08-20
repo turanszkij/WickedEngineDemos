@@ -45,6 +45,7 @@ void Demo::Initialize()
 
 	wiFont::addFontStyle("basic");
 	wiInputManager::addDirectInput(new DirectInput(instance, window));
+	wiInputManager::addXInput(new XInput());
 
 	Content.add("sound/change.wav", wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
@@ -124,6 +125,22 @@ void Demo::Update()
 		else if (wiInputManager::press(VK_RIGHT)){
 			wiLua::GetGlobal()->Signal("rightkey");
 		}
+		else if (wiInputManager::press(XINPUT_GAMEPAD_DPAD_LEFT, wiInputManager::XINPUT_JOYPAD, 0))
+		{
+			ChangeDemo((DEMOS)(demoScene - 1));
+		}
+		else if (wiInputManager::press(XINPUT_GAMEPAD_DPAD_RIGHT, wiInputManager::XINPUT_JOYPAD, 0))
+		{
+			ChangeDemo((DEMOS)(demoScene + 1));
+		}
+		else if (wiInputManager::press(POV_LEFT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
+		{
+			ChangeDemo((DEMOS)(demoScene - 1));
+		}
+		else if (wiInputManager::press(POV_RIGHT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
+		{
+			ChangeDemo((DEMOS)(demoScene + 1));
+		}
 	}
 	else
 	{
@@ -180,7 +197,7 @@ void Demo::FinishLoadingChangeDemo(DEMOS newDemo)
 	Sleep(150);
 }
 void Demo::ChangeDemo(DEMOS newDemo){
-	if (demoScene == LOADINGSCREEN)
+	if (demoScene == LOADINGSCREEN || newDemo==LOADINGSCREEN)
 	{
 		return;
 	}
