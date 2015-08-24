@@ -148,6 +148,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	//case WM_INPUT:
+	//	wiInputManager::rawinput->RetrieveData(lParam);
+	//	return 0;
+	//	break;
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);

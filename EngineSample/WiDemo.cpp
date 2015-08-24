@@ -44,8 +44,9 @@ void Demo::Initialize()
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiFont::addFontStyle("basic");
-	wiInputManager::addDirectInput(new DirectInput(instance, window));
-	wiInputManager::addXInput(new XInput());
+	//wiInputManager::addDirectInput(new wiDirectInput(instance, window));
+	wiInputManager::addXInput(new wiXInput());
+	wiInputManager::addRawInput(new wiRawInput(window));
 
 	Content.add("sound/change.wav", wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
@@ -171,7 +172,6 @@ void Demo::CameraControl(){
 	if (wiBackLog::isActive())
 		return;
 
-	DirectInput* dinput = wiInputManager::dinput;
 	Camera* cam = wiRenderer::getCamera();
 	float speed = (wiInputManager::down(VK_SHIFT) ? 10.0f : 1.0f);
 	if (wiInputManager::down('A')) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
@@ -266,13 +266,14 @@ void Demo::HudRender(){
 		break;
 	}
 	wiFont(ss.str(), wiFontProps(0, 0, -7, WIFALIGN_LEFT, WIFALIGN_TOP, -4)).Draw();
-	//wiFont::Draw(ss.str(), "basic", XMFLOAT4(0, 0, -7, -4), "left", "top");
 	ss.str("");
 	ss.precision(1);
 	ss << fixed << wiFrameRate::FPS() << " FPS";
 	ss << "\nCPU: " << wiCpuInfo::GetCpuPercentage() << "%";
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetScreenWidth() - 15, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
-	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetScreenWidth() - 15, 0, -5, -4), "right", "top");
+	//ss << "\nRAWInput Joy: " << wiInputManager::rawinput->raw.data.hid.bRawData[0];
+	//ss << "\nRAWInput Keyboard: " << (char)wiInputManager::rawinput->raw.data.keyboard.VKey;
+	//ss << "\nRAWInput Mouse: " << wiInputManager::rawinput->raw.data.mouse.lLastX << ":" << wiInputManager::rawinput->raw.data.mouse.lLastY;
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetScreenWidth() - 20, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
 	ss.str("");
 	switch (demoScene)
 	{
