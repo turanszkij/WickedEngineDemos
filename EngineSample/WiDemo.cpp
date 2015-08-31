@@ -114,18 +114,6 @@ void Demo::Update()
 		else if (wiInputManager::press(VK_F1)){
 			ChangeDemo(FORWARDSCENE);
 		}
-		else if (wiInputManager::press(VK_UP)){
-			wiLua::GetGlobal()->Signal("upkey");
-		}
-		else if (wiInputManager::press(VK_DOWN)){
-			wiLua::GetGlobal()->Signal("downkey");
-		} 
-		else if (wiInputManager::press(VK_LEFT)){
-			wiLua::GetGlobal()->Signal("leftkey");
-		}
-		else if (wiInputManager::press(VK_RIGHT)){
-			wiLua::GetGlobal()->Signal("rightkey");
-		}
 		else if (wiInputManager::press(XINPUT_GAMEPAD_DPAD_LEFT, wiInputManager::XINPUT_JOYPAD, 0))
 		{
 			ChangeDemo((DEMOS)(demoScene - 1));
@@ -141,6 +129,19 @@ void Demo::Update()
 		else if (wiInputManager::press(POV_RIGHT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
 		{
 			ChangeDemo((DEMOS)(demoScene + 1));
+		}
+
+		if (wiInputManager::down(VK_UP)){
+			wiLua::GetGlobal()->Signal("upkey");
+		}
+		if (wiInputManager::down(VK_DOWN)){
+			wiLua::GetGlobal()->Signal("downkey");
+		}
+		if (wiInputManager::down(VK_LEFT)){
+			wiLua::GetGlobal()->Signal("leftkey");
+		}
+		if (wiInputManager::down(VK_RIGHT)){
+			wiLua::GetGlobal()->Signal("rightkey");
 		}
 	}
 	else

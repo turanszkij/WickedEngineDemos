@@ -5,6 +5,8 @@
 --	backlog_fontsize	: change font size of the backlog
 --	backlog_clear		: clear backlog
 
+local print = backlog_post
+
 separator = function(str)
 backlog_post("\n\n---------------------------------\n",str,"\n---------------------------------")
 end
@@ -59,15 +61,33 @@ local sleep=waitSeconds
 -- end)
 
 -- runProcess(function()
---  LoadModel("../../DXProject/DXProject/levels/Fencer/", "Fencer")
+--  LoadModel("../../DXProject/DXProject/levels/Training Ground/", "Training Ground")
 --  FinishLoading()
+-- end)
+-- w = GetTransform("wood_barrel_common")
+-- g=GetTransform("Ground_common")
+-- m=MatrixTranslation(Vector(2))
+
+-- runProcess(function()
+-- 	local lopatky = GetTransform("lopatky_common")
+-- 	local mlyn = GetTransform("mlyn_common")
+-- 	lopatky:AttachTo(mlyn)
+-- 	local v = Vector(0,0,0,0)
+-- 	while true do
+-- 		sleep(0.01)
+-- 		v:SetX(v:GetX()-0.001)
+-- 		mlyn:Translate(v)
+-- 	end
 -- end)
 
 
+-- if(w:Intersects(g)) then
+-- 	print("YES!")
+-- else 
+-- 	print("NO")
+-- end
 
 
-
-local print = backlog_post
 
 -- -- And a function to demo it all:
 -- runProcess(function ()  
@@ -116,79 +136,157 @@ local print = backlog_post
 -- backlog_post(len({GetObjects()}))
 -- backlog_post_list({GetObjects()})
 
-local up=0xC8
+-- local up=0xC8
+-- 
+--  runProcess(function()
+--  	while true do
+--  		waitSignal("upkey")
+--  		SoundEffect("sound/change.wav"):Play()
+--  	end
+--  end)
+-- 
 
- runProcess(function()
- 	while true do
- 		waitSignal("upkey")
- 		SoundEffect("sound/change.wav"):Play()
- 	end
- end)
+  local posX = GetScreenWidth()/2
+  local posY = -GetScreenHeight()/2
+  local stepX = posX*0.1
+  local stepY = posY*0.1
+--  AddSprite = function()
+--  	local sprite = Sprite("images/blood2.png")
+--  	local effects = ImageEffects(posX,posY,100,100)
+--  	local anim = SpriteAnim()
+--  	sprite:SetEffects(effects)
+--  	sprite:SetAnim(anim)
+--  	main:GetActiveComponent():AddSprite(sprite)
+--  end
+  --AddSprite()
+  
+  
+  
+-- Screen saver
+--  runProcess(function()
+--	local screenW = GetScreenWidth()
+--	local screenH = GetScreenHeight()
+--	local velX = 1.5
+--	local velY = 1.5
+--	
+--	local sprite = Sprite("images/blood2.png")
+--	local effects = ImageEffects(posX,posY,100,100)
+--	local anim = SpriteAnim()
+--	sprite:SetEffects(effects)
+--	sprite:SetAnim(anim)
+--	main:GetActiveComponent():AddSprite(sprite)
+--	local UpdateSprite = function()
+--		effects:SetPos(posX,posY)
+--		sprite:SetEffects(effects)
+--	end
+--	
+--	while true do
+--		if(posX < 0 or posX + 100 > screenW) then
+--			velX = -velX
+--		end
+--		if(posY > 0 or posY - 100 < -screenH) then
+--			velY = -velY
+--		end
+--		posX = posX + velX
+--		posY = posY + velY
+--		UpdateSprite()
+--		sleep(0.01666)
+--	end
+--  end)
+  
+--  
+-- 
+-- 
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("upkey")
+--  		SoundEffect("sound/change.wav"):Play()
+-- 		posY = posY - stepY;
+-- 		UpdateSprite()
+-- 		--AddSprite()
+-- 	end
+-- end)
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("downkey")
+--  		SoundEffect("sound/change.wav"):Play()
+-- 		posY = posY + stepY;
+-- 		UpdateSprite()
+-- 		--AddSprite()
+-- 	end
+-- end)
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("leftkey")
+--  		SoundEffect("sound/change.wav"):Play()
+-- 		posX = posX + stepY;
+-- 		UpdateSprite()
+-- 		--AddSprite()
+-- 	end
+-- end)
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("rightkey")
+--  		SoundEffect("sound/change.wav"):Play()
+-- 		posX = posX - stepY;
+-- 		UpdateSprite()
+-- 		--AddSprite()
+-- 	end
+-- end)
 
- local posX = GetScreenWidth()/2
- local posY = -GetScreenHeight()/2
- local stepX = posX*0.1
- local stepY = posY*0.1
- AddSprite = function()
- 	local sprite = Sprite("images/blood2.png")
- 	local effects = ImageEffects(posX,posY,100,100)
- 	local anim = SpriteAnim()
- 	sprite:SetEffects(effects)
- 	sprite:SetAnim(anim)
- 	main:GetActiveComponent():AddSprite(sprite)
- end
- --AddSprite()
- 
- 
- local sprite = Sprite("images/blood2.png")
- local effects = ImageEffects(posX,posY,100,100)
- local anim = SpriteAnim()
- sprite:SetEffects(effects)
- sprite:SetAnim(anim)
- main:GetActiveComponent():AddSprite(sprite)
- UpdateSprite = function()
-	effects:SetPos(posX,posY)
-	sprite:SetEffects(effects)
- end
- 
+-- o=GetObject("wood_barrel_common")
+-- o:Translate(Vector(1))
 
 
+-- Control Sample
 runProcess(function()
-	while true do
-		waitSignal("upkey")
- 		SoundEffect("sound/change.wav"):Play()
-		posY = posY - stepY;
-		UpdateSprite()
-		--AddSprite()
-	end
+ --LoadModel("../game/levels/Training Ground/", "Training Ground","common",MatrixTranslation(Vector(0,4)))
+ --LoadModel("../../DXProject/DXProject/levels/Training Ground/", "Training Ground")
+ LoadModel("SkinnedModelDemo/","girl")
+ FinishLoading()
 end)
-runProcess(function()
-	while true do
-		waitSignal("downkey")
- 		SoundEffect("sound/change.wav"):Play()
-		posY = posY + stepY;
-		UpdateSprite()
-		--AddSprite()
-	end
-end)
+
+girl = GetArmature("Armature_common")
+m = MatrixInverse( girl:GetMatrix() )
+girl:MatrixTransform(m)
+girl:Translate(Vector(0,2,2))
+face = Vector(0,0,-0.1)
 runProcess(function()
 	while true do
 		waitSignal("leftkey")
- 		SoundEffect("sound/change.wav"):Play()
-		posX = posX + stepY;
-		UpdateSprite()
-		--AddSprite()
+		girl:Rotate(Vector(0,-0.08))
+		face:Transform(MatrixRotationY(-0.08))
 	end
 end)
 runProcess(function()
 	while true do
 		waitSignal("rightkey")
- 		SoundEffect("sound/change.wav"):Play()
-		posX = posX - stepY;
-		UpdateSprite()
-		--AddSprite()
+		girl:Rotate(Vector(0,0.08))
+		face:Transform(MatrixRotationY(0.08))
+	end
+end)
+runProcess(function()
+	while true do
+		waitSignal("upkey")
+		girl:Translate(face)
+	end
+end)
+runProcess(function()
+	while true do
+		waitSignal("downkey")
+		girl:Translate(VectorSubtract(Vector(),face))
 	end
 end)
 
 
-
+--Picking
+-- a=Vector(10,10,10)
+-- b=Vector(0,-1,0)
+-- r=Ray(a,b)
+-- object,pos,nor=Pick(r)
+-- separator("OBJECT:")
+-- print(object:GetName())
+-- separator("POS")
+-- backlog_post(pos.GetX(),", ",pos.GetY(),", ",pos.GetZ())
+-- separator("NOR")
+-- backlog_post(nor.GetX(),", ",nor.GetY(),", ",nor.GetZ())
