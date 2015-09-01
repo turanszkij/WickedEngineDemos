@@ -246,37 +246,100 @@ runProcess(function()
  FinishLoading()
 end)
 
+
 girl = GetArmature("Armature_common")
-m = MatrixInverse( girl:GetMatrix() )
+m = matrix.Inverse( girl:GetMatrix() )
 girl:MatrixTransform(m)
 girl:Translate(Vector(0,2,2))
 face = Vector(0,0,-0.1)
+pos = Vector(0,2,0)
+realPos = Vector(0,0,0)
+p,n = Vector(0,0,0)
+
 runProcess(function()
 	while true do
-		waitSignal("leftkey")
-		girl:Rotate(Vector(0,-0.08))
-		face:Transform(MatrixRotationY(-0.08))
+		tick()
+		girl:PauseAction()
+		
+		if(input.Down(VK_LEFT)) then
+			girl:Rotate(Vector(0,-0.08))
+			face:Transform(matrix.RotationY(-0.08))
+			girl:PlayAction()
+		end
+		if(input.Down(VK_RIGHT)) then
+			girl:Rotate(Vector(0,0.08))
+			face:Transform(matrix.RotationY(0.08))
+			girl:PlayAction()
+		end
+		if(input.Down(VK_UP)) then
+			pos = vector.Add(pos,face)
+			ray = Ray(pos,Vector(0,-1,0))
+			o,p,n = Pick(ray)
+			if(o:IsValid()) then
+				girl:Translate(vector.Subtract(p,realPos))
+				realPos = p
+				pos=vector.Add(realPos,Vector(0,2,0))
+				girl:PlayAction()
+			else
+				pos = vector.Subtract(pos,face)
+			end
+		end
+		if(input.Down(VK_DOWN)) then
+			pos = vector.Subtract(pos,face)
+			ray = Ray(pos,Vector(0,-1,0))
+			o,p,n = Pick(ray)
+			if(o:IsValid()) then
+				girl:Translate(vector.Subtract(p,realPos))
+				realPos = p
+				pos=vector.Add(realPos,Vector(0,2,0))
+				girl:PlayAction()
+			else
+				pos = vector.Subtract(pos,face)
+			end
+		end
 	end
 end)
-runProcess(function()
-	while true do
-		waitSignal("rightkey")
-		girl:Rotate(Vector(0,0.08))
-		face:Transform(MatrixRotationY(0.08))
-	end
-end)
-runProcess(function()
-	while true do
-		waitSignal("upkey")
-		girl:Translate(face)
-	end
-end)
-runProcess(function()
-	while true do
-		waitSignal("downkey")
-		girl:Translate(VectorSubtract(Vector(),face))
-	end
-end)
+
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("leftkey")
+-- 		girl:Rotate(Vector(0,-0.08))
+-- 		face:Transform(MatrixRotationY(-0.08))
+-- 	end
+-- end)
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("rightkey")
+-- 		girl:Rotate(Vector(0,0.08))
+-- 		face:Transform(MatrixRotationY(0.08))
+-- 	end
+-- end)
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("upkey")
+-- 		pos = VectorAdd(pos,face)
+-- 		ray = Ray(pos,Vector(0,-1,0))
+-- 		o,p,n = Pick(ray)
+-- 		if(o:IsValid()) then
+-- 			girl:Translate(VectorSubtract(p,realPos))
+-- 			realPos = p
+-- 			pos=VectorAdd(realPos,Vector(0,2,0))
+-- 		end
+-- 	end
+-- end)
+-- runProcess(function()
+-- 	while true do
+-- 		waitSignal("downkey")
+-- 		pos = VectorSubtract(pos,face)
+-- 		ray = Ray(pos,Vector(0,-1,0))
+-- 		o,p,n = Pick(ray)
+-- 		if(o:IsValid()) then
+-- 			girl:Translate(VectorSubtract(p,realPos))
+-- 			realPos = p
+-- 			pos=VectorAdd(realPos,Vector(0,2,0))
+-- 		end
+-- 	end
+-- end)
 
 
 --Picking
@@ -290,3 +353,14 @@ end)
 -- backlog_post(pos.GetX(),", ",pos.GetY(),", ",pos.GetZ())
 -- separator("NOR")
 -- backlog_post(nor.GetX(),", ",nor.GetY(),", ",nor.GetZ())
+
+
+-- -- input
+-- runProcess(function()
+-- 	while true do
+-- 		if(input.Down(string.byte('W'))) then
+-- 			print("ALLAT")
+-- 		end
+-- 		tick()
+-- 	end
+-- end)

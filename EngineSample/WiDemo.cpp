@@ -130,19 +130,6 @@ void Demo::Update()
 		{
 			ChangeDemo((DEMOS)(demoScene + 1));
 		}
-
-		if (wiInputManager::down(VK_UP)){
-			wiLua::GetGlobal()->Signal("upkey");
-		}
-		if (wiInputManager::down(VK_DOWN)){
-			wiLua::GetGlobal()->Signal("downkey");
-		}
-		if (wiInputManager::down(VK_LEFT)){
-			wiLua::GetGlobal()->Signal("leftkey");
-		}
-		if (wiInputManager::down(VK_RIGHT)){
-			wiLua::GetGlobal()->Signal("rightkey");
-		}
 	}
 	else
 	{
