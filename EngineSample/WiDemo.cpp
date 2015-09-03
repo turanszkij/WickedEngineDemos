@@ -426,13 +426,13 @@ void SkinnedModelDemo::Start(){
 		}
 	}
 
-	wiRenderer::SetToDrawDebugLines(true);
+	wiRenderer::SetToDrawDebugBoneLines(true);
 }
 void SkinnedModelDemo::Stop()
 {
 	ForwardRenderableComponent::Stop();
 
-	wiRenderer::SetToDrawDebugLines(false);
+	wiRenderer::SetToDrawDebugBoneLines(false);
 }
 
 void EmittedParticleDemo::Initialize()

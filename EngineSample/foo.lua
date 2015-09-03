@@ -248,6 +248,8 @@ end)
 
 
 
+local raypos = Vector(0,2,0)
+
 runProcess(function()
 
 	local girl = GetArmature("Armature_common")
@@ -255,7 +257,6 @@ runProcess(function()
 	--girl:MatrixTransform(m)
 	girl:ClearTransform()
 	girl:Translate(Vector(0,2,2))
-	local raypos = Vector(0,2,0)
 	local realPos = Vector(0,0,0)
 	local p,n = Vector(0,0,0)
 	local face = Vector(0,0,-0.1)
@@ -289,8 +290,7 @@ runProcess(function()
 	end
 	
 	while true do
-		tick()
-		
+	
 		if(state==states.STAND) then
 			if(input.Down(VK_LEFT)) then
 				Turn(-0.08)
@@ -346,9 +346,18 @@ runProcess(function()
 			
 		end
 		
+		update()
 	end
 end)
 
+runProcess(function()
+	while true do
+		
+		DrawLine(raypos,raypos:Add(Vector(0,-1)))
+		
+		render()
+	end
+end)
 
 --Picking
 -- a=Vector(10,10,10)
