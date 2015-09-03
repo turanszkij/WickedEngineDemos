@@ -247,99 +247,107 @@ runProcess(function()
 end)
 
 
-girl = GetArmature("Armature_common")
-m = matrix.Inverse( girl:GetMatrix() )
-girl:MatrixTransform(m)
-girl:Translate(Vector(0,2,2))
-face = Vector(0,0,-0.1)
-pos = Vector(0,2,0)
-realPos = Vector(0,0,0)
-p,n = Vector(0,0,0)
 
 runProcess(function()
-	while true do
-		tick()
-		girl:PauseAction()
-		
-		if(input.Down(VK_LEFT)) then
-			girl:Rotate(Vector(0,-0.08))
-			face:Transform(matrix.RotationY(-0.08))
-			girl:PlayAction()
-		end
-		if(input.Down(VK_RIGHT)) then
-			girl:Rotate(Vector(0,0.08))
-			face:Transform(matrix.RotationY(0.08))
-			girl:PlayAction()
-		end
-		if(input.Down(VK_UP)) then
-			pos = vector.Add(pos,face)
-			ray = Ray(pos,Vector(0,-1,0))
-			o,p,n = Pick(ray)
-			if(o:IsValid()) then
-				girl:Translate(vector.Subtract(p,realPos))
-				realPos = p
-				pos=vector.Add(realPos,Vector(0,2,0))
-				girl:PlayAction()
-			else
-				pos = vector.Subtract(pos,face)
-			end
-		end
-		if(input.Down(VK_DOWN)) then
-			pos = vector.Subtract(pos,face)
-			ray = Ray(pos,Vector(0,-1,0))
-			o,p,n = Pick(ray)
-			if(o:IsValid()) then
-				girl:Translate(vector.Subtract(p,realPos))
-				realPos = p
-				pos=vector.Add(realPos,Vector(0,2,0))
-				girl:PlayAction()
-			else
-				pos = vector.Subtract(pos,face)
-			end
+
+	local girl = GetArmature("Armature_common")
+	--local m = matrix.Inverse( girl:GetMatrix() )
+	--girl:MatrixTransform(m)
+	girl:ClearTransform()
+	girl:Translate(Vector(0,2,2))
+	local raypos = Vector(0,2,0)
+	local realPos = Vector(0,0,0)
+	local p,n = Vector(0,0,0)
+	local face = Vector(0,0,-0.1)
+	local velocity = Vector()
+	
+	states = {
+		STAND = 0,
+		TURN = 1,
+		WALK = 2,
+		JUMP = 4,
+	}
+	local state = states.STAND
+	
+	function MoveForward(f)
+		velocity = face:Multiply(Vector(f,f,f))
+		raypos = raypos:Add(velocity)
+		--raypos = vector.Add(raypos,face:Multiply(Vector(f,f,f)))
+		ray = Ray(raypos,Vector(0,-1,0))
+		o,p,n = Pick(ray)
+		if(o:IsValid()) then
+			state = states.WALK
+		else
+			raypos = vector.Subtract(raypos,face)
+			state = states.STAND
 		end
 	end
+	function Turn(f)
+		girl:Rotate(Vector(0,f))
+		face:Transform(matrix.RotationY(f))
+		state = states.TURN
+	end
+	
+	while true do
+		tick()
+		
+		if(state==states.STAND) then
+			if(input.Down(VK_LEFT)) then
+				Turn(-0.08)
+			end
+			if(input.Down(VK_RIGHT)) then
+				Turn(0.08)
+			end
+		
+			if(input.Down(VK_UP)) then
+				MoveForward(1)
+			end
+			if(input.Down(VK_DOWN)) then
+				MoveForward(-1)
+			end
+		
+		end
+		
+		if( not (state == states.JUMP) and input.Press(string.byte('J'))) then
+			state = states.JUMP
+			velocity=velocity:Multiply(Vector(2,2,2))
+			velocity=velocity:Add(Vector(0,1,0))
+		end
+		
+		if(state == states.STAND) then
+			girl:PauseAction()
+			velocity=Vector()
+			velocity = Vector()
+		elseif(state == states.TURN) then
+			girl:PlayAction()
+			velocity=Vector()
+			state = states.STAND
+		elseif(state == states.WALK) then
+			girl:PlayAction()
+			girl:Translate(vector.Subtract(p,realPos))
+			realPos = p
+			raypos=vector.Add(realPos,Vector(0,2,0))
+			state = states.STAND
+		elseif(state == states.JUMP) then
+			girl:PauseAction()
+			girl:Translate(velocity)
+			raypos = raypos:Add(velocity)
+			realPos = realPos:Add(velocity)
+			velocity = velocity:Subtract(Vector(0,0.076,0))
+			
+			ray = Ray(raypos,Vector(0,-1,0))
+			o,p,n = Pick(ray)
+			
+			if(realPos.GetY() < p.GetY()) then
+				state = states.STAND
+				girl:Translate(vector.Subtract(p,realPos))
+				realPos = p
+			end
+			
+		end
+		
+	end
 end)
-
--- runProcess(function()
--- 	while true do
--- 		waitSignal("leftkey")
--- 		girl:Rotate(Vector(0,-0.08))
--- 		face:Transform(MatrixRotationY(-0.08))
--- 	end
--- end)
--- runProcess(function()
--- 	while true do
--- 		waitSignal("rightkey")
--- 		girl:Rotate(Vector(0,0.08))
--- 		face:Transform(MatrixRotationY(0.08))
--- 	end
--- end)
--- runProcess(function()
--- 	while true do
--- 		waitSignal("upkey")
--- 		pos = VectorAdd(pos,face)
--- 		ray = Ray(pos,Vector(0,-1,0))
--- 		o,p,n = Pick(ray)
--- 		if(o:IsValid()) then
--- 			girl:Translate(VectorSubtract(p,realPos))
--- 			realPos = p
--- 			pos=VectorAdd(realPos,Vector(0,2,0))
--- 		end
--- 	end
--- end)
--- runProcess(function()
--- 	while true do
--- 		waitSignal("downkey")
--- 		pos = VectorSubtract(pos,face)
--- 		ray = Ray(pos,Vector(0,-1,0))
--- 		o,p,n = Pick(ray)
--- 		if(o:IsValid()) then
--- 			girl:Translate(VectorSubtract(p,realPos))
--- 			realPos = p
--- 			pos=VectorAdd(realPos,Vector(0,2,0))
--- 		end
--- 	end
--- end)
 
 
 --Picking

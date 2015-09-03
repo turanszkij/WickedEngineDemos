@@ -51,7 +51,7 @@ void Demo::Initialize()
 	Content.add("sound/change.wav", wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
 
-	wiRenderer::getCamera()->SetDefaultPosition(XMVectorSet(0, 3, -4, 0));
+	CameraReset();
 
 	demos.insert(pair<DEMOS, RenderableComponent*>(LOADINGSCREEN, new DemoLoadingScreen()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(HELLOWORLD, new HelloWorldDemo()));
@@ -160,18 +160,33 @@ void Demo::CameraControl(){
 	if (wiBackLog::isActive())
 		return;
 
-	Camera* cam = wiRenderer::getCamera();
 	float speed = (wiInputManager::down(VK_SHIFT) ? 10.0f : 1.0f);
-	if (wiInputManager::down('A')) cam->AddtoCameraPosition(XMVectorSet(-speed, 0, 0, 0));
-	if (wiInputManager::down('D')) cam->AddtoCameraPosition(XMVectorSet(speed, 0, 0, 0));
-	if (wiInputManager::down('W')) cam->AddtoCameraPosition(XMVectorSet(0, 0, speed, 0));
-	if (wiInputManager::down('S')) cam->AddtoCameraPosition(XMVectorSet(0, 0, -speed, 0));
-	if (wiInputManager::down(VK_SPACE)) cam->AddtoCameraPosition(XMVectorSet(0, speed, 0, 0));
-	if (wiInputManager::down(VK_CONTROL)) cam->AddtoCameraPosition(XMVectorSet(0, -speed, 0, 0));
-	cam->ProcessInput(1.0f / 60.0f, mousebuttondown);
+	if (wiInputManager::down('A')) wiRenderer::getCamera()->Move(XMVectorSet(-speed, 0, 0, 0));
+	if (wiInputManager::down('D')) wiRenderer::getCamera()->Move(XMVectorSet(speed, 0, 0, 0));
+	if (wiInputManager::down('W')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, speed, 0));
+	if (wiInputManager::down('S')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, -speed, 0));
+	if (wiInputManager::down(VK_SPACE)) wiRenderer::getCamera()->Move(XMVectorSet(0, speed, 0, 0));
+	if (wiInputManager::down(VK_CONTROL)) wiRenderer::getCamera()->Move(XMVectorSet(0, -speed, 0, 0));
+
+	static POINT originalMouse;
+	POINT currentMouse;
+	GetCursorPos(&currentMouse);
+	if (mousebuttondown)
+	{
+		LONG xDif = currentMouse.x - originalMouse.x;
+		LONG yDif = currentMouse.y - originalMouse.y;
+		wiRenderer::getCamera()->leftrightRot += 0.1f*xDif*(1.0f/60.0f);
+		wiRenderer::getCamera()->updownRot += 0.1f*yDif*(1.0f / 60.0f);
+		SetCursorPos(originalMouse.x, originalMouse.y);
+	}
+	else
+	{
+		GetCursorPos(&originalMouse);
+	}
 }
 void Demo::CameraReset(){
-	wiRenderer::getCamera()->Reset();
+	wiRenderer::getCamera()->Clear();
+	wiRenderer::getCamera()->transform(XMFLOAT3(0, 3, -4));
 }
 void Demo::StartLoadingChangeDemo(DEMOS newDemo){
 	CameraReset();
