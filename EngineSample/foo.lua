@@ -162,37 +162,37 @@ local sleep=waitSeconds
   
   
   
--- Screen saver
---  runProcess(function()
---	local screenW = GetScreenWidth()
---	local screenH = GetScreenHeight()
---	local velX = 1.5
---	local velY = 1.5
---	
---	local sprite = Sprite("images/blood2.png")
---	local effects = ImageEffects(posX,posY,100,100)
---	local anim = SpriteAnim()
---	sprite:SetEffects(effects)
---	sprite:SetAnim(anim)
---	main:GetActiveComponent():AddSprite(sprite)
---	local UpdateSprite = function()
---		effects:SetPos(posX,posY)
---		sprite:SetEffects(effects)
---	end
---	
---	while true do
---		if(posX < 0 or posX + 100 > screenW) then
---			velX = -velX
---		end
---		if(posY > 0 or posY - 100 < -screenH) then
---			velY = -velY
---		end
---		posX = posX + velX
---		posY = posY + velY
---		UpdateSprite()
---		sleep(0.01666)
---	end
---  end)
+ --Screen saver
+  runProcess(function()
+	local screenW = GetScreenWidth()
+	local screenH = GetScreenHeight()
+	local velX = 1.5
+	local velY = 1.5
+	
+	local sprite = Sprite("images/blood2.png")
+	local effects = ImageEffects(posX,posY,100,100)
+	local anim = SpriteAnim()
+	sprite:SetEffects(effects)
+	sprite:SetAnim(anim)
+	main:GetActiveComponent():AddSprite(sprite)
+	local UpdateSprite = function()
+		effects:SetPos(posX,posY)
+		sprite:SetEffects(effects)
+	end
+	
+	while true do
+		if(posX < 0 or posX + 100 > screenW) then
+			velX = -velX
+		end
+		if(posY > 0 or posY - 100 < -screenH) then
+			velY = -velY
+		end
+		posX = posX + velX
+		posY = posY + velY
+		UpdateSprite()
+		sleep(0.01666)
+	end
+  end)
   
 --  
 -- 
@@ -413,3 +413,7 @@ end)
 -- 		tick()
 -- 	end
 -- end)
+
+-- Font
+font = Font("ASSADSDFASMLKFjkdfkjIIKSKNmmm kaskdjjiopasdjk kkasdjio")
+main:GetActiveComponent():AddFont(font)
