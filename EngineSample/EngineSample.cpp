@@ -258,8 +258,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			ScreenToClient(hWnd, &p);
 			wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_OPAQUE);
 			if (picked.object != nullptr){
-				XMFLOAT4 rot;
-				XMStoreFloat4(&rot, XMQuaternionRotationRollPitchYaw(wiRenderer::getCamera()->updownRot, wiRenderer::getCamera()->leftrightRot, 0));
+				XMFLOAT4 rot = wiRenderer::getCamera()->rotation;
 				Decal* decal = new Decal(picked.position, XMFLOAT3(5, 5, 5), rot);
 				decal->life = 200;
 				decal->fadeStart = 50;
@@ -283,7 +282,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		else if (demo.interactionType == Demo::SPAWN_OBJECT){
-			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->GetEye(), wiRenderer::getCamera()->GetAt() * 5));
+			XMMATRIX spawnTrans = XMMatrixRotationQuaternion(XMLoadFloat4(&wiRenderer::getCamera()->rotation))*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->GetEye(), wiRenderer::getCamera()->GetAt() * 5));
 			switch (wiRandom::getRandom(0,3))
 			{
 			case 0:
@@ -313,7 +312,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		else if (demo.interactionType == Demo::SPAWN_LIGHT){
-			XMMATRIX spawnTrans = XMMatrixRotationX(wiRenderer::getCamera()->updownRot)*XMMatrixRotationY(wiRenderer::getCamera()->leftrightRot)*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->GetEye(), wiRenderer::getCamera()->GetAt() * 5));
+			XMMATRIX spawnTrans = XMMatrixRotationQuaternion(XMLoadFloat4(&wiRenderer::getCamera()->rotation))*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->GetEye(), wiRenderer::getCamera()->GetAt() * 5));
 			switch (wiRandom::getRandom(0,2))
 			{
 			case 0:

@@ -242,44 +242,53 @@ local sleep=waitSeconds
 runProcess(function()
  --LoadModel("../game/levels/Training Ground/", "Training Ground","common",MatrixTranslation(Vector(0,4)))
  --LoadModel("../../DXProject/DXProject/levels/Training Ground/", "Training Ground")
- LoadModel("SkinnedModelDemo/","girl")
+ LoadModel("models/girl/","girl")
  FinishLoading()
 end)
 
-
+local DrawAxis = function(point,f)
+	DrawLine(point,point:Add(Vector(f,0,0)),Vector(1,0,0,0))
+	DrawLine(point,point:Add(Vector(0,f,0)),Vector(0,1,0,0))
+	DrawLine(point,point:Add(Vector(0,0,f)),Vector(0,0,1,0))
+end
 
 local raypos = Vector(0,2,0)
+local girl = GetArmature("Armature_common")
+local realPos = Vector(0,0,0)
+local p,n = Vector(0,0,0)
+local face = Vector(0,0,1)
+local velocity = Vector()
+local ray = Ray()
+camera = GetCamera()
 
 runProcess(function()
 
-	local girl = GetArmature("Armature_common")
-	--local m = matrix.Inverse( girl:GetMatrix() )
-	--girl:MatrixTransform(m)
 	girl:ClearTransform()
-	girl:Translate(Vector(0,2,2))
-	local realPos = Vector(0,0,0)
-	local p,n = Vector(0,0,0)
-	local face = Vector(0,0,-0.1)
-	local velocity = Vector()
+	girl:Translate(Vector(0,4,0))
+	girl:Rotate(Vector(0,3.1415))
+	girl:Scale(Vector(2,2,2))
+	camera:ClearTransform()
+	camera:Rotate(Vector(0.1))
+	camera:Translate(Vector(2,7,-12))
+	camera:AttachTo(girl)
 	
 	states = {
 		STAND = 0,
 		TURN = 1,
 		WALK = 2,
-		JUMP = 4,
+		JUMP = 3,
 	}
 	local state = states.STAND
 	
 	function MoveForward(f)
 		velocity = face:Multiply(Vector(f,f,f))
-		raypos = raypos:Add(velocity)
-		--raypos = vector.Add(raypos,face:Multiply(Vector(f,f,f)))
+		raypos = girl:GetPosition():Add(velocity)
 		ray = Ray(raypos,Vector(0,-1,0))
 		o,p,n = Pick(ray)
 		if(o:IsValid()) then
 			state = states.WALK
 		else
-			raypos = vector.Subtract(raypos,face)
+			raypos = vector.Subtract(raypos,velocity)
 			state = states.STAND
 		end
 	end
@@ -290,7 +299,19 @@ runProcess(function()
 	end
 	
 	while true do
-	
+		
+		while( backlog_isactive() ) do
+			sleep(1)
+		end
+		
+		if(input.Press(string.byte('R'))) then
+			camera:Detach()
+			camera:ClearTransform()
+		end
+		if(input.Press(string.byte('C'))) then
+			camera:AttachTo(girl)
+		end
+		
 		if(state==states.STAND) then
 			if(input.Down(VK_LEFT)) then
 				Turn(-0.08)
@@ -300,10 +321,10 @@ runProcess(function()
 			end
 		
 			if(input.Down(VK_UP)) then
-				MoveForward(1)
+				MoveForward(0.15)
 			end
 			if(input.Down(VK_DOWN)) then
-				MoveForward(-1)
+				MoveForward(-0.15)
 			end
 		
 		end
@@ -313,6 +334,8 @@ runProcess(function()
 			velocity=velocity:Multiply(Vector(2,2,2))
 			velocity=velocity:Add(Vector(0,1,0))
 		end
+		
+		
 		
 		if(state == states.STAND) then
 			girl:PauseAction()
@@ -326,7 +349,6 @@ runProcess(function()
 			girl:PlayAction()
 			girl:Translate(vector.Subtract(p,realPos))
 			realPos = p
-			raypos=vector.Add(realPos,Vector(0,2,0))
 			state = states.STAND
 		elseif(state == states.JUMP) then
 			girl:PauseAction()
@@ -346,14 +368,24 @@ runProcess(function()
 			
 		end
 		
+		w,wp,wn = Pick(ray,PICK_WATER)
+		if(w:IsValid() and velocity:Length()>0) then
+			PutWaterRipple("images/ripple.png",wp)
+		end
+		
+		
 		update()
 	end
 end)
+
 
 runProcess(function()
 	while true do
 		
 		DrawLine(raypos,raypos:Add(Vector(0,-1)))
+		DrawLine(girl:GetPosition(),girl:GetPosition():Add(face:Normalize()),Vector(1,0,0,1))
+		DrawAxis(p,0.5)
+		--DrawLine(girl:GetPosition(),girl:GetPosition():Add(Vector(0,-1)))
 		
 		render()
 	end

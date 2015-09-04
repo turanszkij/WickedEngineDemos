@@ -160,7 +160,7 @@ void Demo::CameraControl(){
 	if (wiBackLog::isActive())
 		return;
 
-	float speed = (wiInputManager::down(VK_SHIFT) ? 10.0f : 1.0f);
+	float speed = (wiInputManager::down(VK_SHIFT) ? 1.0f : 0.1f);
 	if (wiInputManager::down('A')) wiRenderer::getCamera()->Move(XMVectorSet(-speed, 0, 0, 0));
 	if (wiInputManager::down('D')) wiRenderer::getCamera()->Move(XMVectorSet(speed, 0, 0, 0));
 	if (wiInputManager::down('W')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, speed, 0));
@@ -175,8 +175,10 @@ void Demo::CameraControl(){
 	{
 		LONG xDif = currentMouse.x - originalMouse.x;
 		LONG yDif = currentMouse.y - originalMouse.y;
-		wiRenderer::getCamera()->leftrightRot += 0.1f*xDif*(1.0f/60.0f);
-		wiRenderer::getCamera()->updownRot += 0.1f*yDif*(1.0f / 60.0f);
+		//wiRenderer::getCamera()->leftrightRot += 0.1f*xDif*(1.0f/60.0f);
+		//wiRenderer::getCamera()->updownRot += 0.1f*yDif*(1.0f / 60.0f);
+		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, 0.1f*xDif*(1.0f / 60.0f), 0));
+		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0.1f*yDif*(1.0f / 60.0f), 0, 0));
 		SetCursorPos(originalMouse.x, originalMouse.y);
 	}
 	else
@@ -607,7 +609,7 @@ void SSRTestDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/ssrtest/env.dds"));
 	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
