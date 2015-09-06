@@ -162,37 +162,37 @@ local sleep=waitSeconds
   
   
   
- --Screen saver
-  runProcess(function()
-	local screenW = GetScreenWidth()
-	local screenH = GetScreenHeight()
-	local velX = 1.5
-	local velY = 1.5
-	
-	local sprite = Sprite("images/blood2.png")
-	local effects = ImageEffects(posX,posY,100,100)
-	local anim = SpriteAnim()
-	sprite:SetEffects(effects)
-	sprite:SetAnim(anim)
-	main:GetActiveComponent():AddSprite(sprite)
-	local UpdateSprite = function()
-		effects:SetPos(posX,posY)
-		sprite:SetEffects(effects)
-	end
-	
-	while true do
-		if(posX < 0 or posX + 100 > screenW) then
-			velX = -velX
-		end
-		if(posY > 0 or posY - 100 < -screenH) then
-			velY = -velY
-		end
-		posX = posX + velX
-		posY = posY + velY
-		UpdateSprite()
-		sleep(0.01666)
-	end
-  end)
+-- --Screen saver
+--  runProcess(function()
+--	local screenW = GetScreenWidth()
+--	local screenH = GetScreenHeight()
+--	local velX = 1.5
+--	local velY = 1.5
+--	
+--	local sprite = Sprite("images/blood2.png")
+--	local effects = ImageEffects(posX,posY,100,100)
+--	local anim = SpriteAnim()
+--	sprite:SetEffects(effects)
+--	sprite:SetAnim(anim)
+--	main:GetActiveComponent():AddSprite(sprite)
+--	local UpdateSprite = function()
+--		effects:SetPos(posX,posY)
+--		sprite:SetEffects(effects)
+--	end
+--	
+--	while true do
+--		if(posX < 0 or posX + 100 > screenW) then
+--			velX = -velX
+--		end
+--		if(posY > 0 or posY - 100 < -screenH) then
+--			velY = -velY
+--		end
+--		posX = posX + velX
+--		posY = posY + velY
+--		UpdateSprite()
+--		sleep(0.01666)
+--	end
+--  end)
   
 --  
 -- 
@@ -242,7 +242,7 @@ local sleep=waitSeconds
 runProcess(function()
  --LoadModel("../game/levels/Training Ground/", "Training Ground","common",MatrixTranslation(Vector(0,4)))
  --LoadModel("../../DXProject/DXProject/levels/Training Ground/", "Training Ground")
- LoadModel("models/girl/","girl")
+ LoadModel("models/girl/","girl","player")
  FinishLoading()
 end)
 
@@ -252,19 +252,17 @@ local DrawAxis = function(point,f)
 	DrawLine(point,point:Add(Vector(0,0,f)),Vector(0,0,1,0))
 end
 
-local raypos = Vector(0,2,0)
-local girl = GetArmature("Armature_common")
-local realPos = Vector(0,0,0)
+local girl = GetArmature("Armature_player")
 local p,n = Vector(0,0,0)
 local face = Vector(0,0,1)
 local velocity = Vector()
 local ray = Ray()
 camera = GetCamera()
+gravity = Vector(0,-0.076,0)
 
 runProcess(function()
 
 	girl:ClearTransform()
-	girl:Translate(Vector(0,4,0))
 	girl:Rotate(Vector(0,3.1415))
 	girl:Scale(Vector(2,2,2))
 	camera:ClearTransform()
@@ -281,21 +279,26 @@ runProcess(function()
 	local state = states.STAND
 	
 	function MoveForward(f)
+		local velocityPrev = velocity;
 		velocity = face:Multiply(Vector(f,f,f))
-		raypos = girl:GetPosition():Add(velocity)
-		ray = Ray(raypos,Vector(0,-1,0))
+		velocity:SetY(velocityPrev:GetY())
+		ray = Ray(girl:GetPosition():Add(velocity):Add(Vector(0,4)),Vector(0,-1,0))
 		o,p,n = Pick(ray)
 		if(o:IsValid()) then
 			state = states.WALK
 		else
-			raypos = vector.Subtract(raypos,velocity)
 			state = states.STAND
+			velocity = velocityPrev
 		end
 	end
 	function Turn(f)
 		girl:Rotate(Vector(0,f))
 		face:Transform(matrix.RotationY(f))
 		state = states.TURN
+	end
+	function Jump(f)
+		velocity=velocity:Add(Vector(0,f,0))
+		state = states.JUMP
 	end
 	
 	while true do
@@ -321,57 +324,51 @@ runProcess(function()
 			end
 		
 			if(input.Down(VK_UP)) then
-				MoveForward(0.15)
+				MoveForward(0.25)
 			end
 			if(input.Down(VK_DOWN)) then
-				MoveForward(-0.15)
+				MoveForward(-0.25)
 			end
 		
 		end
 		
-		if( not (state == states.JUMP) and input.Press(string.byte('J'))) then
-			state = states.JUMP
-			velocity=velocity:Multiply(Vector(2,2,2))
-			velocity=velocity:Add(Vector(0,1,0))
+		if( input.Press(string.byte('J'))) then
+			Jump(1.3)
 		end
 		
 		
 		
 		if(state == states.STAND) then
 			girl:PauseAction()
-			velocity=Vector()
-			velocity = Vector()
+			state = states.STAND
 		elseif(state == states.TURN) then
 			girl:PlayAction()
-			velocity=Vector()
 			state = states.STAND
 		elseif(state == states.WALK) then
 			girl:PlayAction()
-			girl:Translate(vector.Subtract(p,realPos))
-			realPos = p
 			state = states.STAND
 		elseif(state == states.JUMP) then
 			girl:PauseAction()
-			girl:Translate(velocity)
-			raypos = raypos:Add(velocity)
-			realPos = realPos:Add(velocity)
-			velocity = velocity:Subtract(Vector(0,0.076,0))
-			
-			ray = Ray(raypos,Vector(0,-1,0))
-			o,p,n = Pick(ray)
-			
-			if(realPos.GetY() < p.GetY()) then
-				state = states.STAND
-				girl:Translate(vector.Subtract(p,realPos))
-				realPos = p
-			end
-			
+			state = states.STAND
 		end
 		
 		w,wp,wn = Pick(ray,PICK_WATER)
 		if(w:IsValid() and velocity:Length()>0) then
 			PutWaterRipple("images/ripple.png",wp)
 		end
+		
+		
+		velocity = velocity:Add(gravity)
+		girl:Translate(velocity)
+		ray = Ray(girl:GetPosition():Add(Vector(0,4)),Vector(0,-1,0))
+		o,p,n = Pick(ray)
+		if(girl:GetPosition().GetY() < p.GetY() and velocity:GetY()<=0) then
+			state = states.STAND
+			girl:Translate(vector.Subtract(p,girl:GetPosition()))
+			velocity=Vector()
+		end
+		
+		
 		
 		
 		update()
@@ -382,10 +379,12 @@ end)
 runProcess(function()
 	while true do
 		
-		DrawLine(raypos,raypos:Add(Vector(0,-1)))
-		DrawLine(girl:GetPosition(),girl:GetPosition():Add(face:Normalize()),Vector(1,0,0,1))
+		--velocity
+		DrawLine(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(Vector(0,4)):Add(velocity))
+		--face
+		DrawLine(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(Vector(0,4)):Add(face:Normalize()),Vector(1,0,0,1))
+		--intersection
 		DrawAxis(p,0.5)
-		--DrawLine(girl:GetPosition(),girl:GetPosition():Add(Vector(0,-1)))
 		
 		render()
 	end
@@ -414,6 +413,6 @@ end)
 -- 	end
 -- end)
 
--- Font
-font = Font("ASSADSDFASMLKFjkdfkjIIKSKNmmm kaskdjjiopasdjk kkasdjio")
-main:GetActiveComponent():AddFont(font)
+-- -- Font
+-- font = Font("ASSADSDFASMLKFjkdfkjIIKSKNmmm kaskdjjiopasdjk kkasdjio")
+-- main:GetActiveComponent():AddFont(font)
