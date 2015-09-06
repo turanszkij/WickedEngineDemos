@@ -251,8 +251,14 @@ local DrawAxis = function(point,f)
 	DrawLine(point,point:Add(Vector(0,f,0)),Vector(0,1,0,0))
 	DrawLine(point,point:Add(Vector(0,0,f)),Vector(0,0,1,0))
 end
+local DrawAxisTransformed = function(point,f,transform)
+	DrawLine(point:Transform(transform),point:Add(Vector(f,0,0)):Transform(transform),Vector(1,0,0,0))
+	DrawLine(point:Transform(transform),point:Add(Vector(0,f,0)):Transform(transform),Vector(0,1,0,0))
+	DrawLine(point:Transform(transform),point:Add(Vector(0,0,f)):Transform(transform),Vector(0,0,1,0))
+end
 
-local girl = GetArmature("Armature_player")
+girl = GetArmature("Armature_player")
+head = girl:GetBone("testa")
 local p,n = Vector(0,0,0)
 local face = Vector(0,0,1)
 local velocity = Vector()
@@ -264,7 +270,7 @@ runProcess(function()
 
 	girl:ClearTransform()
 	girl:Rotate(Vector(0,3.1415))
-	girl:Scale(Vector(2,2,2))
+	girl:Scale(Vector(1.9,1.9,1.9))
 	camera:ClearTransform()
 	camera:Rotate(Vector(0.1))
 	camera:Translate(Vector(2,7,-12))
@@ -290,10 +296,19 @@ runProcess(function()
 			state = states.STAND
 			velocity = velocityPrev
 		end
+		--front block
+		local ray2 = Ray(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(velocity):Add(Vector(0,4)))
+		local o2,p2,n2 = Pick(ray)
+		local dist = vector.Subtract(girl:GetPosition():Add(Vector(0,4)),p2):Length()
+		if(o2:IsValid() and o2:GetName() ~= "omino_player" and dist < 3.3) then
+			print(dist)
+			state = states.STAND
+			velocity = velocityPrev
+		end
 	end
 	function Turn(f)
 		girl:Rotate(Vector(0,f))
-		face:Transform(matrix.RotationY(f))
+		face = face:Transform(matrix.RotationY(f))
 		state = states.TURN
 	end
 	function Jump(f)
@@ -361,7 +376,11 @@ runProcess(function()
 		velocity = velocity:Add(gravity)
 		girl:Translate(velocity)
 		ray = Ray(girl:GetPosition():Add(Vector(0,4)),Vector(0,-1,0))
+		local pPrev = p
 		o,p,n = Pick(ray)
+		if(not o:IsValid()) then
+			p=pPrev
+		end
 		if(girl:GetPosition().GetY() < p.GetY() and velocity:GetY()<=0) then
 			state = states.STAND
 			girl:Translate(vector.Subtract(p,girl:GetPosition()))
@@ -385,6 +404,10 @@ runProcess(function()
 		DrawLine(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(Vector(0,4)):Add(face:Normalize()),Vector(1,0,0,1))
 		--intersection
 		DrawAxis(p,0.5)
+		--head
+		--DrawAxisTransformed(Vector(),0.6,head:GetMatrix())
+		--head:GetMatrix()
+		--DrawAxis(head:GetPosition(),0.6)
 		
 		render()
 	end
