@@ -146,10 +146,10 @@ local sleep=waitSeconds
 --  end)
 -- 
 
-  local posX = GetScreenWidth()/2
-  local posY = -GetScreenHeight()/2
-  local stepX = posX*0.1
-  local stepY = posY*0.1
+  -- local posX = GetScreenWidth()/2
+  -- local posY = -GetScreenHeight()/2
+  -- local stepX = posX*0.1
+  -- local stepY = posY*0.1
 --  AddSprite = function()
 --  	local sprite = Sprite("images/blood2.png")
 --  	local effects = ImageEffects(posX,posY,100,100)
@@ -252,29 +252,35 @@ local DrawAxis = function(point,f)
 	DrawLine(point,point:Add(Vector(0,0,f)),Vector(0,0,1,0))
 end
 local DrawAxisTransformed = function(point,f,transform)
-	DrawLine(point:Transform(transform),point:Add(Vector(f,0,0)):Transform(transform),Vector(1,0,0,0))
-	DrawLine(point:Transform(transform),point:Add(Vector(0,f,0)):Transform(transform),Vector(0,1,0,0))
-	DrawLine(point:Transform(transform),point:Add(Vector(0,0,f)):Transform(transform),Vector(0,0,1,0))
+	DrawLine(point,point:Add( Vector(f,0,0):Transform(transform) ),Vector(1,0,0,0))
+	DrawLine(point,point:Add( Vector(0,f,0):Transform(transform) ),Vector(0,1,0,0))
+	DrawLine(point,point:Add( Vector(0,0,f):Transform(transform) ),Vector(0,0,1,0))
 end
 
 girl = GetArmature("Armature_player")
 head = girl:GetBone("testa")
+target = Transform()
 local p,n = Vector(0,0,0)
 local face = Vector(0,0,1)
 local velocity = Vector()
 local ray = Ray()
 camera = GetCamera()
 gravity = Vector(0,-0.076,0)
+mousePos = input.Pointer()
+p2 = Vector()
 
+-- Update
 runProcess(function()
 
 	girl:ClearTransform()
+	target:ClearTransform()
 	girl:Rotate(Vector(0,3.1415))
 	girl:Scale(Vector(1.9,1.9,1.9))
+	target:AttachTo(girl,1,0,1)
 	camera:ClearTransform()
 	camera:Rotate(Vector(0.1))
 	camera:Translate(Vector(2,7,-12))
-	camera:AttachTo(girl)
+	camera:AttachTo(target)
 	
 	states = {
 		STAND = 0,
@@ -285,6 +291,8 @@ runProcess(function()
 	local state = states.STAND
 	
 	function MoveForward(f)
+		--girl:ClearTransform()
+		--girl:Transform(target:GetMatrix())
 		local velocityPrev = velocity;
 		velocity = face:Multiply(Vector(f,f,f))
 		velocity:SetY(velocityPrev:GetY())
@@ -296,12 +304,13 @@ runProcess(function()
 			state = states.STAND
 			velocity = velocityPrev
 		end
+		
 		--front block
-		local ray2 = Ray(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(velocity):Add(Vector(0,4)))
-		local o2,p2,n2 = Pick(ray)
+		local ray2 = Ray(girl:GetPosition():Add(velocity:Normalize():Multiply(1.2)):Add(Vector(0,4)),velocity)
+		o2,p2,n2 = Pick(ray2)
 		local dist = vector.Subtract(girl:GetPosition():Add(Vector(0,4)),p2):Length()
-		if(o2:IsValid() and o2:GetName() ~= "omino_player" and dist < 3.3) then
-			print(dist)
+		if(o2:IsValid() and o2:GetName() ~= "omino_player" and dist < 2.8) then
+			--print(dist)
 			state = states.STAND
 			velocity = velocityPrev
 		end
@@ -314,6 +323,19 @@ runProcess(function()
 	function Jump(f)
 		velocity=velocity:Add(Vector(0,f,0))
 		state = states.JUMP
+	end
+	function MoveDirection(dir,f)
+		local savedPos = girl:GetPosition()
+		target:Detach()
+		girl:ClearTransform()
+		face = dir:Normalize()
+		--girl:MatrixTransform(matrix.LookTo(Vector(),face))
+		girl:Scale(Vector(1.9,1.9,1.9))
+		girl:Rotate(Vector(0,3.1415))
+		girl:Translate(savedPos)
+		girl:GetMatrix()
+		target:AttachTo(girl)
+		MoveForward(f)
 	end
 	
 	while true do
@@ -330,19 +352,45 @@ runProcess(function()
 			camera:AttachTo(girl)
 		end
 		
+		local mousePosNew = input.Pointer()
+		local mouseDif = vector.Subtract(mousePosNew,mousePos)
+		mouseDif = mouseDif:Multiply(0.01)
+		target:Rotate(Vector(mouseDif:GetY(),mouseDif:GetX()))
+		--face = Vector(0,0,1):Transform(target:GetMatrix())
+		face:SetY(0)
+		face=face:Normalize()
+		mousePos=mousePosNew
+		
+		local targetFront = Vector(0,0,1):Transform(target:GetMatrix())
+		targetFront:SetY(0)
+		targetFront = targetFront:Normalize()
+		local targetRight = Vector(1):Transform(target:GetMatrix())
+		targetRight:SetY(0)
+		targetRight = targetRight:Normalize()
+		
 		if(state==states.STAND) then
+			local moveDir = Vector()
 			if(input.Down(VK_LEFT)) then
-				Turn(-0.08)
+				--Turn(-0.08)
+				moveDir = vector.Subtract(moveDir,targetRight)
 			end
 			if(input.Down(VK_RIGHT)) then
-				Turn(0.08)
+				--Turn(0.08)
+				moveDir = vector.Add(moveDir,targetRight)
 			end
 		
 			if(input.Down(VK_UP)) then
-				MoveForward(0.25)
+				--MoveForward(0.25)
+				moveDir = vector.Add(moveDir,targetFront)
 			end
 			if(input.Down(VK_DOWN)) then
-				MoveForward(-0.25)
+				--MoveForward(-0.25)
+				moveDir = vector.Subtract(moveDir,targetFront)
+			end
+			
+			if(moveDir:Length()>0) then
+				moveDir = moveDir:Normalize()
+				MoveDirection(moveDir,0.2)
 			end
 		
 		end
@@ -350,7 +398,6 @@ runProcess(function()
 		if( input.Press(string.byte('J'))) then
 			Jump(1.3)
 		end
-		
 		
 		
 		if(state == states.STAND) then
@@ -394,9 +441,13 @@ runProcess(function()
 	end
 end)
 
-
+-- Draw
 runProcess(function()
 	while true do
+	
+		while( backlog_isactive() ) do
+			sleep(1)
+		end
 		
 		--velocity
 		DrawLine(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(Vector(0,4)):Add(velocity))
@@ -404,10 +455,15 @@ runProcess(function()
 		DrawLine(girl:GetPosition():Add(Vector(0,4)),girl:GetPosition():Add(Vector(0,4)):Add(face:Normalize()),Vector(1,0,0,1))
 		--intersection
 		DrawAxis(p,0.5)
+		DrawAxis(p2,0.7)
 		--head
 		--DrawAxisTransformed(Vector(),0.6,head:GetMatrix())
 		--head:GetMatrix()
 		--DrawAxis(head:GetPosition(),0.6)
+		
+		local testpos = Vector(0,5,60,1)
+		--DrawAxis(testpos,10)
+		DrawAxisTransformed(testpos,10,matrix.LookTo(Vector(),face) )
 		
 		render()
 	end
