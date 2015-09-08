@@ -328,8 +328,10 @@ runProcess(function()
 		local savedPos = girl:GetPosition()
 		target:Detach()
 		girl:ClearTransform()
-		face = dir:Normalize()
-		--girl:MatrixTransform(matrix.LookTo(Vector(),face))
+		face = dir:Normalize():Transform(target:GetMatrix())
+		face:SetY(0)
+		face:Normalize()
+		girl:MatrixTransform(matrix.LookTo(Vector(),face):Inverse())
 		girl:Scale(Vector(1.9,1.9,1.9))
 		girl:Rotate(Vector(0,3.1415))
 		girl:Translate(savedPos)
@@ -352,45 +354,41 @@ runProcess(function()
 			camera:AttachTo(girl)
 		end
 		
-		local mousePosNew = input.Pointer()
-		local mouseDif = vector.Subtract(mousePosNew,mousePos)
-		mouseDif = mouseDif:Multiply(0.01)
-		target:Rotate(Vector(mouseDif:GetY(),mouseDif:GetX()))
-		--face = Vector(0,0,1):Transform(target:GetMatrix())
-		face:SetY(0)
-		face=face:Normalize()
-		mousePos=mousePosNew
-		
-		local targetFront = Vector(0,0,1):Transform(target:GetMatrix())
-		targetFront:SetY(0)
-		targetFront = targetFront:Normalize()
-		local targetRight = Vector(1):Transform(target:GetMatrix())
-		targetRight:SetY(0)
-		targetRight = targetRight:Normalize()
+		--if(input.Down(VK_LBUTTON)) then
+			local mousePosNew = input.Pointer()
+			local mouseDif = vector.Subtract(mousePosNew,mousePos)
+			mouseDif = mouseDif:Multiply(0.01)
+			target:Rotate(Vector(mouseDif:GetY(),mouseDif:GetX()))
+			--face = Vector(0,0,1):Transform(target:GetMatrix())
+			face:SetY(0)
+			face=face:Normalize()
+			mousePos=mousePosNew
+			--input.SetPointer(Vector(GetScreenWidth()/2,GetScreenHeight()/2))
+			--mousePos = input.Pointer()
+		--end
 		
 		if(state==states.STAND) then
-			local moveDir = Vector()
+			local lookDir = Vector()
 			if(input.Down(VK_LEFT)) then
 				--Turn(-0.08)
-				moveDir = vector.Subtract(moveDir,targetRight)
+				lookDir = lookDir:Add( Vector(-1) )
 			end
 			if(input.Down(VK_RIGHT)) then
 				--Turn(0.08)
-				moveDir = vector.Add(moveDir,targetRight)
+				lookDir = lookDir:Add( Vector(1) )
 			end
 		
 			if(input.Down(VK_UP)) then
 				--MoveForward(0.25)
-				moveDir = vector.Add(moveDir,targetFront)
+				lookDir = lookDir:Add( Vector(0,0,1) )
 			end
 			if(input.Down(VK_DOWN)) then
 				--MoveForward(-0.25)
-				moveDir = vector.Subtract(moveDir,targetFront)
+				lookDir = lookDir:Add( Vector(0,0,-1) )
 			end
 			
-			if(moveDir:Length()>0) then
-				moveDir = moveDir:Normalize()
-				MoveDirection(moveDir,0.2)
+			if(lookDir:Length()>0) then
+				MoveDirection(lookDir,0.2)
 			end
 		
 		end
