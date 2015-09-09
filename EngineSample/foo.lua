@@ -252,9 +252,9 @@ local DrawAxis = function(point,f)
 	DrawLine(point,point:Add(Vector(0,0,f)),Vector(0,0,1,0))
 end
 local DrawAxisTransformed = function(point,f,transform)
-	DrawLine(point,point:Add( Vector(f,0,0):Transform(transform) ),Vector(1,0,0,0))
-	DrawLine(point,point:Add( Vector(0,f,0):Transform(transform) ),Vector(0,1,0,0))
-	DrawLine(point,point:Add( Vector(0,0,f):Transform(transform) ),Vector(0,0,1,0))
+	DrawLine(point,point:Add( Vector(f,0,0).Transform(transform) ),Vector(1,0,0,0))
+	DrawLine(point,point:Add( Vector(0,f,0).Transform(transform) ),Vector(0,1,0,0))
+	DrawLine(point,point:Add( Vector(0,0,f).Transform(transform) ),Vector(0,0,1,0))
 end
 
 girl = GetArmature("Armature_player")
@@ -266,8 +266,9 @@ local velocity = Vector()
 local ray = Ray()
 camera = GetCamera()
 gravity = Vector(0,-0.076,0)
-mousePos = input.Pointer()
 p2 = Vector()
+
+local savedPointerPos = Vector()
 
 -- Update
 runProcess(function()
@@ -293,10 +294,10 @@ runProcess(function()
 	
 	function MoveForward(f)
 		--girl:ClearTransform()
-		--girl:Transform(target:GetMatrix())
+		--girl.Transform(target:GetMatrix())
 		local velocityPrev = velocity;
 		velocity = face:Multiply(Vector(f,f,f))
-		velocity:SetY(velocityPrev:GetY())
+		velocity.SetY(velocityPrev.GetY())
 		ray = Ray(girl:GetPosition():Add(velocity):Add(Vector(0,4)),Vector(0,-1,0))
 		o,p,n = Pick(ray)
 		if(o:IsValid()) then
@@ -318,7 +319,7 @@ runProcess(function()
 	end
 	function Turn(f)
 		girl:Rotate(Vector(0,f))
-		face = face:Transform(matrix.RotationY(f))
+		face = face.Transform(matrix.RotationY(f))
 		state = states.TURN
 	end
 	function Jump(f)
@@ -329,8 +330,8 @@ runProcess(function()
 		local savedPos = girl:GetPosition()
 		target:Detach()
 		girl:ClearTransform()
-		face = dir:Normalize():Transform(target:GetMatrix())
-		face:SetY(0)
+		face = dir:Normalize().Transform(target:GetMatrix())
+		face.SetY(0)
 		face:Normalize()
 		girl:MatrixTransform(matrix.LookTo(Vector(),face):Inverse())
 		girl:Scale(Vector(1.9,1.9,1.9))
@@ -387,18 +388,20 @@ runProcess(function()
 		end
 		
 		
-		--if(input.Down(VK_LBUTTON, MOUSE)) then
-			local mousePosNew = input.Pointer()
-			local mouseDif = vector.Subtract(mousePosNew,mousePos)
+		if(input.Down(VK_MBUTTON)) then
+			local mousePosNew = input.GetPointer()
+			local mouseDif = vector.Subtract(mousePosNew,savedPointerPos)
 			mouseDif = mouseDif:Multiply(0.01)
-			target:Rotate(Vector(mouseDif:GetY(),mouseDif:GetX()))
-			--face = Vector(0,0,1):Transform(target:GetMatrix())
-			face:SetY(0)
+			target:Rotate(Vector(mouseDif.GetY(),mouseDif.GetX()))
+			--face = Vector(0,0,1).Transform(target:GetMatrix())
+			face.SetY(0)
 			face=face:Normalize()
-			mousePos=mousePosNew
-			--input.SetPointer(Vector(GetScreenWidth()/2,GetScreenHeight()/2))
-			--mousePos = input.Pointer()
-		--end
+			input.SetPointer(savedPointerPos)
+			--input.HidePointer(true)
+		else
+			savedPointerPos = input.GetPointer()
+			--input.HidePointer(false)
+		end
 		
 		--camera collision
 		local camRestDistance = 12.0
@@ -408,7 +411,7 @@ runProcess(function()
 			camera:Translate( Vector(0,0,-0.09) )
 		end
 		local camRay = Ray(camera:GetPosition(),camTargetDiff:Normalize())
-		camCollObj,camCollPos,camCollNor = Pick(camRay)
+		local camCollObj,camCollPos,camCollNor = Pick(camRay)
 		if(camCollObj:IsValid() and camCollObj:GetName() ~= "omino_player") then
 			local camCollDiff = vector.Subtract(camCollPos, camera:GetPosition())
 			local camCollDistance = camCollDiff:Length()
@@ -446,7 +449,7 @@ runProcess(function()
 		if(not o:IsValid()) then
 			p=pPrev
 		end
-		if(girl:GetPosition().GetY() < p.GetY() and velocity:GetY()<=0) then
+		if(girl:GetPosition().GetY() < p.GetY() and velocity.GetY()<=0) then
 			state = states.STAND
 			girl:Translate(vector.Subtract(p,girl:GetPosition()))
 			velocity=Vector()
@@ -478,7 +481,6 @@ runProcess(function()
 		--DrawAxisTransformed(Vector(),0.6,head:GetMatrix())
 		--head:GetMatrix()
 		--DrawAxis(head:GetPosition(),0.6)
-		DrawAxis(camCollPos,0.9)
 		
 		render()
 	end

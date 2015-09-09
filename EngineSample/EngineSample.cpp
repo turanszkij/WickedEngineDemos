@@ -24,8 +24,6 @@ BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
-
-
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPTSTR    lpCmdLine,
@@ -116,8 +114,23 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
+   int x = CW_USEDEFAULT, y = 0, w = CW_USEDEFAULT, h = 0;
+   string voidStr = "";
+
+   ifstream file("config.cfg");
+   if (file.is_open())
+   {
+	   bool enabled;
+	   file >> enabled;
+	   if (enabled)
+	   {
+		   file >> voidStr >> x >> voidStr >> y >> voidStr >> w >> voidStr >> h;
+	   }
+   }
+   file.close();
+
    g_hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+      x, y, w, h, NULL, NULL, hInstance, NULL);
 
    if (!g_hWnd)
    {
