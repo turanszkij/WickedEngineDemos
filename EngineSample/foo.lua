@@ -276,6 +276,7 @@ runProcess(function()
 	target:ClearTransform()
 	girl:Rotate(Vector(0,3.1415))
 	girl:Scale(Vector(1.9,1.9,1.9))
+	target:Translate(Vector(0,7))
 	target:AttachTo(girl,1,0,1)
 	camera:ClearTransform()
 	camera:Rotate(Vector(0.1))
@@ -354,18 +355,6 @@ runProcess(function()
 			camera:AttachTo(girl)
 		end
 		
-		--if(input.Down(VK_LBUTTON)) then
-			local mousePosNew = input.Pointer()
-			local mouseDif = vector.Subtract(mousePosNew,mousePos)
-			mouseDif = mouseDif:Multiply(0.01)
-			target:Rotate(Vector(mouseDif:GetY(),mouseDif:GetX()))
-			--face = Vector(0,0,1):Transform(target:GetMatrix())
-			face:SetY(0)
-			face=face:Normalize()
-			mousePos=mousePosNew
-			--input.SetPointer(Vector(GetScreenWidth()/2,GetScreenHeight()/2))
-			--mousePos = input.Pointer()
-		--end
 		
 		if(state==states.STAND) then
 			local lookDir = Vector()
@@ -395,6 +384,37 @@ runProcess(function()
 		
 		if( input.Press(string.byte('J'))) then
 			Jump(1.3)
+		end
+		
+		
+		--if(input.Down(VK_LBUTTON, MOUSE)) then
+			local mousePosNew = input.Pointer()
+			local mouseDif = vector.Subtract(mousePosNew,mousePos)
+			mouseDif = mouseDif:Multiply(0.01)
+			target:Rotate(Vector(mouseDif:GetY(),mouseDif:GetX()))
+			--face = Vector(0,0,1):Transform(target:GetMatrix())
+			face:SetY(0)
+			face=face:Normalize()
+			mousePos=mousePosNew
+			--input.SetPointer(Vector(GetScreenWidth()/2,GetScreenHeight()/2))
+			--mousePos = input.Pointer()
+		--end
+		
+		--camera collision
+		local camRestDistance = 12.0
+		local camTargetDiff = vector.Subtract(target:GetPosition(), camera:GetPosition())
+		local camTargetDistance = camTargetDiff:Length()
+		if(camTargetDistance < camRestDistance) then
+			camera:Translate( Vector(0,0,-0.09) )
+		end
+		local camRay = Ray(camera:GetPosition(),camTargetDiff:Normalize())
+		camCollObj,camCollPos,camCollNor = Pick(camRay)
+		if(camCollObj:IsValid() and camCollObj:GetName() ~= "omino_player") then
+			local camCollDiff = vector.Subtract(camCollPos, camera:GetPosition())
+			local camCollDistance = camCollDiff:Length()
+			if(camCollDistance < camTargetDistance) then
+				camera:Translate(Vector(0,0,camCollDistance))
+			end
 		end
 		
 		
@@ -458,10 +478,7 @@ runProcess(function()
 		--DrawAxisTransformed(Vector(),0.6,head:GetMatrix())
 		--head:GetMatrix()
 		--DrawAxis(head:GetPosition(),0.6)
-		
-		local testpos = Vector(0,5,60,1)
-		--DrawAxis(testpos,10)
-		DrawAxisTransformed(testpos,10,matrix.LookTo(Vector(),face) )
+		DrawAxis(camCollPos,0.9)
 		
 		render()
 	end
