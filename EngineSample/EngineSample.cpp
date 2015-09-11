@@ -120,9 +120,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ifstream file("config.cfg");
    if (file.is_open())
    {
-	   bool enabled;
-	   file >> enabled;
-	   if (enabled)
+	   int enabled;
+	   file >> voidStr >> enabled;
+	   if (enabled!=0)
 	   {
 		   file >> voidStr >> x >> voidStr >> y >> voidStr >> w >> voidStr >> h;
 	   }
