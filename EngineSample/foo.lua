@@ -301,6 +301,7 @@ runProcess(function()
 		ray = Ray(girl:GetPosition():Add(velocity):Add(Vector(0,4)),Vector(0,-1,0))
 		o,p,n = Pick(ray)
 		if(o:IsValid()) then
+			velocity = velocity:Multiply( 1 - math.abs( vector.Dot(n,velocity:Normalize()) ) )
 			state = states.WALK
 		else
 			state = states.STAND
@@ -378,7 +379,7 @@ runProcess(function()
 			end
 			
 			if(lookDir:Length()>0) then
-				MoveDirection(lookDir,0.2)
+				MoveDirection(lookDir,0.25)
 			end
 		
 		end
@@ -397,10 +398,10 @@ runProcess(function()
 			face.SetY(0)
 			face=face:Normalize()
 			input.SetPointer(savedPointerPos)
-			--input.HidePointer(true)
+			input.HidePointer(true)
 		else
 			savedPointerPos = input.GetPointer()
-			--input.HidePointer(false)
+			input.HidePointer(false)
 		end
 		
 		--camera collision
