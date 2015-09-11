@@ -151,6 +151,8 @@ void Demo::Compose()
 	MainComponent::Compose();
 
 	HudRender();
+
+	wiBackLog::Draw();
 }
 
 void Demo::CameraControl(){
