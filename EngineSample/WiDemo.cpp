@@ -146,13 +146,11 @@ void Demo::Update()
 
 	MainComponent::Update();
 }
-void Demo::Compose()
+void Demo::Render()
 {
-	MainComponent::Compose();
+	MainComponent::Render();
 
 	HudRender();
-
-	wiBackLog::Draw();
 }
 
 void Demo::CameraControl(){

@@ -33,7 +33,7 @@ public:
 
 	void Initialize();
 	void Update();
-	void Compose();
+	void Render();
 
 	enum INTERACT{
 		DECAL,
