@@ -117,14 +117,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    int x = CW_USEDEFAULT, y = 0, w = CW_USEDEFAULT, h = 0;
    string voidStr = "";
 
-   ifstream file("config.cfg");
+   ifstream file("config.ini");
    if (file.is_open())
    {
 	   int enabled;
 	   file >> voidStr >> enabled;
 	   if (enabled!=0)
 	   {
-		   file >> voidStr >> x >> voidStr >> y >> voidStr >> w >> voidStr >> h;
+		   file >> voidStr >> x >> voidStr >> y >> voidStr >> w >> voidStr >> h >> voidStr >> demo.fullscreen;
+		   demo.screenW = w;
+		   demo.screenH = h;
 	   }
    }
    file.close();

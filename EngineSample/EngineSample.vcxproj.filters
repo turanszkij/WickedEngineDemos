@@ -56,6 +56,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.cfg" />
+    <None Include="config.ini" />
   </ItemGroup>
 </Project>
