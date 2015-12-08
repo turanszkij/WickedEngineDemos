@@ -43,7 +43,7 @@ void Demo::Initialize()
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiFont::addFontStyle("basic");
-	//wiInputManager::addDirectInput(new wiDirectInput(instance, window));
+	wiInputManager::addDirectInput(new wiDirectInput(instance, window));
 	wiInputManager::addXInput(new wiXInput());
 	wiInputManager::addRawInput(new wiRawInput(window));
 

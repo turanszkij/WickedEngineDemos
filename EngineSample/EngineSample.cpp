@@ -301,26 +301,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			switch (wiRandom::getRandom(0,3))
 			{
 			case 0:
-				thread(wiRenderer::LoadModel, "models/barrel/", "barrel",
+				wiRenderer::LoadModel("models/barrel/", "barrel",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine).detach();
+					, "common", wiRenderer::physicsEngine);
 				break;
 			case 1:
-				thread(wiRenderer::LoadModel, "models/crate/", "crate",
+				wiRenderer::LoadModel("models/crate/", "crate",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine).detach();
+					, "common", wiRenderer::physicsEngine);
 				break;
 			case 2:
-				thread(wiRenderer::LoadModel, "models/monkey/", "monkey",
+				wiRenderer::LoadModel("models/monkey/", "monkey",
 					spawnTrans
 					, "common", wiRenderer::physicsEngine
-					).detach();
+					);
 				break;
 			case 3:
-				thread(wiRenderer::LoadModel, "models/golfball/", "golfball",
+				wiRenderer::LoadModel("models/golfball/", "golfball",
 					spawnTrans
 					, "common", wiRenderer::physicsEngine
-					).detach();
+					);
 				break;
 			default:
 				break;
