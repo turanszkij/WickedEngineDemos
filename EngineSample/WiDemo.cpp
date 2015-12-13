@@ -196,7 +196,6 @@ void Demo::FinishLoadingChangeDemo(DEMOS newDemo)
 {
 	demoScene = newDemo;
 	activateComponent(demos[demoScene]);
-	Sleep(150);
 }
 void Demo::ChangeDemo(DEMOS newDemo){
 	if (demoScene == LOADINGSCREEN || newDemo==LOADINGSCREEN)
