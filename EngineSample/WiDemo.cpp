@@ -229,7 +229,7 @@ void Demo::HudRender(){
 		return;
 
 	stringstream ss("");
-	ss << "Wicked Engine v" << WICKED_ENGINE_VERSION;
+	ss << "Wicked Engine v" << wiVersion::GetVersionString();
 #ifdef _DEBUG
 	ss << " [DEBUG]";
 #endif
