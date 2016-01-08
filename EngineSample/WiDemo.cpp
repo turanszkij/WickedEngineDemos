@@ -417,12 +417,7 @@ void SkinnedModelDemo::Start(){
 	ForwardRenderableComponent::Start();
 	wiRenderer::objects.front()->translation_rest.y = 2.2f;
 
-	for (unsigned int i = 0; i < wiRenderer::armatures.back()->actions.size(); ++i){
-		if (wiRenderer::armatures.back()->actions[i].name.find("Idle") != string::npos){
-			wiRenderer::armatures.back()->activeAction = i;
-			break;
-		}
-	}
+	wiRenderer::armatures.back()->ChangeAction("ArmatureIdle");
 
 	wiRenderer::SetToDrawDebugBoneLines(true);
 }
