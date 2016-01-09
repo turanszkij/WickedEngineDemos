@@ -35,7 +35,6 @@ void Demo::Initialize()
 	wiRenderer::VSYNC = false;
 	wiRenderer::EMITTERSENABLED = true;
 	wiRenderer::HAIRPARTICLEENABLED = true;
-	wiRenderer::setRenderResolution(wiRenderer::GetScreenWidth(), wiRenderer::GetScreenHeight());
 	wiRenderer::SetDirectionalLightShadowProps(1024, 2);
 	wiRenderer::SetPointLightShadowProps(2, 512);
 	wiRenderer::SetSpotLightShadowProps(2, 512);

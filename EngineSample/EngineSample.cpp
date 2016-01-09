@@ -225,7 +225,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				POINT p;
 				GetCursorPos(&p);
 				ScreenToClient(hWnd, &p);
-				wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_WATER);
+				wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, PICK_WATER);
 				if (picked.object != nullptr){
 					wiWaterPlane waterPlane = wiWaterPlane(0, 0, 0, 1);
 					if (dynamic_cast<Renderable3DComponent*>(demo.getActiveComponent()))
@@ -271,7 +271,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			POINT p;
 			GetCursorPos(&p);
 			ScreenToClient(hWnd, &p);
-			wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, wiRenderer::PICK_OPAQUE);
+			wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, PICK_OPAQUE);
 			if (picked.object != nullptr){
 				XMFLOAT4 rot = wiRenderer::getCamera()->rotation;
 				Decal* decal = new Decal(picked.position, XMFLOAT3(5, 5, 5), rot);
