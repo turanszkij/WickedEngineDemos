@@ -536,8 +536,8 @@ void DeferredLightDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/lightBenchmark/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/lightBenchmark/env.dds"));
+	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void DeferredLightDemo::Start(){
@@ -558,8 +558,8 @@ void DeferredSceneDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void DeferredSceneDemo::Start(){
@@ -578,8 +578,8 @@ void ForwardSceneDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void ForwardSceneDemo::Start(){
@@ -599,8 +599,8 @@ void SSRTestDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((wiRenderer::TextureView)Content.add("DeferredSceneDemo/ssrtest/env.dds"));
-	wiRenderer::SetColorGrading((wiRenderer::TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/ssrtest/env.dds"));
+	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void SSRTestDemo::Start(){
