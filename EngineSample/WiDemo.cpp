@@ -383,13 +383,13 @@ void BasicModelDemo::Load()
 }
 void BasicModelDemo::Start(){
 	ForwardRenderableComponent::Start();
-	wiRenderer::objects.front()->translation_rest.y = 2.2f;
+	//wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
 void BasicModelDemo::Update(){
 	ForwardRenderableComponent::Update();
 
-	wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
-	wiRenderer::UpdateRenderInfo(wiRenderer::getImmediateContext());
+	//wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
+	//wiRenderer::UpdateRenderInfo(wiRenderer::getImmediateContext());
 }
 
 void SkinnedModelDemo::Initialize()
@@ -414,9 +414,9 @@ void SkinnedModelDemo::Load()
 }
 void SkinnedModelDemo::Start(){
 	ForwardRenderableComponent::Start();
-	wiRenderer::objects.front()->translation_rest.y = 2.2f;
+	//wiRenderer::objects.front()->translation_rest.y = 2.2f;
 
-	wiRenderer::armatures.back()->ChangeAction("ArmatureIdle");
+	//wiRenderer::armatures.back()->ChangeAction("ArmatureIdle");
 
 	wiRenderer::SetToDrawDebugBoneLines(true);
 }
@@ -447,8 +447,8 @@ void EmittedParticleDemo::Load()
 }
 void EmittedParticleDemo::Start(){
 	ForwardRenderableComponent::Start();
-	for (Object* o : wiRenderer::objects)
-		o->translation_rest.y = 2.2f;
+	//for (Object* o : wiRenderer::objects)
+	//	o->translation_rest.y = 2.2f;
 }
 
 void HairParticleDemo::Initialize()

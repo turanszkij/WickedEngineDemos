@@ -292,7 +292,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					break;
 				default:break;
 				};
-				wiRenderer::decals.push_back(decal);
+				wiRenderer::PutDecal(decal);
 				decal->attachTo(picked.object);
 			}
 		}
@@ -303,23 +303,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 0:
 				wiRenderer::LoadModel("models/barrel/", "barrel",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine);
+					, "common");
 				break;
 			case 1:
 				wiRenderer::LoadModel("models/crate/", "crate",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine);
+					, "common");
 				break;
 			case 2:
 				wiRenderer::LoadModel("models/monkey/", "monkey",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine
+					, "common"
 					);
 				break;
 			case 3:
 				wiRenderer::LoadModel("models/golfball/", "golfball",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine
+					, "common"
 					);
 				break;
 			default:
@@ -333,17 +333,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 0:
 				wiRenderer::LoadModel("models/lightTube blue/", "lightTube blue",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine);
+					, "common");
 				break;
 			case 1:
 				wiRenderer::LoadModel("models/lightTube green/", "lightTube green",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine);
+					, "common");
 				break;
 			case 2:
 				wiRenderer::LoadModel("models/lightTube red/", "lightTube red",
 					spawnTrans
-					, "common", wiRenderer::physicsEngine);
+					, "common");
 				break;
 			default:
 				break;
