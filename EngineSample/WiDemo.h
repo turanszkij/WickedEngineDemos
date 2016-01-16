@@ -65,6 +65,8 @@ public:
 
 class BasicModelDemo : public ForwardRenderableComponent
 {
+private:
+	Model* model;
 public:
 	void Initialize();
 	void Load();
@@ -83,6 +85,8 @@ public:
 
 class EmittedParticleDemo : public ForwardRenderableComponent
 {
+private:
+	Model* model;
 public:
 	void Initialize();
 	void Load();

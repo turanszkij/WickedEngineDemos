@@ -378,7 +378,7 @@ void BasicModelDemo::Load()
 {
 	ForwardRenderableComponent::Load();
 
-	wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel");
+	model = wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel", XMMatrixTranslation(0,2.2f,0));
 	wiRenderer::FinishLoading();
 }
 void BasicModelDemo::Start(){
@@ -388,6 +388,7 @@ void BasicModelDemo::Start(){
 void BasicModelDemo::Update(){
 	ForwardRenderableComponent::Update();
 
+	model->RotateRollPitchYaw(XMFLOAT3(0, 0.001f*XM_2PI, 0));
 	//wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
 	//wiRenderer::UpdateRenderInfo(wiRenderer::getImmediateContext());
 }
@@ -409,7 +410,7 @@ void SkinnedModelDemo::Load()
 {
 	ForwardRenderableComponent::Load();
 
-	wiRenderer::LoadModel("SkinnedModelDemo/", "girl");
+	wiRenderer::LoadModel("SkinnedModelDemo/", "girl", XMMatrixTranslation(0,0,2));
 	wiRenderer::FinishLoading();
 }
 void SkinnedModelDemo::Start(){
@@ -442,7 +443,7 @@ void EmittedParticleDemo::Load()
 {
 	ForwardRenderableComponent::Load();
 
-	wiRenderer::LoadModel("EmitterParticleDemo/", "emitter");
+	model = wiRenderer::LoadModel("EmitterParticleDemo/", "emitter", XMMatrixTranslation(0,2.2f,0));
 	wiRenderer::FinishLoading();
 }
 void EmittedParticleDemo::Start(){
