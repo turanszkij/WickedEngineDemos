@@ -50,7 +50,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -107,6 +107,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WickedEngine\WickedEngine\WickedEngine.vcxproj">
+      <Project>{a94a5b28-b5b0-4386-8281-8ae3c6984762}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

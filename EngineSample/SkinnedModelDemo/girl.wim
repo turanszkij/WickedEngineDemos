@@ -1,6 +1,6 @@
 //MATERIAL-Material
 f 0.5
-d 0.0 0.0 0.0
+d 1.0 1.0 1.0
 i 0.0
 t repack.png 0
 b MIX
