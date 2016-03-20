@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "WiDemo.h"
 
+using namespace wiGraphicsTypes;
+
 Demo::Demo()
 {
 	MainComponent::MainComponent();
@@ -17,7 +19,7 @@ Demo::~Demo()
 	wiFont::CleanUpStatic();
 	wiInputManager::CleanUp();
 	wiLensFlare::CleanUp();
-	wiRenderer::DestroyDevice();
+	wiRenderer::CleanUpStatic();
 
 }
 void Demo::Initialize()
@@ -32,13 +34,13 @@ void Demo::Initialize()
 		| wiInitializer::WICKEDENGINE_INITIALIZE_MISC
 		);
 
-	wiRenderer::VSYNC = false;
+	wiRenderer::GetDevice()->SetVSyncEnabled(false);
 	wiRenderer::EMITTERSENABLED = true;
 	wiRenderer::HAIRPARTICLEENABLED = true;
 	wiRenderer::SetDirectionalLightShadowProps(1024, 2);
 	wiRenderer::SetPointLightShadowProps(2, 512);
 	wiRenderer::SetSpotLightShadowProps(2, 512);
-	wiRenderer::DX11 = false;
+	//wiRenderer::DX11 = false;
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiFont::addFontStyle("basic");
@@ -227,13 +229,17 @@ void Demo::HudRender(){
 	if (demoScene == LOADINGSCREEN)
 		return;
 
+	Renderable3DComponent* r3c = dynamic_cast<Renderable3DComponent*>(getActiveComponent());
+	if (r3c != nullptr && r3c->getStereogramEnabled())
+		return;
+
 	stringstream ss("");
 	ss << "Wicked Engine v" << wiVersion::GetVersionString();
 #ifdef _DEBUG
 	ss << " [DEBUG]";
 #endif
-	ss << "\nResolution: " << wiRenderer::GetScreenWidth() << " x " << wiRenderer::GetScreenHeight();
-	ss << "\nDeferred context support: " << (wiRenderer::getMultithreadingSupport() ? "yes" : "no");
+	ss << "\nResolution: " << wiRenderer::GetDevice()->GetScreenWidth() << " x " << wiRenderer::GetDevice()->GetScreenHeight();
+	ss << "\nDeferred context support: " << (wiRenderer::GetDevice()->GetMultithreadingSupport() ? "yes" : "no");
 	ss << "\n\nDemo Select:\n------------------";
 	ss << "\n[1] :  HelloWorld";
 	ss << "\n[2] :  BasicModel";
@@ -273,7 +279,7 @@ void Demo::HudRender(){
 	//ss << "\nRAWInput Joy: " << wiInputManager::rawinput->raw.data.hid.bRawData[0];
 	//ss << "\nRAWInput Keyboard: " << (char)wiInputManager::rawinput->raw.data.keyboard.VKey;
 	//ss << "\nRAWInput Mouse: " << wiInputManager::rawinput->raw.data.mouse.lLastX << ":" << wiInputManager::rawinput->raw.data.mouse.lLastY;
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetScreenWidth() - 20, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
 	ss.str("");
 	switch (demoScene)
 	{
@@ -314,8 +320,8 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetScreenWidth() / 2, -(float)wiRenderer::GetScreenHeight(), -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
-	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetScreenWidth() / 2, -(float)wiRenderer::GetScreenHeight(), -5, -4), "center", "bottom");
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
+	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, -4), "center", "bottom");
 }
 
 
@@ -325,7 +331,7 @@ void DemoLoadingScreen::Load()
 	sprite->setTexture(wiTextureHelper::getInstance()->getWhite());
 	sprite->anim.rot = 0.08f;
 	sprite->effects.siz = XMFLOAT2(100.f, 100.f);
-	sprite->effects.pos = XMFLOAT3(wiRenderer::GetScreenWidth() * 0.5f - 50.f, -wiRenderer::GetScreenHeight() * 0.5f - 50.f, 0.f);
+	sprite->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() * 0.5f - 50.f, -wiRenderer::GetDevice()->GetScreenHeight() * 0.5f - 50.f, 0.f);
 	addSprite(sprite);
 }
 void DemoLoadingScreen::Update()
@@ -338,7 +344,7 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetScreenWidth() / 2.f, -wiRenderer::GetScreenHeight() / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2.f, -wiRenderer::GetDevice()->GetScreenHeight() / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
 }
 
 
@@ -346,7 +352,7 @@ HelloWorldDemo::HelloWorldDemo(){
 	wiSprite* image;
 	image = new wiSprite("HelloWorldDemo/HelloWorld.png",&Content);
 	image->effects.siz = XMFLOAT2(400, 200);
-	image->effects.pos = XMFLOAT3(wiRenderer::GetScreenWidth() / 2 - image->effects.siz.x / 2, -wiRenderer::GetScreenHeight() / 2 + image->effects.siz.y / 2, 0);
+	image->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() / 2 - image->effects.siz.x / 2, -wiRenderer::GetDevice()->GetScreenHeight() / 2 + image->effects.siz.y / 2, 0);
 	image->anim.rot = 0.01f;
 
 	addSprite(image);
@@ -537,8 +543,8 @@ void DeferredLightDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/lightBenchmark/", "lightBenchmark");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/lightBenchmark/env.dds"));
-	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((Texture2D*)Content.add("DeferredSceneDemo/lightBenchmark/env.dds"));
+	wiRenderer::SetColorGrading((Texture2D*)Content.add("DeferredSceneDemo/lightBenchmark/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void DeferredLightDemo::Start(){
@@ -559,8 +565,8 @@ void DeferredSceneDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void DeferredSceneDemo::Start(){
@@ -579,8 +585,8 @@ void ForwardSceneDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
-	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
+	wiRenderer::SetColorGrading((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void ForwardSceneDemo::Start(){
@@ -600,8 +606,8 @@ void SSRTestDemo::Load()
 
 	wiRenderer::LoadModel("DeferredSceneDemo/ssrtest/", "ssrtest");
 	wiRenderer::FinishLoading();
-	wiRenderer::SetEnviromentMap((TextureView)Content.add("DeferredSceneDemo/ssrtest/env.dds"));
-	wiRenderer::SetColorGrading((TextureView)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
+	wiRenderer::SetEnviromentMap((Texture2D*)Content.add("DeferredSceneDemo/ssrtest/env.dds"));
+	wiRenderer::SetColorGrading((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
 	wiHairParticle::Settings(20, 50, 200);
 }
 void SSRTestDemo::Start(){
