@@ -19,8 +19,6 @@ Demo::~Demo()
 	wiFont::CleanUpStatic();
 	wiInputManager::CleanUp();
 	wiLensFlare::CleanUp();
-	wiRenderer::CleanUpStatic();
-
 }
 void Demo::Initialize()
 {
@@ -30,7 +28,7 @@ void Demo::Initialize()
 		wiInitializer::WICKEDENGINE_INITIALIZE_RENDERER
 		| wiInitializer::WICKEDENGINE_INITIALIZE_IMAGE
 		| wiInitializer::WICKEDENGINE_INITIALIZE_FONT
-		| wiInitializer::WICKEDENGINE_INITIALIZE_SOUND
+		//| wiInitializer::WICKEDENGINE_INITIALIZE_SOUND
 		| wiInitializer::WICKEDENGINE_INITIALIZE_MISC
 		);
 
@@ -65,6 +63,7 @@ void Demo::Initialize()
 	demos.insert(pair<DEMOS, RenderableComponent*>(DEFERREDLIGHTS, new DeferredLightDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(SSRTEST, new SSRTestDemo()));
 	demos.insert(pair<DEMOS, RenderableComponent*>(FORWARDSCENE, new ForwardSceneDemo()));
+	demos.insert(pair<DEMOS, RenderableComponent*>(SKINTEST, new SkinTestDemo()));
 
 	for (pair<DEMOS, RenderableComponent*> x : demos)
 	{
@@ -111,8 +110,11 @@ void Demo::Update()
 		else if (wiInputManager::press('0')){
 			ChangeDemo(SSRTEST);
 		}
-		else if (wiInputManager::press(VK_F1)){
+		else if (wiInputManager::press(VK_F1)) {
 			ChangeDemo(FORWARDSCENE);
+		}
+		else if (wiInputManager::press(VK_F2)) {
+			ChangeDemo(SKINTEST);
 		}
 		else if (wiInputManager::press(XINPUT_GAMEPAD_DPAD_LEFT, wiInputManager::XINPUT_JOYPAD, 0))
 		{
@@ -611,6 +613,24 @@ void SSRTestDemo::Load()
 	wiHairParticle::Settings(20, 50, 200);
 }
 void SSRTestDemo::Start(){
+	DeferredRenderableComponent::Start();
+}
+
+void SkinTestDemo::Initialize()
+{
+	setSSAOEnabled(true);
+	setSSREnabled(true);
+
+	DeferredRenderableComponent::Initialize();
+}
+void SkinTestDemo::Load()
+{
+	DeferredRenderableComponent::Load();
+
+	wiRenderer::LoadModel("SkinTestDemo/", "leeperrysmith");
+	wiRenderer::FinishLoading();
+}
+void SkinTestDemo::Start(){
 	DeferredRenderableComponent::Start();
 }
 

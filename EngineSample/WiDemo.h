@@ -17,6 +17,7 @@ private:
 		DEFERREDLIGHTS,
 		SSRTEST,
 		FORWARDSCENE,
+		SKINTEST,
 		DEMO_COUNT,
 	};
 	DEMOS demoScene;
@@ -142,6 +143,14 @@ public:
 };
 
 class SSRTestDemo :public DeferredRenderableComponent
+{
+public:
+	void Initialize();
+	void Load();
+	void Start();
+};
+
+class SkinTestDemo :public DeferredRenderableComponent
 {
 public:
 	void Initialize();
