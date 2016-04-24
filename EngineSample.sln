@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineSample", "EngineSample\EngineSample.vcxproj", "{76DC83E6-CC34-4AA6-8EDB-DAF046970082}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762} = {A94A5B28-B5B0-4386-8281-8AE3C6984762}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WickedEngine", "..\WickedEngine\WickedEngine\WickedEngine.vcxproj", "{A94A5B28-B5B0-4386-8281-8AE3C6984762}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +21,6 @@ Global
 		{76DC83E6-CC34-4AA6-8EDB-DAF046970082}.Release|Win32.Build.0 = Release|Win32
 		{76DC83E6-CC34-4AA6-8EDB-DAF046970082}.WinRT|Win32.ActiveCfg = Release|Win32
 		{76DC83E6-CC34-4AA6-8EDB-DAF046970082}.WinRT|Win32.Build.0 = Release|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.Debug|Win32.Build.0 = Debug|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.Release_RT|Win32.ActiveCfg = Release_RT|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.Release_RT|Win32.Build.0 = Release_RT|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.Release|Win32.ActiveCfg = Release|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.Release|Win32.Build.0 = Release|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.WinRT|Win32.ActiveCfg = WinRT|Win32
-		{A94A5B28-B5B0-4386-8281-8AE3C6984762}.WinRT|Win32.Build.0 = WinRT|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
