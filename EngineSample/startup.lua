@@ -31,17 +31,17 @@
 runProcess(function()
 	while true do
 		
-		if(input.Press(VK_F12)) then
+		if(input.Press(VK_F11)) then
 			ReloadShaders("../../WickedEngine/WickedEngine/shaders/")
 		end
 		
-		if(input.Press(VK_F11)) then
-			PutEnvProbe(GetCamera().GetPosition(),256);
+		if(input.Press(VK_F10)) then
+			PutEnvProbe(GetCamera().GetPosition(),4096);
 		end
 		
-		-- if(input.Press(VK_F6)) then
-			-- main.GetActiveComponent().SetDepthOfFieldEnabled(true);
-		-- end
+		if(input.Press(VK_F6)) then
+			main.GetActiveComponent().SetPreferredThreadingCount(4);
+		end
 		
 		update()
 	end

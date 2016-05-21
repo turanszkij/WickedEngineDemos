@@ -444,6 +444,8 @@ void EmittedParticleDemo::Initialize()
 	setVolumeLightsEnabled(false);
 	setLightShaftsEnabled(false);
 	setLensFlareEnabled(false);
+	setAlphaParticleDownSample(0.5f);
+	setAdditiveParticleDownSample(0.5f);
 
 	ForwardRenderableComponent::Initialize();
 }
@@ -558,6 +560,7 @@ void DeferredSceneDemo::Initialize()
 	setSSAOEnabled(true);
 	setSSREnabled(false);
 	setReflectionsEnabled(true);
+	setEyeAdaptionEnabled(true);
 
 	DeferredRenderableComponent::Initialize();
 }
