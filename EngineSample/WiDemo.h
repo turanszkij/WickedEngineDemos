@@ -56,6 +56,8 @@ public:
 
 class HelloWorldDemo : public Renderable2DComponent
 {
+private:
+	wiButton button;
 public:
 	HelloWorldDemo();
 	~HelloWorldDemo();

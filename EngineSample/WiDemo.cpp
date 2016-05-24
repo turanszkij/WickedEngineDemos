@@ -242,6 +242,8 @@ void Demo::HudRender(){
 #endif
 	ss << "\nResolution: " << wiRenderer::GetDevice()->GetScreenWidth() << " x " << wiRenderer::GetDevice()->GetScreenHeight();
 	ss << "\nDeferred context support: " << (wiRenderer::GetDevice()->GetMultithreadingSupport() ? "yes" : "no");
+	XMFLOAT4 po = wiInputManager::getpointer();
+	ss << "\nPointer: " << po.x << "," << po.y;
 	ss << "\n\nDemo Select:\n------------------";
 	ss << "\n[1] :  HelloWorld";
 	ss << "\n[2] :  BasicModel";
@@ -322,7 +324,7 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, (float)wiRenderer::GetDevice()->GetScreenHeight(), -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
 	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, -4), "center", "bottom");
 }
 
@@ -333,7 +335,8 @@ void DemoLoadingScreen::Load()
 	sprite->setTexture(wiTextureHelper::getInstance()->getWhite());
 	sprite->anim.rot = 0.08f;
 	sprite->effects.siz = XMFLOAT2(100.f, 100.f);
-	sprite->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() * 0.5f - 50.f, -wiRenderer::GetDevice()->GetScreenHeight() * 0.5f - 50.f, 0.f);
+	sprite->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() * 0.5f - 50.f, wiRenderer::GetDevice()->GetScreenHeight() * 0.5f + 50.f, 0.f);
+	sprite->effects.pivot = XMFLOAT2(0.5f, 0.5f);
 	addSprite(sprite);
 }
 void DemoLoadingScreen::Update()
@@ -346,7 +349,7 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2.f, -wiRenderer::GetDevice()->GetScreenHeight() / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2.f, wiRenderer::GetDevice()->GetScreenHeight() / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
 }
 
 
@@ -354,10 +357,20 @@ HelloWorldDemo::HelloWorldDemo(){
 	wiSprite* image;
 	image = new wiSprite("HelloWorldDemo/HelloWorld.png",&Content);
 	image->effects.siz = XMFLOAT2(400, 200);
-	image->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() / 2 - image->effects.siz.x / 2, -wiRenderer::GetDevice()->GetScreenHeight() / 2 + image->effects.siz.y / 2, 0);
+	image->effects.pos = XMFLOAT3((float)wiRenderer::GetDevice()->GetScreenWidth()/2, (float)wiRenderer::GetDevice()->GetScreenHeight()/2, 0);
+	image->effects.pivot = XMFLOAT2(0.5f, 0.5f);
 	image->anim.rot = 0.01f;
 
 	addSprite(image);
+
+	button.SetName("BUTTON1");
+	button.OnClick([](wiEventArgs args) {
+		wiHelper::messageBox("Button clicked!", "Success!");
+	});
+	button.SetPos(XMFLOAT2(wiRenderer::GetDevice()->GetScreenWidth() *0.5f - 100, wiRenderer::GetDevice()->GetScreenHeight()*0.8f));
+	button.SetSize(XMFLOAT2(200, 50));
+	button.SetText("Click me!");
+	GetGUI().AddWidget(&button);
 }
 HelloWorldDemo::~HelloWorldDemo(){
 	Renderable2DComponent::~Renderable2DComponent();

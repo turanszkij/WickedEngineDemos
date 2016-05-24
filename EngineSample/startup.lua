@@ -36,7 +36,7 @@ runProcess(function()
 		end
 		
 		if(input.Press(VK_F10)) then
-			PutEnvProbe(GetCamera().GetPosition(),4096);
+			PutEnvProbe(GetCamera().GetPosition(),256);
 		end
 		
 		if(input.Press(VK_F6)) then
