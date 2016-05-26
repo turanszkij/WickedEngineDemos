@@ -3,7 +3,7 @@
 
 class Demo : public MainComponent
 {
-private:
+public:
 	enum DEMOS{
 		LOADINGSCREEN,
 		HELLOWORLD,
@@ -32,6 +32,7 @@ public:
 	Demo();
 	~Demo();
 
+
 	void Initialize();
 	void Update();
 	void Render();
@@ -58,6 +59,8 @@ class HelloWorldDemo : public Renderable2DComponent
 {
 private:
 	wiButton button;
+	wiSlider slider;
+	wiLabel label;
 public:
 	HelloWorldDemo();
 	~HelloWorldDemo();

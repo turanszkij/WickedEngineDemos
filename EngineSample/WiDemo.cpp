@@ -17,7 +17,6 @@ Demo::~Demo()
 	wiRenderer::CleanUpStatic();
 	wiImage::CleanUp();
 	wiFont::CleanUpStatic();
-	wiInputManager::CleanUp();
 	wiLensFlare::CleanUp();
 }
 void Demo::Initialize()
@@ -42,9 +41,9 @@ void Demo::Initialize()
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiFont::addFontStyle("basic");
-	wiInputManager::addDirectInput(new wiDirectInput(instance, window));
-	wiInputManager::addXInput(new wiXInput());
-	wiInputManager::addRawInput(new wiRawInput(window));
+	wiInputManager::GetInstance()->addDirectInput(new wiDirectInput(instance, window));
+	wiInputManager::GetInstance()->addXInput(new wiXInput());
+	wiInputManager::GetInstance()->addRawInput(new wiRawInput(window));
 
 	Content.add("sound/change.wav", wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
@@ -80,69 +79,69 @@ void Demo::Update()
 
 	if (!wiBackLog::isActive())
 	{
-		if (wiInputManager::press('1')){
+		if (wiInputManager::GetInstance()->press('1')){
 			ChangeDemo(HELLOWORLD);
 		}
-		else if (wiInputManager::press('2')){
+		else if (wiInputManager::GetInstance()->press('2')){
 			ChangeDemo(BASICMODEL);
 		}
-		else if (wiInputManager::press('3')){
+		else if (wiInputManager::GetInstance()->press('3')){
 			ChangeDemo(SKINNEDMODEL);
 		}
-		else if (wiInputManager::press('4')){
+		else if (wiInputManager::GetInstance()->press('4')){
 			ChangeDemo(EMITTERPARTICLE);
 		}
-		else if (wiInputManager::press('5')){
+		else if (wiInputManager::GetInstance()->press('5')){
 			ChangeDemo(HAIRPARTICLE);
 		}
-		else if (wiInputManager::press('6')){
+		else if (wiInputManager::GetInstance()->press('6')){
 			ChangeDemo(RIGIDBODY);
 		}
-		else if (wiInputManager::press('7')){
+		else if (wiInputManager::GetInstance()->press('7')){
 			ChangeDemo(SOFTBODY);
 		}
-		else if (wiInputManager::press('8')){
+		else if (wiInputManager::GetInstance()->press('8')){
 			ChangeDemo(DEFERREDLIGHTS);
 		}
-		else if (wiInputManager::press('9')){
+		else if (wiInputManager::GetInstance()->press('9')){
 			ChangeDemo(DEFERREDSCENE);
 		}
-		else if (wiInputManager::press('0')){
+		else if (wiInputManager::GetInstance()->press('0')){
 			ChangeDemo(SSRTEST);
 		}
-		else if (wiInputManager::press(VK_F1)) {
+		else if (wiInputManager::GetInstance()->press(VK_F1)) {
 			ChangeDemo(FORWARDSCENE);
 		}
-		else if (wiInputManager::press(VK_F2)) {
+		else if (wiInputManager::GetInstance()->press(VK_F2)) {
 			ChangeDemo(SKINTEST);
 		}
-		else if (wiInputManager::press(XINPUT_GAMEPAD_DPAD_LEFT, wiInputManager::XINPUT_JOYPAD, 0))
+		else if (wiInputManager::GetInstance()->press(XINPUT_GAMEPAD_DPAD_LEFT, wiInputManager::XINPUT_JOYPAD, 0))
 		{
 			ChangeDemo((DEMOS)(demoScene - 1));
 		}
-		else if (wiInputManager::press(XINPUT_GAMEPAD_DPAD_RIGHT, wiInputManager::XINPUT_JOYPAD, 0))
+		else if (wiInputManager::GetInstance()->press(XINPUT_GAMEPAD_DPAD_RIGHT, wiInputManager::XINPUT_JOYPAD, 0))
 		{
 			ChangeDemo((DEMOS)(demoScene + 1));
 		}
-		else if (wiInputManager::press(POV_LEFT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
+		else if (wiInputManager::GetInstance()->press(POV_LEFT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
 		{
 			ChangeDemo((DEMOS)(demoScene - 1));
 		}
-		else if (wiInputManager::press(POV_RIGHT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
+		else if (wiInputManager::GetInstance()->press(POV_RIGHT, wiInputManager::DIRECTINPUT_JOYPAD, 0))
 		{
 			ChangeDemo((DEMOS)(demoScene + 1));
 		}
 	}
 	else
 	{
-		if (wiInputManager::press(VK_PRIOR) || wiInputManager::hold(VK_PRIOR, 30, true)){ //page up
+		if (wiInputManager::GetInstance()->press(VK_PRIOR) || wiInputManager::GetInstance()->hold(VK_PRIOR, 30, true)){ //page up
 			wiBackLog::Scroll(-5);
 		}
-		else if (wiInputManager::press(VK_NEXT) || wiInputManager::hold(VK_NEXT, 40, true)){ //page down
+		else if (wiInputManager::GetInstance()->press(VK_NEXT) || wiInputManager::GetInstance()->hold(VK_NEXT, 40, true)){ //page down
 			wiBackLog::Scroll(5);
 		}
 	}
-	if (wiInputManager::press(VK_HOME)){
+	if (wiInputManager::GetInstance()->press(VK_HOME)){
 		wiBackLog::Toggle();
 	}
 
@@ -160,13 +159,13 @@ void Demo::CameraControl(){
 	if (wiBackLog::isActive())
 		return;
 
-	float speed = (wiInputManager::down(VK_SHIFT) ? 1.0f : 0.1f);
-	if (wiInputManager::down('A')) wiRenderer::getCamera()->Move(XMVectorSet(-speed, 0, 0, 0));
-	if (wiInputManager::down('D')) wiRenderer::getCamera()->Move(XMVectorSet(speed, 0, 0, 0));
-	if (wiInputManager::down('W')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, speed, 0));
-	if (wiInputManager::down('S')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, -speed, 0));
-	if (wiInputManager::down(VK_SPACE)) wiRenderer::getCamera()->Move(XMVectorSet(0, speed, 0, 0));
-	if (wiInputManager::down(VK_CONTROL)) wiRenderer::getCamera()->Move(XMVectorSet(0, -speed, 0, 0));
+	float speed = (wiInputManager::GetInstance()->down(VK_SHIFT) ? 1.0f : 0.1f);
+	if (wiInputManager::GetInstance()->down('A')) wiRenderer::getCamera()->Move(XMVectorSet(-speed, 0, 0, 0));
+	if (wiInputManager::GetInstance()->down('D')) wiRenderer::getCamera()->Move(XMVectorSet(speed, 0, 0, 0));
+	if (wiInputManager::GetInstance()->down('W')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, speed, 0));
+	if (wiInputManager::GetInstance()->down('S')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, -speed, 0));
+	if (wiInputManager::GetInstance()->down(VK_SPACE)) wiRenderer::getCamera()->Move(XMVectorSet(0, speed, 0, 0));
+	if (wiInputManager::GetInstance()->down(VK_CONTROL)) wiRenderer::getCamera()->Move(XMVectorSet(0, -speed, 0, 0));
 
 	static POINT originalMouse;
 	POINT currentMouse;
@@ -242,7 +241,7 @@ void Demo::HudRender(){
 #endif
 	ss << "\nResolution: " << wiRenderer::GetDevice()->GetScreenWidth() << " x " << wiRenderer::GetDevice()->GetScreenHeight();
 	ss << "\nDeferred context support: " << (wiRenderer::GetDevice()->GetMultithreadingSupport() ? "yes" : "no");
-	XMFLOAT4 po = wiInputManager::getpointer();
+	XMFLOAT4 po = wiInputManager::GetInstance()->getpointer();
 	ss << "\nPointer: " << po.x << "," << po.y;
 	ss << "\n\nDemo Select:\n------------------";
 	ss << "\n[1] :  HelloWorld";
@@ -363,14 +362,68 @@ HelloWorldDemo::HelloWorldDemo(){
 
 	addSprite(image);
 
+	float screenW = (float)wiRenderer::GetDevice()->GetScreenWidth();
+	float screenH = (float)wiRenderer::GetDevice()->GetScreenHeight();
+
 	button.SetName("BUTTON1");
-	button.OnClick([](wiEventArgs args) {
-		wiHelper::messageBox("Button clicked!", "Success!");
+	button.OnClick([&](wiEventArgs args) {
+		static int clicks = 0;
+		clicks++;
+		stringstream ss("");
+		ss << "Button clicks: " << clicks;
+		label.SetText(ss.str());
 	});
-	button.SetPos(XMFLOAT2(wiRenderer::GetDevice()->GetScreenWidth() *0.5f - 100, wiRenderer::GetDevice()->GetScreenHeight()*0.8f));
+	button.SetPos(XMFLOAT2(screenW *0.5f - 100, screenH*0.8f));
 	button.SetSize(XMFLOAT2(200, 50));
 	button.SetText("Click me!");
 	GetGUI().AddWidget(&button);
+
+	slider = wiSlider(12, 45, 0.5f, 23.0f, "SLIDER1");
+	slider.SetText("Drag me: ");
+	slider.SetPos(XMFLOAT2(screenW*0.5f - 200, screenH*0.55f));
+	slider.SetSize(XMFLOAT2(400, 50));
+	slider.OnSlide([&](wiEventArgs args) {
+		stringstream ss("");
+		ss << "Slider value: " << args.fValue << endl;
+		label.SetText(ss.str());
+	});
+	GetGUI().AddWidget(&slider);
+
+	label.SetName("LABEL1");
+	label.SetPos(XMFLOAT2(screenW / 2 - 300, screenH*0.3f));
+	label.SetSize(XMFLOAT2(600, 100));
+	label.SetText("Label text");
+	GetGUI().AddWidget(&label);
+
+	wiSlider* slider1 = new wiSlider(0, 100, 20);
+	slider1->SetSize(XMFLOAT2(100, 20));
+	slider1->SetPos(XMFLOAT2(screenW *0.75f, screenH*0.12f));
+	slider1->OnSlide([&](wiEventArgs args) {
+		stringstream ss("");
+		ss << "Slider1 value: " << args.fValue << endl;
+		label.SetText(ss.str());
+	});
+	GetGUI().AddWidget(slider1);
+
+	wiSlider* slider2 = new wiSlider(50, 230, 11, 230 - 50);
+	slider2->SetSize(XMFLOAT2(100, 20));
+	slider2->SetPos(XMFLOAT2(screenW *0.75f, screenH*0.18f));
+	slider2->OnSlide([&](wiEventArgs args) {
+		stringstream ss("");
+		ss << "Slider2 value: " << args.fValue << endl;
+		label.SetText(ss.str());
+	});
+	GetGUI().AddWidget(slider2);
+
+	wiSlider* slider3 = new wiSlider(10, 4000, 300, 3);
+	slider3->SetSize(XMFLOAT2(100, 20));
+	slider3->SetPos(XMFLOAT2(screenW *0.75f, screenH*0.24f));
+	slider3->OnSlide([&](wiEventArgs args) {
+		stringstream ss("");
+		ss << "Slider3 value: " << args.fValue << endl;
+		label.SetText(ss.str());
+	});
+	GetGUI().AddWidget(slider3);
 }
 HelloWorldDemo::~HelloWorldDemo(){
 	Renderable2DComponent::~Renderable2DComponent();

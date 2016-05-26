@@ -267,6 +267,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_LBUTTONDOWN:
 	{
+		if (demo.demoScene == Demo::HELLOWORLD)
+			break;
 		if (demo.interactionType == Demo::INTERACT::DECAL){
 			POINT p;
 			GetCursorPos(&p);
