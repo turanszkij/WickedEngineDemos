@@ -274,7 +274,7 @@ void Demo::HudRender(){
 	default:
 		break;
 	}
-	wiFont(ss.str(), wiFontProps(0, 0, -7, WIFALIGN_LEFT, WIFALIGN_TOP, -4)).Draw();
+	wiFont(ss.str(), wiFontProps(0, 0, 12, WIFALIGN_LEFT, WIFALIGN_TOP, -4)).Draw();
 	ss.str("");
 	ss.precision(1);
 	ss << fixed << wiFrameRate::FPS() << " FPS";
@@ -282,7 +282,7 @@ void Demo::HudRender(){
 	//ss << "\nRAWInput Joy: " << wiInputManager::rawinput->raw.data.hid.bRawData[0];
 	//ss << "\nRAWInput Keyboard: " << (char)wiInputManager::rawinput->raw.data.keyboard.VKey;
 	//ss << "\nRAWInput Mouse: " << wiInputManager::rawinput->raw.data.mouse.lLastX << ":" << wiInputManager::rawinput->raw.data.mouse.lLastY;
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, -5, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, 12, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
 	ss.str("");
 	switch (demoScene)
 	{
@@ -323,7 +323,7 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, (float)wiRenderer::GetDevice()->GetScreenHeight(), -5, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
+	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, (float)wiRenderer::GetDevice()->GetScreenHeight(), 12, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
 	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, -4), "center", "bottom");
 }
 
@@ -334,7 +334,7 @@ void DemoLoadingScreen::Load()
 	sprite->setTexture(wiTextureHelper::getInstance()->getWhite());
 	sprite->anim.rot = 0.08f;
 	sprite->effects.siz = XMFLOAT2(100.f, 100.f);
-	sprite->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() * 0.5f - 50.f, wiRenderer::GetDevice()->GetScreenHeight() * 0.5f + 50.f, 0.f);
+	sprite->effects.pos = XMFLOAT3(wiRenderer::GetDevice()->GetScreenWidth() * 0.5f, wiRenderer::GetDevice()->GetScreenHeight() * 0.75f, 0.f);
 	sprite->effects.pivot = XMFLOAT2(0.5f, 0.5f);
 	addSprite(sprite);
 }
@@ -348,7 +348,7 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2.f, wiRenderer::GetDevice()->GetScreenHeight() / 2.f, 10, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2.f, wiRenderer::GetDevice()->GetScreenHeight() / 2.f, 30, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
 }
 
 

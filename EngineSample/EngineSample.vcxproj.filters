@@ -13,9 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="fonts">
+      <UniqueIdentifier>{6d2fc153-85a3-4857-9ce9-86749224e7c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="fonts\basic.wifont">
+      <Filter>fonts</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -53,6 +59,9 @@
     </Image>
     <Image Include="EngineSample.ico">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="fonts\basic.dds">
+      <Filter>fonts</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
