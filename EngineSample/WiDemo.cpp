@@ -211,7 +211,7 @@ void Demo::ChangeDemo(DEMOS newDemo){
 		LoadingScreenComponent* loading = dynamic_cast<LoadingScreenComponent*>(demos[LOADINGSCREEN]);
 		if (loading != nullptr)
 		{
-			loading->Unload();
+			loading->Stop();
 			for (int i = 0; i < 10; ++i)
 			{
 				//Added some fake loading simulation tasks
@@ -446,21 +446,21 @@ void BasicModelDemo::Initialize()
 	setEmitterParticlesEnabled(false);
 	setHairParticlesEnabled(false);
 
-	ForwardRenderableComponent::Initialize();
+	__super::Initialize();
 }
 void BasicModelDemo::Load()
 {
-	ForwardRenderableComponent::Load();
+	__super::Load();
 
 	model = wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel", XMMatrixTranslation(0,2.2f,0));
 	wiRenderer::FinishLoading();
 }
 void BasicModelDemo::Start(){
-	ForwardRenderableComponent::Start();
+	__super::Start();
 	//wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
 void BasicModelDemo::Update(){
-	ForwardRenderableComponent::Update();
+	__super::Update();
 
 	model->RotateRollPitchYaw(XMFLOAT3(0, 0.001f*XM_2PI, 0));
 	//wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));

@@ -69,7 +69,7 @@ public:
 	void Compose();
 };
 
-class BasicModelDemo : public ForwardRenderableComponent
+class BasicModelDemo : public DeferredRenderableComponent
 {
 private:
 	Model* model;
