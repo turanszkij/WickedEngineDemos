@@ -41,9 +41,9 @@ void Demo::Initialize()
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiFont::addFontStyle("basic");
-	wiInputManager::GetInstance()->addDirectInput(new wiDirectInput(instance, window));
+	//wiInputManager::GetInstance()->addDirectInput(new wiDirectInput(instance, window));
 	wiInputManager::GetInstance()->addXInput(new wiXInput());
-	wiInputManager::GetInstance()->addRawInput(new wiRawInput(window));
+	//wiInputManager::GetInstance()->addRawInput(new wiRawInput(window));
 
 	Content.add("sound/change.wav", wiResourceManager::SOUND);
 	wiSoundEffect::SetVolume(0.5f);
@@ -167,22 +167,109 @@ void Demo::CameraControl(){
 	if (wiInputManager::GetInstance()->down(VK_SPACE)) wiRenderer::getCamera()->Move(XMVectorSet(0, speed, 0, 0));
 	if (wiInputManager::GetInstance()->down(VK_CONTROL)) wiRenderer::getCamera()->Move(XMVectorSet(0, -speed, 0, 0));
 
-	static POINT originalMouse;
-	POINT currentMouse;
-	GetCursorPos(&currentMouse);
-	if (mousebuttondown)
+	static XMFLOAT4 originalMouse = XMFLOAT4(0, 0, 0, 0);
+	XMFLOAT4 currentMouse = wiInputManager::GetInstance()->getpointer();
+	if (wiInputManager::GetInstance()->down(VK_RBUTTON) || mousebuttondown)
 	{
-		LONG xDif = currentMouse.x - originalMouse.x;
-		LONG yDif = currentMouse.y - originalMouse.y;
-		//wiRenderer::getCamera()->leftrightRot += 0.1f*xDif*(1.0f/60.0f);
-		//wiRenderer::getCamera()->updownRot += 0.1f*yDif*(1.0f / 60.0f);
+		float xDif = currentMouse.x - originalMouse.x;
+		float yDif = currentMouse.y - originalMouse.y;
 		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, 0.1f*xDif*(1.0f / 60.0f), 0));
 		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0.1f*yDif*(1.0f / 60.0f), 0, 0));
-		SetCursorPos(originalMouse.x, originalMouse.y);
+		wiInputManager::GetInstance()->setpointer(originalMouse);
 	}
 	else
 	{
-		GetCursorPos(&originalMouse);
+		originalMouse = wiInputManager::GetInstance()->getpointer();
+	}
+
+
+	// TOUCH
+
+	static XMFLOAT4 originalMouseL = XMFLOAT4(0, 0, 0, 0);
+	static XMFLOAT4 originalMouseR = XMFLOAT4(0, 0, 0, 0);
+	auto& touches = wiInputManager::GetInstance()->getTouches();
+	for (auto& touch : touches)
+	{
+		switch (touch.state)
+		{
+		case wiInputManager::Touch::TOUCHSTATE_PRESSED:
+		{
+			if (touch.pos.x < screenW / 4 && touch.pos.y < screenH / 4)
+			{
+				DEMOS nextDemo = (DEMOS)(demoScene + 1);
+				if (nextDemo == DEMO_COUNT)
+					nextDemo = HELLOWORLD;
+				ChangeDemo(nextDemo);
+			}
+			else if (touch.pos.x > screenW * 0.75f && touch.pos.y < screenH / 4)
+			{
+				XMMATRIX spawnTrans = XMMatrixRotationQuaternion(XMLoadFloat4(&wiRenderer::getCamera()->rotation))*XMMatrixTranslationFromVector(XMVectorAdd(wiRenderer::getCamera()->GetEye(), wiRenderer::getCamera()->GetAt() * 5));
+				switch (wiRandom::getRandom(0, 3))
+				{
+				case 0:
+					wiRenderer::LoadModel("models/barrel/", "barrel",
+						spawnTrans
+						, "common");
+					break;
+				case 1:
+					wiRenderer::LoadModel("models/crate/", "crate",
+						spawnTrans
+						, "common");
+					break;
+				case 2:
+					wiRenderer::LoadModel("models/monkey/", "monkey",
+						spawnTrans
+						, "common"
+					);
+					break;
+				case 3:
+					wiRenderer::LoadModel("models/golfball/", "golfball",
+						spawnTrans
+						, "common"
+					);
+					break;
+				default:
+					break;
+				}
+			}
+			else
+			{
+				if (touch.pos.x < screenW / 2)
+				{
+					originalMouseL = XMFLOAT4(touch.pos.x, touch.pos.y, 0, 0);
+				}
+				else
+				{
+					originalMouseR = XMFLOAT4(touch.pos.x, touch.pos.y, 0, 0);
+				}
+			}
+		}
+		break;
+		case wiInputManager::Touch::TOUCHSTATE_MOVED:
+		{
+			if (touch.pos.x < screenW / 2)
+			{
+				float speed = -0.005f;
+				XMFLOAT4 currentMouse = XMFLOAT4(touch.pos.x, touch.pos.y, 0, 0);
+				float xDif = originalMouseL.x - currentMouse.x;
+				float yDif = originalMouseL.y - currentMouse.y;
+				wiRenderer::getCamera()->Move(XMVectorSet(xDif, 0, -yDif, 0)*speed);
+			}
+			else
+			{
+				float speed = 0.2f;
+				XMFLOAT4 currentMouse = XMFLOAT4(touch.pos.x, touch.pos.y, 0, 0);
+				float xDif = originalMouseR.x - currentMouse.x;
+				float yDif = originalMouseR.y - currentMouse.y;
+				wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, speed*xDif*(1.0f / 60.0f), 0));
+				wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(speed*yDif*(1.0f / 60.0f), 0, 0));
+				originalMouseR = currentMouse;
+			}
+		}
+		break;
+		default:
+			break;
+		}
 	}
 }
 void Demo::CameraReset(){

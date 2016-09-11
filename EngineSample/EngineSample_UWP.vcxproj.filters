@@ -1,0 +1,958 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>979ace43-a6f4-4fee-ae66-1d732c174804</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>70a32973-1fcc-4eae-85ff-3fa5c8fd1fb7</UniqueIdentifier>
+      <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Filter Include="Assets\CONTENT">
+      <UniqueIdentifier>{8ea4b030-8d44-4e7c-b1b3-4bf78728df25}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="BasicModelDemo\barrel\textures\wood_barrel1_c.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="BasicModelDemo\barrel\textures\wood_barrel1_n.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="BasicModelDemo\barrel\textures\wood_barrel1_s.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\colorGrading.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\env.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\preview.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare0.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare1.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare2.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare3.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare4.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare5.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare6.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\billboardredflowers.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Bricks_01_Diffuse.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Clay_01_Diffuse.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\flame.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Foliage_Bark_01_Diffuse_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Foliage_Bark_01_Normal_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Foliage_Leaves_01_DiffuseMask_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\grassbb.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\grass-texture-2.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Rocks02_DiffuseAtlas_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Rocks02_NormalAtlas_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\RoofTiles_01_Diffuse.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\waterNor.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_base_COL.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_base_NOR.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_base_SPEC.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_lopatky_COL.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_lopatky_NOR.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\WoodenPlain_01_Diffuse.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\WoodenPlanks_01_Diffuse_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\colorGrading.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\env.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\textures\ground.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\textures\normalmap.jpg">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="DeferredSceneDemo\ssrtest\env.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="SkinnedModelDemo\textures\repack.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="HelloWorldDemo\HelloWorld.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\Rocks02_DiffuseAtlas_01.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\wc1_diffuse.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\wc1_normal.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\wc1_specular.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="SoftBodyDemo\textures\HelloWorld.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="EmitterParticleDemo\textures\flame.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="EmitterParticleDemo\textures\smoke0.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="HairParticleDemo\textures\billboardredflowers.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="HairParticleDemo\textures\grassbb.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="images\blood1.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="images\blood2.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="images\graffiti.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="images\leaf.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="images\ripple.png">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+    <Image Include="fonts\basic.dds">
+      <Filter>Assets\CONTENT</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EngineSample_UWP_TemporaryKey.pfx" />
+    <None Include="BasicModelDemo\barrel\barrel.wi">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="BasicModelDemo\barrel\wood_barrel.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Architecture_Timberhouse_593_Internal.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Circle.003.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Circle.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Foliage_Trees_01.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Foliage_Trees_02.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Foliage_Trees_03.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wi">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.001.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.002.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\re.wimf">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock01_LP.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock02_LP.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock03_LP.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock04_LP.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\waterm.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wi">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Plane.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.001.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.002.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.003.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.004.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.blend">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.blend1">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.blend">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.blend1">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SkinnedModelDemo\omino.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\Plane.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.blend">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.blend1">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\Suzanne.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\Torus.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="RigidBodyDemo\Wood_container1.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\Cylinder.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.blend">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.blend1">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\flag.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="SoftBodyDemo\Plane.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.blend">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.blend1">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\Plane.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\Sphere.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="EmitterParticleDemo\Torus.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.blend">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.blend1">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wia">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wiact">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wic">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wid">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wierror">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wih">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wil">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wim">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wio">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\hair.wiw">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\Sphere.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="HairParticleDemo\Suzanne.wimesh">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\bloomSeparatePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\captureImpostorPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\circleGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\circlePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\circleVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\colorGradePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeMapPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeShadowGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeShadowPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeShadowVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\decalPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\decalVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\deferredPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\depthofFieldPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\dirLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\dirLightSoftPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\dirLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\environmentalLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\envMap_skyGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\envMap_skyPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\envMap_skyVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\envMapGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\envMapPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\envMapVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\fontPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\fontVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\fxaa.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassL0GS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassL1GS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassL2GS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\horizontalBlurPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\imagePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\imageVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lensFlareGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lensFlarePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lensFlareVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightShaftPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\linDepthPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\linesPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\linesVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\luminancePass1CS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\luminancePass2CS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\motionBlurPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectDS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectHS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_blackout.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_deferred.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_deferred_normalmap.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_deferred_normalmap_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_deferred_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_normalmap.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_normalmap_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_normalmap_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_normalmap.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_normalmap_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_normalmap_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_simplest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_textureonly.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_reflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS10.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\outlinePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\pointLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\pointLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\pointspriteGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\pointspritePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\pointspritePS_simplest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\pointspriteVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassLCloseGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassLDistGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\screenPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\screenVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\shadowPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\shadowVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\skyPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\skyPS_reflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\skyVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\skyVS_reflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\sOGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\sOVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\sphereVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\spotLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\spotLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\ssao.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\ssr.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\ssss.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\stereogramPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\sunPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\toneMapPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\trailPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\trailVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\verticalBlurPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\volumeLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\vPointLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\vSpotLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\waterPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\waterVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="fonts\basic.wifont">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wimf">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sound\change.wav">
+      <Filter>Assets\CONTENT</Filter>
+    </Media>
+  </ItemGroup>
+</Project>

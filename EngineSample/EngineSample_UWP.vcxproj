@@ -1,0 +1,1109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{979ace43-a6f4-4fee-ae66-1d732c174804}</ProjectGuid>
+    <RootNamespace>EngineSample_UWP</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="EngineSample_SHARED.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <PackageCertificateKeyFile>EngineSample_UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;BT_USE_DOUBLE_PRECISION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../WickedEngine/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;BT_USE_DOUBLE_PRECISION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../WickedEngine/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../WickedEngine/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../WickedEngine/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../WickedEngine/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../WickedEngine/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="BasicModelDemo\barrel\barrel.wi">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\barrel.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="BasicModelDemo\barrel\wood_barrel.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Architecture_Timberhouse_593_Internal.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Circle.003.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Circle.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Foliage_Trees_01.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Foliage_Trees_02.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Foliage_Trees_03.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wi">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wimf">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.001.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.002.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\re.wimf">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock01_LP.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock02_LP.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock03_LP.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\Rock04_LP.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\instanceBenchmark2\waterm.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wi">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\lightBenchmark\lightBenchmark.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Plane.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.001.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.002.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.003.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.004.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\Sphere.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.blend">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.blend1">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="DeferredSceneDemo\ssrtest\ssrtest.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.blend">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.blend1">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\emitter.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\Plane.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\Sphere.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EmitterParticleDemo\Torus.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="EngineSample_UWP_TemporaryKey.pfx" />
+    <None Include="fonts\basic.wifont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.blend">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.blend1">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\hair.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\Sphere.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="HairParticleDemo\Suzanne.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\Plane.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.blend">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.blend1">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\rigidScene.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\Suzanne.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\Torus.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="RigidBodyDemo\Wood_container1.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\bloomSeparatePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\captureImpostorPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\circleGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\circlePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\circleVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\colorGradePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\cubeMapPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\cubeShadowGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\cubeShadowPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\cubeShadowVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\decalPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\decalVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\deferredPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\depthofFieldPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\dirLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\dirLightSoftPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\dirLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\environmentalLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\envMapGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\envMapPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\envMapVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\envMap_skyGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\envMap_skyPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\envMap_skyVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\fontPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\fontVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\fxaa.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassL0GS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassL1GS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassL2GS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\horizontalBlurPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\imagePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\imageVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lensFlareGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lensFlarePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lensFlareVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightShaftPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\linDepthPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\linesPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\linesVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\luminancePass1CS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\luminancePass2CS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\motionBlurPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectDS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectHS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_blackout.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_deferred.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_deferred_normalmap.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_deferred_normalmap_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_deferred_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_normalmap.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_normalmap_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_normalmap_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_normalmap.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_normalmap_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_normalmap_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_transparent_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_simplest.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_textureonly.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS10.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS_reflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\outlinePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\pointLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\pointLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\pointspriteGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\pointspritePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\pointspritePS_simplest.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\pointspriteVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\qGrassLCloseGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\qGrassLDistGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\qGrassPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\screenPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\screenVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\shadowPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\shadowVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\skyPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\skyPS_reflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\skyVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\skyVS_reflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\sOGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\sOVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\sphereVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\spotLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\spotLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\ssao.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\ssr.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\ssss.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\stereogramPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\sunPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\toneMapPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\trailPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\trailVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\verticalBlurPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\volumeLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\vPointLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\vSpotLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\waterPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\waterVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.blend">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.blend1">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\girl.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SkinnedModelDemo\omino.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\Cylinder.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.blend">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.blend1">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wia">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wiact">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wic">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wid">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wierror">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wih">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wil">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wim">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wio">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\flag.wiw">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="SoftBodyDemo\Plane.wimesh">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\SplashScreen.scale-200.png" />
+    <Image Include="Assets\Square150x150Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Image Include="BasicModelDemo\barrel\textures\wood_barrel1_c.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="BasicModelDemo\barrel\textures\wood_barrel1_n.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="BasicModelDemo\barrel\textures\wood_barrel1_s.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\colorGrading.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\env.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\preview.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare0.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare1.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare2.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare3.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare4.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare5.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\rims\flare6.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\billboardredflowers.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Bricks_01_Diffuse.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Clay_01_Diffuse.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\flame.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Foliage_Bark_01_Diffuse_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Foliage_Bark_01_Normal_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Foliage_Leaves_01_DiffuseMask_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\grass-texture-2.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\grassbb.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Rocks02_DiffuseAtlas_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\Rocks02_NormalAtlas_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\RoofTiles_01_Diffuse.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\waterNor.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_base_COL.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_base_NOR.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_base_SPEC.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_lopatky_COL.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\windmill_001_lopatky_NOR.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\WoodenPlain_01_Diffuse.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\instanceBenchmark2\textures\WoodenPlanks_01_Diffuse_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\colorGrading.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\env.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\textures\ground.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\lightBenchmark\textures\normalmap.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="DeferredSceneDemo\ssrtest\env.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="EmitterParticleDemo\textures\flame.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="EmitterParticleDemo\textures\smoke0.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="fonts\basic.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="HairParticleDemo\textures\billboardredflowers.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="HairParticleDemo\textures\grassbb.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="HelloWorldDemo\HelloWorld.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="images\blood1.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="images\blood2.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="images\graffiti.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="images\leaf.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="images\ripple.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\Rocks02_DiffuseAtlas_01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\wc1_diffuse.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\wc1_normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="RigidBodyDemo\textures\wc1_specular.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="SkinnedModelDemo\textures\repack.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="SoftBodyDemo\textures\HelloWorld.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sound\change.wav">
+      <DeploymentContent>true</DeploymentContent>
+    </Media>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
