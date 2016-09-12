@@ -327,7 +327,7 @@ void Demo::HudRender(){
 	ss << " [DEBUG]";
 #endif
 	ss << "\nResolution: " << wiRenderer::GetDevice()->GetScreenWidth() << " x " << wiRenderer::GetDevice()->GetScreenHeight();
-	ss << "\nDeferred context support: " << (wiRenderer::GetDevice()->GetMultithreadingSupport() ? "yes" : "no");
+	ss << "\nDeferred context support: " << (wiRenderer::GetDevice()->CheckCapability(GraphicsDevice::GRAPHICSDEVICE_CAPABILITY_MULTITHREADED_RENDERING) ? "yes" : "no");
 	XMFLOAT4 po = wiInputManager::GetInstance()->getpointer();
 	ss << "\nPointer: " << po.x << "," << po.y;
 	ss << "\n\nDemo Select:\n------------------";
