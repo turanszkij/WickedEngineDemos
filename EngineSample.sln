@@ -15,6 +15,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\WickedEngine\WickedEngine\WickedEngine_SHARED.vcxitems*{45d41acc-2c3c-43d2-bc10-02aa73ffc7c7}*SharedItemsImports = 9
 		EngineSample\EngineSample_SHARED.vcxitems*{76dc83e6-cc34-4aa6-8edb-daf046970082}*SharedItemsImports = 4
+		EngineSample\EngineSample_SHARED.vcxitems*{7d34d5e8-4da1-498a-b949-dd5f6af6cb32}*SharedItemsImports = 9
 		EngineSample\EngineSample_SHARED.vcxitems*{979ace43-a6f4-4fee-ae66-1d732c174804}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
