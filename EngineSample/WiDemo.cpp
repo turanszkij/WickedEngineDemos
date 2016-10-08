@@ -34,13 +34,9 @@ void Demo::Initialize()
 	wiRenderer::GetDevice()->SetVSyncEnabled(false);
 	wiRenderer::EMITTERSENABLED = true;
 	wiRenderer::HAIRPARTICLEENABLED = true;
-	wiRenderer::SetDirectionalLightShadowProps(1024, 2);
-	wiRenderer::SetPointLightShadowProps(2, 512);
-	wiRenderer::SetSpotLightShadowProps(2, 512);
 	//wiRenderer::DX11 = false;
 	wiRenderer::physicsEngine = new wiBULLET();
 
-	wiFont::addFontStyle("basic");
 	//wiInputManager::GetInstance()->addDirectInput(new wiDirectInput(instance, window));
 	wiInputManager::GetInstance()->addXInput(new wiXInput());
 	//wiInputManager::GetInstance()->addRawInput(new wiRawInput(window));
@@ -361,7 +357,7 @@ void Demo::HudRender(){
 	default:
 		break;
 	}
-	wiFont(ss.str(), wiFontProps(0, 0, 12, WIFALIGN_LEFT, WIFALIGN_TOP, -4)).Draw();
+	wiFont(ss.str(), wiFontProps(0, 0, -1, WIFALIGN_LEFT, WIFALIGN_TOP)).Draw();
 	ss.str("");
 	ss.precision(1);
 	ss << fixed << wiFrameRate::FPS() << " FPS";
@@ -369,7 +365,7 @@ void Demo::HudRender(){
 	//ss << "\nRAWInput Joy: " << wiInputManager::rawinput->raw.data.hid.bRawData[0];
 	//ss << "\nRAWInput Keyboard: " << (char)wiInputManager::rawinput->raw.data.keyboard.VKey;
 	//ss << "\nRAWInput Mouse: " << wiInputManager::rawinput->raw.data.mouse.lLastX << ":" << wiInputManager::rawinput->raw.data.mouse.lLastY;
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, 12, WIFALIGN_RIGHT, WIFALIGN_TOP, -4)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, -1, WIFALIGN_RIGHT, WIFALIGN_TOP)).Draw();
 	ss.str("");
 	switch (demoScene)
 	{
@@ -410,7 +406,7 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont(ss.str(), wiFontProps((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, (float)wiRenderer::GetDevice()->GetScreenHeight(), 12, WIFALIGN_CENTER, WIFALIGN_BOTTOM, -4)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2, wiRenderer::GetDevice()->GetScreenHeight(), -1, WIFALIGN_CENTER, WIFALIGN_BOTTOM)).Draw();
 	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, -4), "center", "bottom");
 }
 
@@ -435,7 +431,7 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2.f, wiRenderer::GetDevice()->GetScreenHeight() / 2.f, 30, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2, wiRenderer::GetDevice()->GetScreenHeight() / 2, 30, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
 }
 
 
@@ -710,10 +706,22 @@ void DeferredLightDemo::Start(){
 
 void DeferredSceneDemo::Initialize()
 {
+#ifndef BUILD_PHONE
 	setSSAOEnabled(true);
 	setSSREnabled(false);
-	setReflectionsEnabled(true);
 	setEyeAdaptionEnabled(true);
+#else
+	this->setSSAOEnabled(false);
+	this->setSSREnabled(false);
+	this->setEyeAdaptionEnabled(false);
+	this->setFXAAEnabled(false);
+	this->setLightShaftsEnabled(false);
+	this->setReflectionQuality(0.2f);
+	this->setTessellationEnabled(false);
+	this->setMotionBlurEnabled(false);
+	this->setSSSEnabled(false);
+#endif
+	setReflectionsEnabled(true);
 
 	DeferredRenderableComponent::Initialize();
 }
@@ -725,7 +733,7 @@ void DeferredSceneDemo::Load()
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
 	wiRenderer::SetColorGrading((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
-	wiHairParticle::Settings(20, 50, 200);
+	wiHairParticle::Settings(20, 50, 120);
 }
 void DeferredSceneDemo::Start(){
 	DeferredRenderableComponent::Start();
@@ -733,6 +741,17 @@ void DeferredSceneDemo::Start(){
 
 void ForwardSceneDemo::Initialize()
 {
+#ifdef BUILD_PHONE
+	this->setSSAOEnabled(false);
+	this->setSSREnabled(false);
+	this->setEyeAdaptionEnabled(false);
+	this->setFXAAEnabled(false);
+	this->setLightShaftsEnabled(false);
+	this->setReflectionQuality(0.2f);
+	this->setTessellationEnabled(false);
+	this->setMotionBlurEnabled(false);
+	this->setSSSEnabled(false);
+#endif
 	setReflectionsEnabled(true);
 
 	ForwardRenderableComponent::Initialize();
@@ -745,7 +764,7 @@ void ForwardSceneDemo::Load()
 	wiRenderer::FinishLoading();
 	wiRenderer::SetEnviromentMap((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/env.dds"));
 	wiRenderer::SetColorGrading((Texture2D*)Content.add("DeferredSceneDemo/instanceBenchmark2/colorGrading.dds"));
-	wiHairParticle::Settings(20, 50, 200);
+	wiHairParticle::Settings(20, 50, 120);
 }
 void ForwardSceneDemo::Start(){
 	ForwardRenderableComponent::Start();

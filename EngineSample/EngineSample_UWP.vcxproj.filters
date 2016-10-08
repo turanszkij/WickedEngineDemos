@@ -202,7 +202,7 @@
     <Image Include="images\ripple.png">
       <Filter>Assets\CONTENT</Filter>
     </Image>
-    <Image Include="fonts\basic.dds">
+    <Image Include="fonts\default_font.dds">
       <Filter>Assets\CONTENT</Filter>
     </Image>
   </ItemGroup>
@@ -715,9 +715,6 @@
     <None Include="shaders\grassL2GS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\grassPS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\grassVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
@@ -826,9 +823,6 @@
     <None Include="shaders\objectVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\objectVS_reflection.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\objectVS10.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
@@ -859,9 +853,6 @@
     <None Include="shaders\qGrassLDistGS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\qGrassPS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\screenPS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
@@ -877,13 +868,7 @@
     <None Include="shaders\skyPS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\skyPS_reflection.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\skyVS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
-    <None Include="shaders\skyVS_reflection.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
     <None Include="shaders\sOGS.cso">
@@ -937,16 +922,85 @@
     <None Include="shaders\vSpotLightVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\waterPS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\waterVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="fonts\basic.wifont">
+    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wimf">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="DeferredSceneDemo\instanceBenchmark2\instanceBenchmark2.wimf">
+    <None Include="fonts\default_font.wifont">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassPS_alphatestonly.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassPS_deferred.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassPS_forward_dirlight.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassPS_tiledforward.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_forward_dirlight_water.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_normalmap.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_normalmap_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_normalmap_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_normalmap.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_normalmap_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_normalmap_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_planarreflection.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_pom.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_water.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassPS_alphatestonly.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassPS_deferred.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassPS_forward_dirlight.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qGrassPS_tiledforward.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\tileFrustumsCS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
   </ItemGroup>

@@ -102,11 +102,35 @@
   <PropertyGroup>
     <PackageCertificateKeyFile>EngineSample_UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PreprocessorDefinitions>WINSTORE_SUPPORT;BT_USE_DOUBLE_PRECISION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;BT_USE_DOUBLE_PRECISION;BUILD_PHONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -118,7 +142,7 @@
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PreprocessorDefinitions>WINSTORE_SUPPORT;BT_USE_DOUBLE_PRECISION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINSTORE_SUPPORT;BT_USE_DOUBLE_PRECISION;BUILD_PHONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../../WickedEngine\WickedEngine;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -428,7 +452,7 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="EngineSample_UWP_TemporaryKey.pfx" />
-    <None Include="fonts\basic.wifont">
+    <None Include="fonts\default_font.wifont">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="HairParticleDemo\hair.blend">
@@ -611,7 +635,16 @@
     <None Include="shaders\grassL2GS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\grassPS.cso">
+    <None Include="shaders\grassPS_alphatestonly.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassPS_deferred.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassPS_forward_dirlight.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassPS_tiledforward.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\grassVS.cso">
@@ -633,6 +666,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\lensFlareVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\lightShaftPS.cso">
@@ -713,19 +749,58 @@
     <None Include="shaders\objectPS_forward_dirlight_transparent_pom.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\objectPS_forward_dirlight_water.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\objectPS_simplest.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\objectPS_textureonly.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\objectPS_tiledforward.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_normalmap.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_normalmap_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_normalmap_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_normalmap.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_normalmap_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_normalmap_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_planarreflection.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_transparent_pom.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_tiledforward_water.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\objectVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\objectVS10.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="shaders\objectVS_reflection.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\outlinePS.cso">
@@ -755,7 +830,16 @@
     <None Include="shaders\qGrassLDistGS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\qGrassPS.cso">
+    <None Include="shaders\qGrassPS_alphatestonly.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\qGrassPS_deferred.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\qGrassPS_forward_dirlight.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\qGrassPS_tiledforward.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\screenPS.cso">
@@ -773,13 +857,7 @@
     <None Include="shaders\skyPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\skyPS_reflection.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="shaders\skyVS.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="shaders\skyVS_reflection.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\sOGS.cso">
@@ -812,6 +890,9 @@
     <None Include="shaders\sunPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\tileFrustumsCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\toneMapPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -831,9 +912,6 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\vSpotLightVS.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="shaders\waterPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\waterVS.cso">
@@ -1049,7 +1127,7 @@
     <Image Include="EmitterParticleDemo\textures\smoke0.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="fonts\basic.dds">
+    <Image Include="fonts\default_font.dds">
       <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="HairParticleDemo\textures\billboardredflowers.png">

@@ -5,15 +5,12 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineSample", "EngineSample\EngineSample.vcxproj", "{76DC83E6-CC34-4AA6-8EDB-DAF046970082}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WickedEngine_SHARED", "..\WickedEngine\WickedEngine\WickedEngine_SHARED.vcxitems", "{45D41ACC-2C3C-43D2-BC10-02AA73FFC7C7}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineSample_UWP", "EngineSample\EngineSample_UWP.vcxproj", "{979ACE43-A6F4-4FEE-AE66-1D732C174804}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineSample_SHARED", "EngineSample\EngineSample_SHARED.vcxitems", "{7D34D5E8-4DA1-498A-B949-DD5F6AF6CB32}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\WickedEngine\WickedEngine\WickedEngine_SHARED.vcxitems*{45d41acc-2c3c-43d2-bc10-02aa73ffc7c7}*SharedItemsImports = 9
 		EngineSample\EngineSample_SHARED.vcxitems*{76dc83e6-cc34-4aa6-8edb-daf046970082}*SharedItemsImports = 4
 		EngineSample\EngineSample_SHARED.vcxitems*{7d34d5e8-4da1-498a-b949-dd5f6af6cb32}*SharedItemsImports = 9
 		EngineSample\EngineSample_SHARED.vcxitems*{979ace43-a6f4-4fee-ae66-1d732c174804}*SharedItemsImports = 4

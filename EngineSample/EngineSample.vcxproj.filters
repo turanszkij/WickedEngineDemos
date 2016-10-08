@@ -19,9 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
-    <Text Include="fonts\basic.wifont">
-      <Filter>fonts</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -48,12 +45,15 @@
     <Image Include="EngineSample.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="fonts\basic.dds">
+    <Image Include="fonts\default_font.dds">
       <Filter>fonts</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
     <None Include="startup.lua" />
+    <None Include="fonts\default_font.wifont">
+      <Filter>fonts</Filter>
+    </None>
   </ItemGroup>
 </Project>
