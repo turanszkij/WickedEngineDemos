@@ -307,9 +307,6 @@
     <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.wimesh">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="DeferredSceneDemo\instanceBenchmark2\re.wimf">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="DeferredSceneDemo\instanceBenchmark2\Rock01_LP.wimesh">
       <Filter>Assets\CONTENT</Filter>
     </None>

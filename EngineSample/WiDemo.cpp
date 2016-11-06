@@ -751,14 +751,15 @@ void ForwardSceneDemo::Initialize()
 	this->setTessellationEnabled(false);
 	this->setMotionBlurEnabled(false);
 	this->setSSSEnabled(false);
+	this->setHairParticleAlphaCompositionEnabled(false);
 #endif
 	setReflectionsEnabled(true);
 
-	ForwardRenderableComponent::Initialize();
+	__super::Initialize();
 }
 void ForwardSceneDemo::Load()
 {
-	ForwardRenderableComponent::Load();
+	__super::Load();
 
 	wiRenderer::LoadModel("DeferredSceneDemo/instanceBenchmark2/", "instanceBenchmark2");
 	wiRenderer::FinishLoading();
@@ -767,7 +768,7 @@ void ForwardSceneDemo::Load()
 	wiHairParticle::Settings(20, 50, 120);
 }
 void ForwardSceneDemo::Start(){
-	ForwardRenderableComponent::Start();
+	__super::Start();
 }
 
 void SSRTestDemo::Initialize()

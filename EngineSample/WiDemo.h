@@ -139,7 +139,7 @@ public:
 	void Start();
 };
 
-class ForwardSceneDemo :public ForwardRenderableComponent
+class ForwardSceneDemo :public TiledForwardRenderableComponent
 {
 public:
 	void Initialize();

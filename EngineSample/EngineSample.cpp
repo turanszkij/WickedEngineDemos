@@ -227,12 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				ScreenToClient(hWnd, &p);
 				wiRenderer::Picked picked = wiRenderer::Pick(p.x, p.y, PICK_WATER);
 				if (picked.object != nullptr){
-					wiWaterPlane waterPlane = wiWaterPlane(0, 0, 0, 1);
-					if (dynamic_cast<Renderable3DComponent*>(demo.getActiveComponent()))
-					{
-						waterPlane = dynamic_cast<Renderable3DComponent*>(demo.getActiveComponent())->getWaterPlane();
-					}
-					wiRenderer::PutWaterRipple("images/ripple.png", picked.position, waterPlane);
+					wiRenderer::PutWaterRipple("images/ripple.png", picked.position);
 				}
 
 			}

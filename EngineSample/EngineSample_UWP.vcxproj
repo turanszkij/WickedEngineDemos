@@ -304,9 +304,6 @@
     <None Include="DeferredSceneDemo\instanceBenchmark2\Plane.wimesh">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="DeferredSceneDemo\instanceBenchmark2\re.wimf">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="DeferredSceneDemo\instanceBenchmark2\Rock01_LP.wimesh">
       <DeploymentContent>true</DeploymentContent>
     </None>

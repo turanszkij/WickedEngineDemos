@@ -196,3 +196,7 @@ ModelManifest.xml
 /EngineSample/BasicModelDemo/barrel/temp
 /EngineSample/SoftBodyDemo/temp
 /EngineSample/DeferredSceneDemo/ssrtest/temp
+/EngineSample/shaders/header
+/EngineSample/SkinnedModelDemo/temp
+/EngineSample/SkinnedModelDemo/nsight_profiler.cfg
+/EngineSample/DeferredSceneDemo/instanceBenchmark2/nsight_profiler.cfg
