@@ -703,15 +703,6 @@
     <None Include="shaders\fxaa.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\grassL0GS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
-    <None Include="shaders\grassL1GS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
-    <None Include="shaders\grassL2GS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\grassVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
@@ -842,12 +833,6 @@
       <Filter>Assets\CONTENT</Filter>
     </None>
     <None Include="shaders\pointspriteVS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
-    <None Include="shaders\qGrassLCloseGS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
-    <None Include="shaders\qGrassLDistGS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
     <None Include="shaders\screenPS.cso">
@@ -998,6 +983,21 @@
       <Filter>Assets\CONTENT</Filter>
     </None>
     <None Include="shaders\tileFrustumsCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\qgrassGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\resolveMSAADepthStencilCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_DEBUG.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
   </ItemGroup>

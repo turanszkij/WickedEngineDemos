@@ -572,6 +572,9 @@
     <None Include="shaders\cubeShadowVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\cubeVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\decalPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -623,13 +626,7 @@
     <None Include="shaders\fxaa.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\grassL0GS.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="shaders\grassL1GS.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="shaders\grassL2GS.cso">
+    <None Include="shaders\grassGS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\grassPS_alphatestonly.cso">
@@ -666,6 +663,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\lightCullingCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS_DEBUG.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\lightShaftPS.cso">
@@ -821,10 +821,7 @@
     <None Include="shaders\pointspriteVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\qGrassLCloseGS.cso">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="shaders\qGrassLDistGS.cso">
+    <None Include="shaders\qgrassGS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\qGrassPS_alphatestonly.cso">
@@ -837,6 +834,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\qGrassPS_tiledforward.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\resolveMSAADepthStencilCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\screenPS.cso">

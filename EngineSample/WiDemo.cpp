@@ -37,6 +37,8 @@ void Demo::Initialize()
 	//wiRenderer::DX11 = false;
 	wiRenderer::physicsEngine = new wiBULLET();
 
+	wiRenderer::SetOcclusionCullingEnabled(false);
+
 	//wiInputManager::GetInstance()->addDirectInput(new wiDirectInput(instance, window));
 	wiInputManager::GetInstance()->addXInput(new wiXInput());
 	//wiInputManager::GetInstance()->addRawInput(new wiRawInput(window));
@@ -67,7 +69,7 @@ void Demo::Initialize()
 
 	demos[LOADINGSCREEN]->Load();
 
-	ChangeDemo(HELLOWORLD);
+	ChangeDemo(DEFERREDSCENE);
 }
 void Demo::Update()
 {
