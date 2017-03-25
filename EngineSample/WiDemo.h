@@ -33,9 +33,9 @@ public:
 	~Demo();
 
 
-	void Initialize();
-	void Update();
-	void Render();
+	virtual void Initialize() override;
+	virtual void Update(float dt) override;
+	virtual void Render() override;
 
 	enum INTERACT{
 		DECAL,
@@ -50,9 +50,9 @@ public:
 class DemoLoadingScreen : public LoadingScreenComponent
 {
 public:
-	void Load();
-	void Update();
-	void Compose();
+	virtual void Load() override;
+	virtual void Update(float dt) override;
+	virtual void Compose() override;
 };
 
 class HelloWorldDemo : public Renderable2DComponent
@@ -65,8 +65,8 @@ public:
 	HelloWorldDemo();
 	~HelloWorldDemo();
 
-	void Update();
-	void Compose();
+	virtual void Update(float dt) override;
+	virtual void Compose() override;
 };
 
 class BasicModelDemo : public DeferredRenderableComponent
@@ -74,19 +74,19 @@ class BasicModelDemo : public DeferredRenderableComponent
 private:
 	Model* model;
 public:
-	void Initialize();
-	void Load();
-	void Start();
-	void Update();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
+	virtual void Update(float dt) override;
 };
 
 class SkinnedModelDemo : public ForwardRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
-	void Stop();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
+	virtual void Stop() override;
 };
 
 class EmittedParticleDemo : public ForwardRenderableComponent
@@ -94,71 +94,71 @@ class EmittedParticleDemo : public ForwardRenderableComponent
 private:
 	Model* model;
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class HairParticleDemo : public ForwardRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class RigidBodyDemo : public ForwardRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class SoftBodyDemo : public ForwardRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class DeferredLightDemo :public DeferredRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class DeferredSceneDemo :public DeferredRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class ForwardSceneDemo :public TiledForwardRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class SSRTestDemo :public DeferredRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };
 
 class SkinTestDemo :public DeferredRenderableComponent
 {
 public:
-	void Initialize();
-	void Load();
-	void Start();
+	virtual void Initialize() override;
+	virtual void Load() override;
+	virtual void Start() override;
 };

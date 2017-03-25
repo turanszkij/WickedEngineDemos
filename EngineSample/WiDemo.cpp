@@ -71,7 +71,7 @@ void Demo::Initialize()
 
 	ChangeDemo(DEFERREDSCENE);
 }
-void Demo::Update()
+void Demo::Update(float dt)
 {
 	CameraControl();
 
@@ -143,7 +143,7 @@ void Demo::Update()
 		wiBackLog::Toggle();
 	}
 
-	MainComponent::Update();
+	MainComponent::Update(dt);
 }
 void Demo::Render()
 {
@@ -423,9 +423,9 @@ void DemoLoadingScreen::Load()
 	sprite->effects.pivot = XMFLOAT2(0.5f, 0.5f);
 	addSprite(sprite);
 }
-void DemoLoadingScreen::Update()
+void DemoLoadingScreen::Update(float dt)
 {
-	Renderable2DComponent::Update();
+	Renderable2DComponent::Update(dt);
 }
 void DemoLoadingScreen::Compose()
 {
@@ -513,8 +513,8 @@ HelloWorldDemo::HelloWorldDemo(){
 HelloWorldDemo::~HelloWorldDemo(){
 	Renderable2DComponent::~Renderable2DComponent();
 }
-void HelloWorldDemo::Update(){
-	Renderable2DComponent::Update();
+void HelloWorldDemo::Update(float dt){
+	Renderable2DComponent::Update(dt);
 }
 void HelloWorldDemo::Compose(){
 	Renderable2DComponent::Compose();
@@ -544,8 +544,8 @@ void BasicModelDemo::Start(){
 	__super::Start();
 	//wiRenderer::objects.front()->translation_rest.y = 2.2f;
 }
-void BasicModelDemo::Update(){
-	__super::Update();
+void BasicModelDemo::Update(float dt){
+	__super::Update(dt);
 
 	model->RotateRollPitchYaw(XMFLOAT3(0, 0.001f*XM_2PI, 0));
 	//wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
