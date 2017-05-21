@@ -808,12 +808,6 @@
     <None Include="shaders\objectPS_textureonly.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\objectVS.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
-    <None Include="shaders\objectVS10.cso">
-      <Filter>Assets\CONTENT</Filter>
-    </None>
     <None Include="shaders\outlinePS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
@@ -998,6 +992,111 @@
       <Filter>Assets\CONTENT</Filter>
     </None>
     <None Include="shaders\lightCullingCS_DEBUG.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\discLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\downsampleDepthBuffer4xPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\generateMIPChain2D_GaussianCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\generateMIPChain2D_SimpleFilterCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\generateMIPChain3D_GaussianCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\generateMIPChain3D_SimpleFilterCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_ADVANCED.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_ADVANCED_DEBUG.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectGS_voxelizer.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_alphatestonly.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_debug.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectPS_voxelizer.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_common.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_common_tessellation.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_debug.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_simple.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_simple_tessellation.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_voxelizer.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\rectangleLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\reprojectDepthBufferPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\sharpenPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\sphereLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\temporalAAResolvePS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\tubeLightPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\vDiscLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelClearOnlyNormalCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelGS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelPS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelRadianceSecondaryBounceCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelSceneCopyClear_TemporalSmoothing.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelSceneCopyClearCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\voxelVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\vRectangleLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\vSphereLightVS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\vTubeLightVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
   </ItemGroup>

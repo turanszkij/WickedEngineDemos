@@ -5,6 +5,8 @@
 #include "EngineSample.h"
 #include "WiDemo.h"
 
+using namespace std;
+
 #define MAX_LOADSTRING 100
 
 extern "C" {

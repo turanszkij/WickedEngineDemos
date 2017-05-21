@@ -596,6 +596,12 @@
     <None Include="shaders\dirLightVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\discLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\downsampleDepthBuffer4xPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\environmentalLightPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -624,6 +630,18 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\fxaa.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\generateMIPChain2D_GaussianCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\generateMIPChain2D_SimpleFilterCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\generateMIPChain3D_GaussianCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\generateMIPChain3D_SimpleFilterCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\grassGS.cso">
@@ -665,6 +683,12 @@
     <None Include="shaders\lightCullingCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\lightCullingCS_ADVANCED.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS_ADVANCED_DEBUG.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\lightCullingCS_DEBUG.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -692,10 +716,19 @@
     <None Include="shaders\objectDS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\objectGS_voxelizer.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\objectHS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\objectPS_alphatestonly.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\objectPS_blackout.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectPS_debug.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\objectPS_deferred.cso">
@@ -794,10 +827,25 @@
     <None Include="shaders\objectPS_tiledforward_water.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\objectVS.cso">
+    <None Include="shaders\objectPS_voxelizer.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\objectVS10.cso">
+    <None Include="shaders\objectVS_common.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS_common_tessellation.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS_debug.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS_simple.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS_simple_tessellation.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\objectVS_voxelizer.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\outlinePS.cso">
@@ -836,6 +884,12 @@
     <None Include="shaders\qGrassPS_tiledforward.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\rectangleLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\reprojectDepthBufferPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\resolveMSAADepthStencilCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -851,6 +905,9 @@
     <None Include="shaders\shadowVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\sharpenPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\skyPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -861,6 +918,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\sOVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\sphereLightPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\sphereVS.cso">
@@ -887,6 +947,9 @@
     <None Include="shaders\sunPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\temporalAAResolvePS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\tileFrustumsCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -899,16 +962,52 @@
     <None Include="shaders\trailVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\tubeLightPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\vDiscLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\verticalBlurPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\volumeLightPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\voxelClearOnlyNormalCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\voxelGS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\voxelPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\voxelRadianceSecondaryBounceCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\voxelSceneCopyClearCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\voxelSceneCopyClear_TemporalSmoothing.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\voxelVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\vPointLightVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\vRectangleLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\vSphereLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\vSpotLightVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\vTubeLightVS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\waterVS.cso">

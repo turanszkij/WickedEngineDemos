@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WiDemo.h"
 
+using namespace std;
 using namespace wiGraphicsTypes;
 
 Demo::Demo()
@@ -359,7 +360,7 @@ void Demo::HudRender(){
 	default:
 		break;
 	}
-	wiFont(ss.str(), wiFontProps(0, 0, -1, WIFALIGN_LEFT, WIFALIGN_TOP)).Draw();
+	wiFont(ss.str(), wiFontProps(0, 0, -1, WIFALIGN_LEFT, WIFALIGN_TOP)).Draw(GRAPHICSTHREAD_IMMEDIATE);
 	ss.str("");
 	ss.precision(1);
 	ss << fixed << wiFrameRate::FPS() << " FPS";
@@ -367,7 +368,7 @@ void Demo::HudRender(){
 	//ss << "\nRAWInput Joy: " << wiInputManager::rawinput->raw.data.hid.bRawData[0];
 	//ss << "\nRAWInput Keyboard: " << (char)wiInputManager::rawinput->raw.data.keyboard.VKey;
 	//ss << "\nRAWInput Mouse: " << wiInputManager::rawinput->raw.data.mouse.lLastX << ":" << wiInputManager::rawinput->raw.data.mouse.lLastY;
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, -1, WIFALIGN_RIGHT, WIFALIGN_TOP)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() - 20, 0, -1, WIFALIGN_RIGHT, WIFALIGN_TOP)).Draw(GRAPHICSTHREAD_IMMEDIATE);
 	ss.str("");
 	switch (demoScene)
 	{
@@ -408,7 +409,7 @@ void Demo::HudRender(){
 		break;
 	}
 	ss << " DEMO";
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2, wiRenderer::GetDevice()->GetScreenHeight(), -1, WIFALIGN_CENTER, WIFALIGN_BOTTOM)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2, wiRenderer::GetDevice()->GetScreenHeight(), -1, WIFALIGN_CENTER, WIFALIGN_BOTTOM)).Draw(GRAPHICSTHREAD_IMMEDIATE);
 	//wiFont::Draw(ss.str(), "basic", XMFLOAT4((float)wiRenderer::GetDevice()->GetScreenWidth() / 2, -(float)wiRenderer::GetDevice()->GetScreenHeight(), -5, -4), "center", "bottom");
 }
 
@@ -433,7 +434,7 @@ void DemoLoadingScreen::Compose()
 
 	stringstream ss("");
 	ss << "Loading: " << getPercentageComplete() << "%";
-	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2, wiRenderer::GetDevice()->GetScreenHeight() / 2, 30, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw();
+	wiFont(ss.str(), wiFontProps(wiRenderer::GetDevice()->GetScreenWidth() / 2, wiRenderer::GetDevice()->GetScreenHeight() / 2, 30, WIFALIGN_CENTER, WIFALIGN_CENTER)).Draw(GRAPHICSTHREAD_IMMEDIATE);
 }
 
 

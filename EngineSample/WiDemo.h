@@ -21,7 +21,7 @@ public:
 		DEMO_COUNT,
 	};
 	DEMOS demoScene;
-	map<DEMOS, RenderableComponent*> demos;
+	std::map<DEMOS, RenderableComponent*> demos;
 	void CameraControl();
 	void CameraReset(); 
 	void StartLoadingChangeDemo(DEMOS newDemo);
