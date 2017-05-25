@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "WiDemo.h"
+#include "wiProfiler.h"
 
 using namespace std;
 using namespace wiGraphicsTypes;
@@ -12,6 +13,7 @@ Demo::Demo()
 	interactionType = SPAWN_OBJECT;
 
 	setFrameSkip(true);
+
 }
 Demo::~Demo()
 {
@@ -39,6 +41,13 @@ void Demo::Initialize()
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiRenderer::SetOcclusionCullingEnabled(false);
+
+#ifdef BUILD_PHONE
+	wiRenderer::SetShadowProps2D(256, 4, 0);
+	wiRenderer::SetShadowPropsCube(128, 1);
+#endif
+
+	wiProfiler::GetInstance().ENABLED = false;
 
 	//wiInputManager::GetInstance()->addDirectInput(new wiDirectInput(instance, window));
 	wiInputManager::GetInstance()->addXInput(new wiXInput());
@@ -74,7 +83,7 @@ void Demo::Initialize()
 }
 void Demo::Update(float dt)
 {
-	CameraControl();
+	CameraControl(dt);
 
 	if (!wiBackLog::isActive())
 	{
@@ -153,12 +162,12 @@ void Demo::Render()
 	HudRender();
 }
 
-void Demo::CameraControl(){
+void Demo::CameraControl(float dt){
 
 	if (wiBackLog::isActive())
 		return;
 
-	float speed = (wiInputManager::GetInstance()->down(VK_SHIFT) ? 1.0f : 0.1f);
+	float speed = (wiInputManager::GetInstance()->down(VK_SHIFT) ? 100.0f : 30.0f) * dt;
 	if (wiInputManager::GetInstance()->down('A')) wiRenderer::getCamera()->Move(XMVectorSet(-speed, 0, 0, 0));
 	if (wiInputManager::GetInstance()->down('D')) wiRenderer::getCamera()->Move(XMVectorSet(speed, 0, 0, 0));
 	if (wiInputManager::GetInstance()->down('W')) wiRenderer::getCamera()->Move(XMVectorSet(0, 0, speed, 0));
@@ -172,8 +181,8 @@ void Demo::CameraControl(){
 	{
 		float xDif = currentMouse.x - originalMouse.x;
 		float yDif = currentMouse.y - originalMouse.y;
-		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, 0.1f*xDif*(1.0f / 60.0f), 0));
-		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0.1f*yDif*(1.0f / 60.0f), 0, 0));
+		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, xDif*dt, 0));
+		wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(yDif*dt, 0, 0));
 		wiInputManager::GetInstance()->setpointer(originalMouse);
 	}
 	else
@@ -248,7 +257,7 @@ void Demo::CameraControl(){
 		{
 			if (touch.pos.x < screenW / 2)
 			{
-				float speed = -0.005f;
+				float speed = -0.5f * dt;
 				XMFLOAT4 currentMouse = XMFLOAT4(touch.pos.x, touch.pos.y, 0, 0);
 				float xDif = originalMouseL.x - currentMouse.x;
 				float yDif = originalMouseL.y - currentMouse.y;
@@ -256,12 +265,11 @@ void Demo::CameraControl(){
 			}
 			else
 			{
-				float speed = 0.2f;
 				XMFLOAT4 currentMouse = XMFLOAT4(touch.pos.x, touch.pos.y, 0, 0);
 				float xDif = originalMouseR.x - currentMouse.x;
 				float yDif = originalMouseR.y - currentMouse.y;
-				wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, speed*xDif*(1.0f / 60.0f), 0));
-				wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(speed*yDif*(1.0f / 60.0f), 0, 0));
+				wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0, 0.1f*dt*xDif, 0));
+				wiRenderer::getCamera()->RotateRollPitchYaw(XMFLOAT3(0.1f*dt*yDif, 0, 0));
 				originalMouseR = currentMouse;
 			}
 		}
@@ -290,6 +298,8 @@ void Demo::ChangeDemo(DEMOS newDemo){
 	{
 		return;
 	}
+
+	wiRenderer::CleanUpStaticTemp();
 
 	static_cast<wiSoundEffect*>(Content.get("sound/change.wav")->data)->Play();
 
@@ -539,6 +549,7 @@ void BasicModelDemo::Load()
 	__super::Load();
 
 	model = wiRenderer::LoadModel("BasicModelDemo/barrel/", "barrel", XMMatrixTranslation(0,2.2f,0));
+	wiRenderer::LoadDefaultLighting();
 	wiRenderer::FinishLoading();
 }
 void BasicModelDemo::Start(){
@@ -548,7 +559,7 @@ void BasicModelDemo::Start(){
 void BasicModelDemo::Update(float dt){
 	__super::Update(dt);
 
-	model->RotateRollPitchYaw(XMFLOAT3(0, 0.001f*XM_2PI, 0));
+	model->RotateRollPitchYaw(XMFLOAT3(0, XM_2PI * dt * 0.1f, 0));
 	//wiRenderer::objects.front()->transform(XMMatrixRotationRollPitchYaw(0, 0.001f*XM_2PI, 0));
 	//wiRenderer::UpdateRenderInfo(wiRenderer::getImmediateContext());
 }
@@ -571,6 +582,7 @@ void SkinnedModelDemo::Load()
 	ForwardRenderableComponent::Load();
 
 	wiRenderer::LoadModel("SkinnedModelDemo/", "girl", XMMatrixTranslation(0,0,2));
+	wiRenderer::LoadDefaultLighting();
 	wiRenderer::FinishLoading();
 }
 void SkinnedModelDemo::Start(){
@@ -606,6 +618,7 @@ void EmittedParticleDemo::Load()
 	ForwardRenderableComponent::Load();
 
 	model = wiRenderer::LoadModel("EmitterParticleDemo/", "emitter", XMMatrixTranslation(0,2.2f,0));
+	wiRenderer::LoadDefaultLighting();
 	wiRenderer::FinishLoading();
 }
 void EmittedParticleDemo::Start(){
@@ -631,6 +644,7 @@ void HairParticleDemo::Load()
 	ForwardRenderableComponent::Load();
 
 	wiRenderer::LoadModel("HairParticleDemo/", "hair");
+	wiRenderer::LoadDefaultLighting();
 	wiRenderer::FinishLoading();
 	wiHairParticle::Settings(8, 14, 28); //LOD levels (close, mid, distant)
 }
@@ -656,6 +670,7 @@ void RigidBodyDemo::Load()
 	ForwardRenderableComponent::Load();
 
 	wiRenderer::LoadModel("RigidBodyDemo/", "rigidScene");
+	wiRenderer::LoadDefaultLighting();
 	wiRenderer::FinishLoading();
 }
 void RigidBodyDemo::Start(){
@@ -680,6 +695,7 @@ void SoftBodyDemo::Load()
 	ForwardRenderableComponent::Load();
 
 	wiRenderer::LoadModel("SoftBodyDemo/", "flag");
+	wiRenderer::LoadDefaultLighting();
 	wiRenderer::FinishLoading();
 }
 void SoftBodyDemo::Start(){

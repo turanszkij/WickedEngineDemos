@@ -566,10 +566,19 @@
     <None Include="shaders\cubeShadowGS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\cubeShadowGS_alphatest.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\cubeShadowPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\cubeShadowPS_alphatest.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\cubeShadowVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\cubeShadowVS_alphatest.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\cubeVS.cso">
@@ -839,6 +848,9 @@
     <None Include="shaders\objectVS_debug.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\objectVS_positionstream.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\objectVS_simple.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -902,7 +914,13 @@
     <None Include="shaders\shadowPS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\shadowPS_alphatest.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\shadowVS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\shadowVS_alphatest.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\sharpenPS.cso">

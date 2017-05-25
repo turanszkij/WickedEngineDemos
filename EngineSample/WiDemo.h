@@ -22,7 +22,7 @@ public:
 	};
 	DEMOS demoScene;
 	std::map<DEMOS, RenderableComponent*> demos;
-	void CameraControl();
+	void CameraControl(float dt);
 	void CameraReset(); 
 	void StartLoadingChangeDemo(DEMOS newDemo);
 	void FinishLoadingChangeDemo(DEMOS newDemo);
