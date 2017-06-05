@@ -653,6 +653,12 @@
     <None Include="shaders\generateMIPChain3D_SimpleFilterCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\grassCullingCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\grassCulling_ResetCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\grassGS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -699,6 +705,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\lightCullingCS_DEBUG.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS_RESET.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\lightShaftPS.cso">
@@ -924,6 +933,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\sharpenPS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\skinningCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\skyPS.cso">

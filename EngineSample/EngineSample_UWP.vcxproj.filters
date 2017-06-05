@@ -1105,6 +1105,10 @@
     <None Include="shaders\objectVS_positionstream.cso" />
     <None Include="shaders\shadowPS_alphatest.cso" />
     <None Include="shaders\shadowVS_alphatest.cso" />
+    <None Include="shaders\grassCulling_ResetCS.cso" />
+    <None Include="shaders\grassCullingCS.cso" />
+    <None Include="shaders\lightCullingCS_RESET.cso" />
+    <None Include="shaders\skinningCS.cso" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\change.wav">

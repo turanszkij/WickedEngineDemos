@@ -41,6 +41,7 @@ void Demo::Initialize()
 	wiRenderer::physicsEngine = new wiBULLET();
 
 	wiRenderer::SetOcclusionCullingEnabled(false);
+	wiRenderer::SetAdvancedRefractionsEnabled(false);
 
 #ifdef BUILD_PHONE
 	wiRenderer::SetShadowProps2D(256, 4, 0);
@@ -79,7 +80,7 @@ void Demo::Initialize()
 
 	demos[LOADINGSCREEN]->Load();
 
-	ChangeDemo(DEFERREDSCENE);
+	ChangeDemo(HELLOWORLD);
 }
 void Demo::Update(float dt)
 {
@@ -739,6 +740,7 @@ void DeferredSceneDemo::Initialize()
 	this->setTessellationEnabled(false);
 	this->setMotionBlurEnabled(false);
 	this->setSSSEnabled(false);
+	this->setHairParticlesEnabled(false);
 #endif
 	setReflectionsEnabled(true);
 
