@@ -542,6 +542,9 @@
     <None Include="RigidBodyDemo\Wood_container1.wimesh">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\bitonicSort_hairparticleCS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\bloomSeparatePS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -726,6 +729,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\luminancePass2CS.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\matrixTransposeCS.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="shaders\motionBlurPS.cso">

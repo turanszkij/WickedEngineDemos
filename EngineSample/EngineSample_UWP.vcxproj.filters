@@ -1109,6 +1109,8 @@
     <None Include="shaders\grassCullingCS.cso" />
     <None Include="shaders\lightCullingCS_RESET.cso" />
     <None Include="shaders\skinningCS.cso" />
+    <None Include="shaders\bitonicSort_hairparticleCS.cso" />
+    <None Include="shaders\matrixTransposeCS.cso" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\change.wav">

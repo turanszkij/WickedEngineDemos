@@ -80,7 +80,7 @@ void Demo::Initialize()
 
 	demos[LOADINGSCREEN]->Load();
 
-	ChangeDemo(HELLOWORLD);
+	ChangeDemo(DEFERREDSCENE);
 }
 void Demo::Update(float dt)
 {
@@ -740,7 +740,7 @@ void DeferredSceneDemo::Initialize()
 	this->setTessellationEnabled(false);
 	this->setMotionBlurEnabled(false);
 	this->setSSSEnabled(false);
-	this->setHairParticlesEnabled(false);
+	//this->setHairParticlesEnabled(false);
 #endif
 	setReflectionsEnabled(true);
 
