@@ -200,3 +200,8 @@ ModelManifest.xml
 /EngineSample/SkinnedModelDemo/temp
 /EngineSample/SkinnedModelDemo/nsight_profiler.cfg
 /EngineSample/DeferredSceneDemo/instanceBenchmark2/nsight_profiler.cfg
+/.vs/EngineSample/v15
+/.vs/EngineSample/v15/Solution.VC.db-wal
+/.vs/EngineSample/v15/Solution.VC.db-shm
+/.vs/EngineSample/v15/Solution.VC.db
+/.vs/EngineSample/v15/Browse.VC.db
