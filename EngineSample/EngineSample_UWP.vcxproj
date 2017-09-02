@@ -710,6 +710,18 @@
     <None Include="shaders\lightCullingCS_DEBUG.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="shaders\lightCullingCS_DEFERRED.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS_DEFERRED_ADVANCED.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS_DEFERRED_ADVANCED_DEBUG.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\lightCullingCS_DEFERRED_DEBUG.cso">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="shaders\lightCullingCS_RESET.cso">
       <DeploymentContent>true</DeploymentContent>
     </None>

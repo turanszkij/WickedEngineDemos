@@ -1099,18 +1099,54 @@
     <None Include="shaders\vTubeLightVS.cso">
       <Filter>Assets\CONTENT</Filter>
     </None>
-    <None Include="shaders\cubeShadowGS_alphatest.cso" />
-    <None Include="shaders\cubeShadowPS_alphatest.cso" />
-    <None Include="shaders\cubeShadowVS_alphatest.cso" />
-    <None Include="shaders\objectVS_positionstream.cso" />
-    <None Include="shaders\shadowPS_alphatest.cso" />
-    <None Include="shaders\shadowVS_alphatest.cso" />
-    <None Include="shaders\grassCulling_ResetCS.cso" />
-    <None Include="shaders\grassCullingCS.cso" />
-    <None Include="shaders\lightCullingCS_RESET.cso" />
-    <None Include="shaders\skinningCS.cso" />
-    <None Include="shaders\bitonicSort_hairparticleCS.cso" />
-    <None Include="shaders\matrixTransposeCS.cso" />
+    <None Include="shaders\lightCullingCS_DEFERRED.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_DEFERRED_ADVANCED.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_DEFERRED_ADVANCED_DEBUG.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_DEFERRED_DEBUG.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassCulling_ResetCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\grassCullingCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeShadowVS_alphatest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeShadowPS_alphatest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\cubeShadowGS_alphatest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\bitonicSort_hairparticleCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\lightCullingCS_RESET.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\matrixTransposeCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\objectVS_positionstream.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\shadowPS_alphatest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\shadowVS_alphatest.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
+    <None Include="shaders\skinningCS.cso">
+      <Filter>Assets\CONTENT</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\change.wav">
